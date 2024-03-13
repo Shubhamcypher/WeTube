@@ -6,7 +6,7 @@ import { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Video from "./pages/Video.jsx";
-import Signin from "./pages/SignIn.jsx";
+import Signin from "./pages/Signin.jsx";
 import Search from "./componets/Search.jsx";
 
 const Container = styled.div`

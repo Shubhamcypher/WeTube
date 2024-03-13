@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'https://server-xi-dun.vercel.app',
         
         cors: true, // Enable CORS for preflight requests (OPTIONS)
       },

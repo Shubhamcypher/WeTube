@@ -22,7 +22,7 @@ export const signup = async (req, res, next)=>{
 
         res
         .status(200)
-        .json("User added successfully")
+        .json("User added successfully!!!!")
     } 
     catch (error) {
         next(err)

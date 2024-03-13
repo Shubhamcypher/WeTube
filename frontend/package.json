@@ -1,23 +1,22 @@
 {
-  "name": "frontend",
+  "name": "wetube",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.13",
-    "@mui/material": "^5.15.13",
+    "@mui/icons-material": "^5.15.11",
+    "@mui/material": "^5.15.11",
     "@reduxjs/toolkit": "^2.2.1",
     "axios": "^1.6.7",
     "firebase": "^10.8.1",
-    "reac": "^0.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.0",
@@ -27,13 +26,13 @@
     "timeago.js": "^4.0.2"
   },
   "devDependencies": {
-    "@types/react": "^18.2.64",
-    "@types/react-dom": "^18.2.21",
-    "@vitejs/plugin-react": "^4.2.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react": "^7.34.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.38.0",
+    "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "vite": "^5.1.6"
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "vite": "^4.5.2"
   }
 }

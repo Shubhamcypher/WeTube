@@ -1,0 +1,24 @@
+# Node Modules
+node_modules/
+
+# Environment variables
+.env
+
+# Build files
+/build
+
+# Dependency directories
+# Commenting out next line in case you use yarn. Uncomment if you use npm.
+# /client/node_modules/
+# /server/node_modules/
+
+# Logs
+*.log
+
+# Editor-specific files
+.vscode/
+.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db

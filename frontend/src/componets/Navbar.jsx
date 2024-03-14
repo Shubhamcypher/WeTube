@@ -9,6 +9,7 @@ import Alert from '@mui/material/Alert';
 
 
 
+
 import {useDispatch, useSelector} from 'react-redux'
 import Upload from './Upload';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -89,6 +90,36 @@ const LogoutButton = styled(LogoutIcon)`
     color: red;
   }
 `;
+const VideoButton = styled(VideoCallIcon)`
+  cursor: pointer;
+
+
+  &:hover {
+    color: #00B5E2;
+    transform: scale(1.5)
+  }
+`;
+
+const StyledAlert = styled(Alert)`
+  background-color: ${({theme})=>theme.bgLighter};
+  border-radius: 8px;
+  padding: 16px;
+`;
+
+const AlertButton = styled.button`
+  padding: 8px 16px;
+  background-color: ${({ color }) => color};
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 8px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
 
 
 
@@ -108,9 +139,9 @@ const navigate = useNavigate()
 const dispatch = useDispatch()
 
 const handleLogout = ()=>{
+  setShowAlert(true)
   dispatch(logout())
   navigate('/')
-  setShowAlert(true)
 
 }
 
@@ -143,7 +174,7 @@ const handleContinue = () => {
         </Search>
         {currentUser  ?(
           <User>
-            <VideoCallIcon onClick={()=>setOpen(true)} style={{cursor:'pointer'}}/>
+            <VideoButton onClick={()=>setOpen(true)} />
             <Avatar src={currentUser.img} style={{cursor:'pointer'}}/>
             {currentUser.name}
             <LogoutButton onClick={handleLogout} />
@@ -152,30 +183,24 @@ const handleContinue = () => {
             <Button>
                 <PersonIcon/> Sign in
             </Button>
-        </a>}
-        {open && (<Upload setOpen={setOpen} />  )}
+        </a>}     
       </Wrapper>
-      {showAlert && (
-    <Alert severity="info" style={{ backgroundColor: 'grey' }}>
-      <div style={{display: 'flex', justifyContent:'space-between'}}>
-    <div>You are not logged in. What would you like to do?</div>
-    <Button onClick={handleLogin} style={{ backgroundColor: 'green', color: 'white' }}>
-      Login
-    </Button>
-    <Button onClick={handleRegister} style={{ backgroundColor: 'blue', color: 'white' }}>
-      Register
-    </Button>
-    <Button onClick={handleContinue} style={{ backgroundColor: 'red', color: 'white' }}>
-      Continue without logging in
-    </Button>
-            
-    </div>
-    </Alert>
-  )}
     </Container>
-    
-    
-   
+    {open && <Upload setOpen={setOpen} />}
+    {showAlert && (
+        <StyledAlert severity="info">
+          You won't be able to use complete features of WeTube without logging in...Choose between  
+          <AlertButton onClick={handleLogin} color="green">
+            Login
+          </AlertButton>
+          <AlertButton onClick={handleRegister} color="blue">
+            Register
+          </AlertButton>
+          <AlertButton onClick={handleContinue} color="red">
+            Continue without logging in
+          </AlertButton>
+        </StyledAlert>
+      )}
     </>
   )
 }

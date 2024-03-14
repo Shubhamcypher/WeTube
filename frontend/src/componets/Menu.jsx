@@ -57,6 +57,10 @@ const Logo = styled.div`
     gap:5px;
     font-weight:bold;
     margin-bottom:25px;
+
+    &:hover {
+        transform: scale(1.2)
+      }
 `;
 const Img = styled.img`
     height:25px;
@@ -67,7 +71,7 @@ const Item = styled.div`
   align-items: center;
   gap: 20px;
   cursor: pointer;
-  padding: 7.5px 0px;
+  padding: 7.5px 7px;
 
   &:hover {
     background-color: ${({ theme }) => theme.soft};

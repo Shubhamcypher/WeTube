@@ -25,7 +25,12 @@ const connect = async ()=>{
 
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors())
+
+
+app.use(cors({
+    origin: '*',
+    credentials: true, // This is needed if you're using cookies or authentication
+}));
 
 
 //appending routes

@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://localhost:8000',
+        target: 'https://wetube-cmtu.onrender.com',
         
         cors: true, // Enable CORS for preflight requests (OPTIONS)
       },

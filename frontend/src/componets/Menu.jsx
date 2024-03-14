@@ -72,7 +72,6 @@ const Item = styled.div`
   &:hover {
     background-color: ${({ theme }) => theme.soft};
     border-radius : 7.5px;
-    padding: 7.5px ;
   }
 `;
 

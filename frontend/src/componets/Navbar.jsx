@@ -82,6 +82,14 @@ const Avatar = styled.img`
       background-color: #999;
 `;
 
+const LogoutButton = styled(LogoutIcon)`
+  cursor: pointer;
+
+  &:hover {
+    color: red;
+  }
+`;
+
 
 
 
@@ -131,21 +139,21 @@ const handleContinue = () => {
       <Wrapper>
         <Search>
           <Input placeholder="Search" onChange={(e)=>setQ(e.target.value)}/>
-          <SearchIcon onClick={()=>navigate(`/search?q=${q}`)}/>
+          <SearchIcon onClick={()=>navigate(`/search?q=${q}`)} style={{cursor:'pointer'}}/>
         </Search>
         {currentUser  ?(
           <User>
-            <VideoCallIcon onClick={()=>setOpen(true)}/>
-            <Avatar src={currentUser.img}/>
+            <VideoCallIcon onClick={()=>setOpen(true)} style={{cursor:'pointer'}}/>
+            <Avatar src={currentUser.img} style={{cursor:'pointer'}}/>
             {currentUser.name}
-            <LogoutIcon onClick={handleLogout}/>
+            <LogoutButton onClick={handleLogout} />
           </User>
         ) : <a href='/signin' style={{textDecoration:"none"}}>
             <Button>
                 <PersonIcon/> Sign in
             </Button>
         </a>}
-        {open && (<Upload setOpen={setOpen}/>  )}
+        {open && (<Upload setOpen={setOpen} />  )}
       </Wrapper>
       {showAlert && (
     <Alert severity="info" style={{ backgroundColor: 'grey' }}>

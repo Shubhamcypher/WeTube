@@ -7,8 +7,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'http://localhost:8000',
-        
-        cors: true, // Enable CORS for preflight requests (OPTIONS)
+        secure: true,
       },
     },
   },

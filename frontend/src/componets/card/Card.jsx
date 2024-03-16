@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import axios from 'axios'
 
 const Container = styled.div`
-    width: ${(props)=>props.type !== "sm" && "280px"};
-    margin-bottom: ${(props) => (props.type === "sm" ? "10px" : "45px")};
+    width: ${(props)=>props.type !== "sm" && "320px"};
+    margin-bottom: ${(props) => (props.type === "sm" ? "15px" : "20px")};
     cursor:pointer;
     border-radius:10px;
     display: ${(props)=>props.type === "sm" && "flex"};
@@ -14,18 +14,18 @@ const Container = styled.div`
 `
 
 const Image = styled.img`
-    width: ${(props) => (props.type === "sm" ? "80%" : "100%")};
-    height: ${(props) => (props.type === "sm" ? "120px" : "180px")};
+    width: ${(props) => (props.type === "sm" ? "100%" : "100%")};
+    height: ${(props) => (props.type === "sm" ? "100px" : "180px")};
     background-color: #999;
     border-radius:10px;
-    flex:1;
+    
 `
 
 const Details = styled.div`
     display:flex;
     margin-top: ${(props)=>props.type !== "sm" && "16px"};
     gap:12px;
-    flex:1;
+    
 `
 
 const ChannelImage = styled.img`
@@ -43,6 +43,8 @@ const Title = styled.h1`
     font-size: 16px;
     font-weight: 500;
     color:${({theme})=>theme.text};
+    width: 10%;
+    display: inline;
 `
 const ChannelName = styled.h2`
     font-size: 16px;

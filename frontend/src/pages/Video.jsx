@@ -47,7 +47,7 @@ const Hr = styled.hr`
   border: 0.5px solid ${({ theme }) => theme.soft};
 `;
 
-const Info = styled.span`
+const Info = styled.div`
   color: ${({ theme }) => theme.text};
 `
 const Buttons = styled.div`

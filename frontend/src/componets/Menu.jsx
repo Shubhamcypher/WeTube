@@ -23,8 +23,9 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 
-import { Link } from 'react-router-dom';
+import { Link , useLocation} from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Alerts from './Alerts';
 
 
 
@@ -112,9 +113,23 @@ const Title = styled.h2`
     margin-bottom:20px;
 `
 
+const ActiveIcon = styled.div`
+ color : #d2b48c
+`;
+
+const InactiveIcon = styled.div`
+ color: inherit; 
+ `;
+
+
 
 const Menu = ({darkMode, setDarkMode}) => {
     const {currentUser} = useSelector(state=>state.user)
+    const location = useLocation();
+
+ 
+
+    const isActive = (path) => location.pathname === path;
   return (
     <Container>
         <Wrapper>
@@ -127,25 +142,66 @@ const Menu = ({darkMode, setDarkMode}) => {
           </Logo>
         </Link>
             
-        <Link to="/" style={{textDecoration:"none", color:"inherit"}}>
+        {isActive('/')?(<ActiveIcon>
+            <Link to="/" style={{textDecoration:"none", color:"inherit"}}>
             <Item>
                 <HomeIcon/>
                 Home
             </Item>
-        </Link>
+            </Link>
+            </ActiveIcon>):
             
-            <Link to='/trending' style={{textDecoration:"none", color:"inherit"}}>
+            (<InactiveIcon>
+                <Link to="/" style={{textDecoration:"none", color:"inherit"}}>
+            <Item>
+                <HomeIcon/>
+                Home
+            </Item>
+            </Link>
+            </InactiveIcon>)}
+
+        {isActive('/trending')?(<ActiveIcon>
+            <Link to="/trending" style={{textDecoration:"none", color:"inherit"}}>
             <Item>
                 <TravelExploreIcon/>
                 Explore
             </Item>
             </Link>
-            <Link to='/subscriptions' style={{textDecoration:"none", color:"inherit"}}>
+            </ActiveIcon>):
+            
+            (<InactiveIcon>
+                <Link to="/trending" style={{textDecoration:"none", color:"inherit"}}>
             <Item>
-                <SubscriptionsIcon/>
-                Subscriptions
+                <TravelExploreIcon/>
+                Explore
             </Item>
             </Link>
+            </InactiveIcon>)}
+            
+            <Link to={currentUser ? "/subscriptions" : "/"}
+            onClick={(e) => {
+              {!currentUser && <Alerts/>}
+            }}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            {isActive('/subscriptions') ? (
+              <ActiveIcon>
+                <Item>
+                  <SubscriptionsIcon />
+                  Subscriptions
+                </Item>
+              </ActiveIcon>
+            ) : (
+              <InactiveIcon>
+                <Item>
+                  <SubscriptionsIcon />
+                  Subscriptions
+                </Item>
+              </InactiveIcon>
+            )}
+          </Link>
+
+            
             <Hr/>
             <Item>
                 <VideoLibraryIcon/>

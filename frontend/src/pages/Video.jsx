@@ -23,12 +23,12 @@ import Recommendation from '../componets/Recommendation.jsx';
 const Container = styled.div`
   display: flex;
   gap: 24px;
+  
 `
 const Content = styled.div`
   flex: 5;
 `
 const VideoWrapper = styled.div`
-  ;
 `
 const Title = styled.h1`
 font-size: 18px;
@@ -73,6 +73,7 @@ const Image = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  background-color: #999;
 `
 
 

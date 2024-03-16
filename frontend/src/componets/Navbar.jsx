@@ -5,7 +5,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SearchIcon from '@mui/icons-material/Search';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import LogoutIcon from '@mui/icons-material/Logout';
-import Alerts from './Alerts.jsx'
+import Alert from '@mui/material/Alert';
 
 
 
@@ -20,6 +20,7 @@ const Container = styled.div`
   top: 0;
   background-color:${({theme})=>theme.bgLighter};
   height: 56px;
+  z-index:999;
   `
   const Wrapper = styled.div`
   display: flex;
@@ -100,7 +101,26 @@ const VideoButton = styled(VideoCallIcon)`
   }
 `;
 
+const StyledAlert = styled(Alert)`
+  background-color: inherit;
+  border-radius: 8px;
+  padding: 16px;
+`;
 
+const AlertButton = styled.button`
+  padding: 8px 16px;
+  background-color: ${({ color }) => color};
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 8px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
 
 
 
@@ -113,19 +133,33 @@ const Navbar = () => {
 const {currentUser} = useSelector(state=>state.user)
 const [open, setOpen] = useState(false)
 const [q, setQ] = useState("")
-
+const [showAlert, setShowAlert] = useState(false);
 
 
 const navigate = useNavigate()
 const dispatch = useDispatch()
 
-
 const handleLogout = ()=>{
   setShowAlert(true)
   dispatch(logout())
   navigate('/')
+
 }
 
+const handleLogin = () => {
+  setShowAlert(false);
+  navigate('/signin');
+};
+
+const handleRegister = () => {
+  setShowAlert(false);
+  navigate('/signin');
+};
+
+const handleContinue = () => {
+  setShowAlert(false);
+  
+};
 
 
 
@@ -154,8 +188,21 @@ const handleLogout = ()=>{
       </Wrapper>
     </Container>
     {open && <Upload setOpen={setOpen} />}
-
-    <Alerts />
+    {showAlert && (
+        <StyledAlert severity="warning">
+          You won't be able to use complete features of WeTube without logging in...Choose Login or Register to like,subscribe and more premium features
+          <br/>  
+          <AlertButton onClick={handleLogin} color="green">
+            Login
+          </AlertButton>
+          <AlertButton onClick={handleRegister} color="blue">
+            Register
+          </AlertButton>
+          <AlertButton onClick={handleContinue} color="red">
+            Continue without logging in
+          </AlertButton>
+        </StyledAlert>
+      )}
     </>
   )
 }

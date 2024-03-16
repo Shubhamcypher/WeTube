@@ -11,6 +11,7 @@ const Container = styled.div`
     border-radius:10px;
     display: ${(props)=>props.type === "sm" && "flex"};
     gap:10px;
+    
 `
 
 const Image = styled.img`
@@ -18,6 +19,9 @@ const Image = styled.img`
     height: ${(props) => (props.type === "sm" ? "100px" : "180px")};
     background-color: #999;
     border-radius:10px;
+    &:hover {
+        transform: ${(props) => (props.type === "sm" ? "scale(1)" : "scale(1.07)")}
+      }
     
 `
 

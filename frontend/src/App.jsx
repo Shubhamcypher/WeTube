@@ -18,7 +18,8 @@ const Main = styled.div`
   background-color: ${({theme})=>theme.bg};
 `
 const Wrapper = styled.div`
-  padding: 22px 22px;
+  padding: 22px 40px;
+  z-index:0
 `
 
 const App = ()=>{

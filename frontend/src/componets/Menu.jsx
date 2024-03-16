@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 
 import styled from 'styled-components'
+
 
 import channel_logo from '../img/channel_logo.png'
 
@@ -22,10 +23,10 @@ import HelpIcon from '@mui/icons-material/Help';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import NightlightIcon from '@mui/icons-material/Nightlight';
+import Alert from '@mui/material/Alert';
 
-import { Link , useLocation} from 'react-router-dom';
+import { Link , useLocation, useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Alerts from './Alerts';
 
 
 
@@ -121,156 +122,219 @@ const InactiveIcon = styled.div`
  color: inherit; 
  `;
 
+ const StyledAlert = styled(Alert)`
+  background-color: inherit;
+  border-radius: 8px;
+  padding: 16px;
+`;
+
+const AlertButton = styled.button`
+  padding: 8px 16px;
+  background-color: ${({ color }) => color};
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 8px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
 
 
-const Menu = ({darkMode, setDarkMode}) => {
-    const {currentUser} = useSelector(state=>state.user)
-    const location = useLocation();
 
- 
 
-    const isActive = (path) => location.pathname === path;
+
+const Menu = ({ darkMode, setDarkMode }) => {
+  const { currentUser } = useSelector((state) => state.user);
+  const location = useLocation();
+  const navigate = useNavigate()
+  const [showAlert, setShowAlert] = useState(false); // State for managing the alert
+
+  const handleLogin = () => {
+    setShowAlert(false);
+    navigate('/signin');
+  };
+
+  const handleRegister = () => {
+    setShowAlert(false);
+    navigate('/signin');
+  };
+
+  const handleContinue = () => {
+    setShowAlert(false);
+  };
+
+  const isActive = (path) => location.pathname === path;
+
   return (
     <Container>
-        <Wrapper>
-
-        {/* Todo: Need to replace a tag with Link */}
-        <Link to="/" style={{textDecoration:"none", color:"inherit"}}>  
+      <Wrapper>
+        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Logo>
             <Img src={channel_logo} />
             WeTube
           </Logo>
         </Link>
-            
-        {isActive('/')?(<ActiveIcon>
-            <Link to="/" style={{textDecoration:"none", color:"inherit"}}>
-            <Item>
-                <HomeIcon/>
-                Home
-            </Item>
-            </Link>
-            </ActiveIcon>):
-            
-            (<InactiveIcon>
-                <Link to="/" style={{textDecoration:"none", color:"inherit"}}>
-            <Item>
-                <HomeIcon/>
-                Home
-            </Item>
-            </Link>
-            </InactiveIcon>)}
 
-        {isActive('/trending')?(<ActiveIcon>
-            <Link to="/trending" style={{textDecoration:"none", color:"inherit"}}>
-            <Item>
-                <TravelExploreIcon/>
-                Explore
-            </Item>
+        {isActive('/') ? (
+          <ActiveIcon>
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Item>
+                <HomeIcon />
+                Home
+              </Item>
             </Link>
-            </ActiveIcon>):
-            
-            (<InactiveIcon>
-                <Link to="/trending" style={{textDecoration:"none", color:"inherit"}}>
-            <Item>
-                <TravelExploreIcon/>
-                Explore
-            </Item>
+          </ActiveIcon>
+        ) : (
+          <InactiveIcon>
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Item>
+                <HomeIcon />
+                Home
+              </Item>
             </Link>
-            </InactiveIcon>)}
+          </InactiveIcon>
+        )}
+
+        {isActive('/trending') ? (
+          <ActiveIcon>
+            <Link
+              to="/trending"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <Item>
+                <TravelExploreIcon />
+                Explore
+              </Item>
+            </Link>
+          </ActiveIcon>
+        ) : (
+          <InactiveIcon>
+            <Link
+              to="/trending"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <Item>
+                <TravelExploreIcon />
+                Explore
+              </Item>
+            </Link>
+          </InactiveIcon>
+        )}
+
+        <Link
+          to={currentUser ? '/subscriptions' : '/'} style={{ textDecoration: 'none', color: 'inherit' }}
+          onClick={(e)=>{
+            {!currentUser && alert("Log in to use this feature")}
+          }}>
             
-            <Link to={currentUser ? "/subscriptions" : "/"}
-            onClick={(e) => {
-              {!currentUser && <Alerts/>}
-            }}
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            {isActive('/subscriptions') ? (
-              <ActiveIcon>
-                <Item>
-                  <SubscriptionsIcon />
-                  Subscriptions
-                </Item>
-              </ActiveIcon>
-            ) : (
+          {isActive('/subscriptions') ? (
+            <ActiveIcon>
+              <Item>
+                <SubscriptionsIcon />
+                Subscriptions
+              </Item>
+            </ActiveIcon>
+          ) : (
               <InactiveIcon>
-                <Item>
-                  <SubscriptionsIcon />
-                  Subscriptions
-                </Item>
-              </InactiveIcon>
-            )}
-          </Link>
+              <Item>
+                <SubscriptionsIcon />
+                Subscriptions
+              </Item> 
+            </InactiveIcon>
+          )}
+        </Link>
 
-            
-            <Hr/>
-            <Item>
-                <VideoLibraryIcon/>
-                Library
-            </Item>
-            <Item>
-                <HistoryIcon/>
-                History
-            </Item>
-            <Hr/>
-            {!currentUser &&
-            <>
-            <Login>Sign in to like videos, comment  and subscribe.
-                <Link to='/signin' style={{textDecoration:"none"}}>
-                    <Button>
-                        <PersonIcon/> Sign in
-                    </Button>
-                </Link>
+        <Hr />
+        <Item>
+          <VideoLibraryIcon />
+          Library
+        </Item>
+        <Item>
+          <HistoryIcon />
+          History
+        </Item>
+        <Hr />
+        {!currentUser && (
+          <>
+            <Login>
+              Sign in to like videos, comment and subscribe.
+              <Link to="/signin" style={{ textDecoration: 'none' }}>
+                <Button>
+                  <PersonIcon /> Sign in
+                </Button>
+              </Link>
             </Login>
-            <Hr/>
-            </>}
-            
+            <Hr />
+          </>
+        )}
 
-            <Title>FEATURED</Title>
+        <Title>FEATURED</Title>
 
-            <Item>
-                <LibraryMusicIcon/>
-                Music
-            </Item>
-            <Item>
-                <SportsBasketballIcon/>
-                Sports
-            </Item>
-            <Item>
-                <SportsEsportsIcon/>
-                Gaming
-            </Item>
-            <Item>
-                <MovieCreationIcon/>
-                Movies
-            </Item>
-            <Item>
-               <NewspaperIcon/>
-                News
-            </Item>
-            <Item>
-                <LiveTvIcon/>
-                Live
-            </Item>
-            <Hr/>
-            <Item>
-                <SettingsIcon/>
-                Settings
-            </Item>
-            <Item>
-                <FlagIcon/>
-                Report
-            </Item>
-            <Item>    
-                <HelpIcon/>
-                Help
-            </Item>
-            <Item onClick={()=> setDarkMode(!darkMode)}>
-                {darkMode?<ModeNightIcon/>:<NightlightIcon/>}
-                {darkMode?"Light":"Dark"} Mode
-            </Item>
-        </Wrapper>
+        <Item>
+          <LibraryMusicIcon />
+          Music
+        </Item>
+        <Item>
+          <SportsBasketballIcon />
+          Sports
+        </Item>
+        <Item>
+          <SportsEsportsIcon />
+          Gaming
+        </Item>
+        <Item>
+          <MovieCreationIcon />
+          Movies
+        </Item>
+        <Item>
+          <NewspaperIcon />
+          News
+        </Item>
+        <Item>
+          <LiveTvIcon />
+          Live
+        </Item>
+        <Hr />
+        <Item>
+          <SettingsIcon />
+          Settings
+        </Item>
+        <Item>
+          <FlagIcon />
+          Report
+        </Item>
+        <Item>
+          <HelpIcon />
+          Help
+        </Item>
+        <Item onClick={() => setDarkMode(!darkMode)}>
+          {darkMode ? <ModeNightIcon /> : <NightlightIcon />}
+          {darkMode ? 'Light' : 'Dark'} Mode
+        </Item>
+      </Wrapper>
+      {showAlert && (
+        <StyledAlert severity="warning">
+          You won't be able to use complete features of WeTube without logging
+          in...Choose Login or Register to like, subscribe and more premium
+          features
+          <br />
+          <AlertButton onClick={handleLogin} color="green">
+            Login
+          </AlertButton>
+          <AlertButton onClick={handleRegister} color="blue">
+            Register
+          </AlertButton>
+          <AlertButton onClick={handleContinue} color="red">
+            Continue without logging in
+          </AlertButton>
+        </StyledAlert>
+      )}
     </Container>
-  )
-}
+  );
+};
 
-export default Menu
+export default Menu;

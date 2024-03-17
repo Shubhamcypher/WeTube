@@ -49,3 +49,39 @@ export const getComments = async(req,res,next)=>{
         next(error)
     }
 }
+export const editComment = async(req,res,next)=>{
+    try {
+        const commentId = req.params.id;
+        const { desc } = req.body;
+
+        // Find the comment by ID
+        const comment = await Comment.findById(commentId);
+
+        // Check if the comment exists
+        if (!comment) {
+            return res
+            .status(404)
+            .json({ message: 'Comment not found' });
+        }
+
+        // Check if the user is the author of the comment
+        if (comment.userId !== req.user.id) {
+            return res
+            .status(403)
+            .json({ message: 'You can only update your comment' });
+        }
+
+        // Update the comment with the new description
+        const updatedComment = await Comment.findByIdAndUpdate(
+            commentId,
+            { desc },
+            { new: true } // Return the updated document
+        );
+
+        res
+        .status(200)
+        .json(updatedComment);
+    } catch (error) {
+        next(error);
+    }
+}

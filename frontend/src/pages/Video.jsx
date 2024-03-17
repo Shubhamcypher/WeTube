@@ -192,7 +192,7 @@ const Video = () => {
               <Description>{currentVideo.desc}</Description>
             </ChannelDetail>
           </ChannelInfo>
-          <Subscribe onClick={handleSub}>
+          <Subscribe onClick={handleSub} style={{backgroundColor:currentUser?.subscribedUsers?.includes(channel._id)&&"grey"}}>
             {currentUser?.subscribedUsers?.includes(channel._id)
               ? "SUBSCRIBED"
               : "SUBSCRIBE"}

@@ -88,7 +88,6 @@ const Comments = ({videoId}) => {
     const fetchComments = async()=>{
       try {
         const res = await axios.get(`/api/comment/${videoId}`)
-        console.log(res);
         setComments(res.data)
       } 
       catch (error) {
@@ -109,7 +108,7 @@ const Comments = ({videoId}) => {
         </NewComment>
 
         {comments.slice().reverse().map(comment=>(
-          <Comment key={comment._id} comment={comment} comments={comments} setComments={setComments}/>
+          <Comment key={comment._id} comment={comment} comments={comments} setComments={setComments} currentUser={currentUser}/>
         ))} 
     </Container>
   )

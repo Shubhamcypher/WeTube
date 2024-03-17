@@ -42,20 +42,19 @@ const Date = styled.span`
   margin-left: 5px;
 `;
 
-const Text = styled.span`
+const Text = styled.div`
   font-size: 14px;
 `;
 
 const InputField = styled.input`
-  font-size: 14px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
+  border: none;
+  border-bottom: 1px solid ${({ theme }) => theme.soft};
+  color: ${({ theme }) => theme.text};
   background-color: transparent;
   outline: none;
-  color: ${({ theme }) => theme.text};
-
+  padding: 5px;
+  min-width: 0;
+  flex-grow: 1; 
 `;
 
 const ActionButtons = styled.div`
@@ -93,7 +92,7 @@ const DeleteComment = styled.button`
   }
 `;
 
-const Comment = ({ comment, comments, setComments }) => {
+const Comment = ({ comment, comments, setComments, currentUser }) => {
   const [channel, setChannel] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [editedComment, setEditedComment] = useState(comment.desc);
@@ -105,21 +104,26 @@ const Comment = ({ comment, comments, setComments }) => {
     };
     fetchComment();
   }, [comment.userId]);
+  
+  const handleNonEditableComment = ()=>{
+    if(comment.userId==currentUser._id){
+      setIsEditing(true)
+    }
+  }
 
 
   const handleEditComment = async () => {
     try {
-      
-      const res = await axios.put(`/api/comment/${comment._id}`, {
+      const res = await axios.patch(`/api/comment/edit/${comment._id}`, {
         desc: editedComment,
       });
-      
       const updatedComments = comments.map((c) =>
-        c._id === comment._id ? { ...c, desc: editedComment } : c
-      );
-      setComments(updatedComments);
-      setIsEditing(false);
-    } catch (error) {
+      c._id === comment._id ? { ...c, desc: editedComment } : c
+    );
+    setComments(updatedComments);
+    setIsEditing(false);
+  }
+    catch (error) {
       console.log(error);
     }
   };
@@ -137,7 +141,7 @@ const Comment = ({ comment, comments, setComments }) => {
   return (
     <Container>
       <CommentWrapper>
-        <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+        <div style={{ display: "flex", gap: "10px", alignItems: "center"}}>
           <Avatar src={channel.img} />
           <Details>
             <Name>
@@ -156,12 +160,14 @@ const Comment = ({ comment, comments, setComments }) => {
         </div>
 
         <ActionButtons>
-          {isEditing ? (
+        {currentUser._id === comment.userId && isEditing ? (
             <EditComment onClick={handleEditComment}>Save</EditComment>
-          ) : (
-            <EditComment onClick={() => setIsEditing(true)}>Edit</EditComment>
+          ) : currentUser._id === comment.userId ? (
+            <EditComment onClick={handleNonEditableComment}>Edit</EditComment>
+          ) : null}
+          {currentUser._id === comment.userId && (
+            <DeleteComment onClick={handleDeleteComment}>Delete</DeleteComment>
           )}
-          <DeleteComment onClick={handleDeleteComment}>Delete</DeleteComment>
         </ActionButtons>
       </CommentWrapper>
     </Container>

@@ -166,7 +166,7 @@ const handleContinue = () => {
 
 
   return (
-    <>
+    <>    
     <Container>
       <Wrapper>
         <Search>

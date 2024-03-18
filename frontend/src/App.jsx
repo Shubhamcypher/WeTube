@@ -8,6 +8,7 @@ import Home from "./pages/Home.jsx";
 import Video from "./pages/Video.jsx";
 import Signin from "./pages/Signin.jsx";
 import Search from "./componets/Search.jsx";
+import Menu2 from "./componets/Menu2.jsx";
 
 const Container = styled.div`
   display : flex
@@ -19,18 +20,20 @@ const Main = styled.div`
 `
 const Wrapper = styled.div`
   padding: 22px 40px;
-  z-index:0
 `
 
 const App = ()=>{
 
   const [darkMode, setDarkMode] = useState(true)
+  const [showMenu, setShowMenu] = useState(true)
   
   return (
     <ThemeProvider theme={darkMode?darkTheme:lightTheme}>
         <Container>
           <BrowserRouter>
-          <Menu darkMode={darkMode} setDarkMode={setDarkMode} />
+          {showMenu
+          ?(<Menu darkMode={darkMode} setDarkMode={setDarkMode} setShowMenu={setShowMenu} showMenu={showMenu} />)
+          :(<Menu2 showMenu={showMenu} setShowMenu={setShowMenu}/>)}
           <Main>
             <Navbar/>
             <Wrapper>

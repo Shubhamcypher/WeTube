@@ -37,11 +37,10 @@ import { useSelector } from 'react-redux';
 const Container = styled.div`
     flex: 1;
     background-color: ${({theme})=>theme.bgLighter};
-    height:100%;
     color:${({theme})=>theme.text};
     font-size:14px;
     position: sticky;
-    top:0;
+    top:0; 
     
 `;
 
@@ -50,22 +49,26 @@ const Wrapper = styled.div`
     padding: 18px 26px;
     display:flex;
     flex-direction:column;
-   
 `;
 
-const MenuButton = styled.button`
+const TopMenu = styled.div`
+    display: flex;
+    justify-content: space-between;
+    gap:5px;
+`
+
+const HamburgerButton = styled.button`
   height:25px;
   background-color: transparent;
-  color:${({theme})=>theme.text};
-  border:none;
-  outline:none;
-  cursor:pointer;
+  border: none;
+  outline: none;
+  color: ${({theme})=>theme.text};
+  cursor: pointer;
   &:hover {
     background-color: ${({ theme }) => theme.soft};
     border-radius : 7.5px;
   }
-  `
-
+`;
 
 
 const Logo = styled.div`
@@ -89,7 +92,7 @@ const Item = styled.div`
   gap: 20px;
   cursor: pointer;
   padding: 7.5px 7px;
-
+  width: auto;
   &:hover {
     background-color: ${({ theme }) => theme.soft};
     border-radius : 7.5px;
@@ -130,7 +133,7 @@ const Title = styled.h2`
 `
 
 const ActiveIcon = styled.div`
- color : #d2b48c
+ color : orange;
 `;
 
 const InactiveIcon = styled.div`
@@ -162,12 +165,17 @@ const AlertButton = styled.button`
 
 
 
-const Menu = ({ darkMode, setDarkMode }) => {
+const Menu = ({ darkMode, setDarkMode, setShowMenu, showMenu }) => {
   const { currentUser } = useSelector((state) => state.user);
   const location = useLocation();
   const navigate = useNavigate()
   const [showAlert, setShowAlert] = useState(false); // State for managing the alert
   
+
+  const handleHamburger = ()=>{
+    setShowMenu(!showMenu)
+  }
+
 
   const handleLogin = () => {
     setShowAlert(false);
@@ -188,22 +196,23 @@ const Menu = ({ darkMode, setDarkMode }) => {
   return (
     <Container>
       <Wrapper>
-        <div style={{display:'flex', justifyContent:'space-around', margin:'0',padding:'0' }}>
-        <MenuButton>
-        <MenuIcon/>
-        </MenuButton>
+
+        <TopMenu>
+        <HamburgerButton onClick={handleHamburger}>
+          <MenuIcon/>
+        </HamburgerButton>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Logo>
             <Img src={channel_logo} />
             WeTube
           </Logo>
         </Link>
-        </div>
+        </TopMenu>
 
         {isActive('/') ? (
           <ActiveIcon>
             <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <Item>
+              <Item style={{position:'sticky'}}>
                 <HomeIcon />
                 Home
               </Item>
@@ -256,14 +265,14 @@ const Menu = ({ darkMode, setDarkMode }) => {
             <ActiveIcon>
               <Item>
                 <SubscriptionsIcon />
-                Subscriptions
+                Subscribes
               </Item>
             </ActiveIcon>
           ) : (
               <InactiveIcon>
               <Item>
                 <SubscriptionsIcon />
-                Subscriptions
+                Subscribes
               </Item> 
             </InactiveIcon>
           )}

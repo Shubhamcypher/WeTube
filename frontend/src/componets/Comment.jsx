@@ -72,7 +72,11 @@ const EditComment = styled.button`
   border-radius: 10px;
   height: max-content;
   padding: 10px 20px;
+  gap:2px;
   cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const DeleteComment = styled.button`

@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import channel_logo from '../img/channel_logo.png'
 
+import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
@@ -51,6 +52,20 @@ const Wrapper = styled.div`
     flex-direction:column;
    
 `;
+
+const MenuButton = styled.button`
+  height:25px;
+  background-color: transparent;
+  color:${({theme})=>theme.text};
+  border:none;
+  outline:none;
+  cursor:pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.soft};
+    border-radius : 7.5px;
+  }
+  `
+
 
 
 const Logo = styled.div`
@@ -152,6 +167,7 @@ const Menu = ({ darkMode, setDarkMode }) => {
   const location = useLocation();
   const navigate = useNavigate()
   const [showAlert, setShowAlert] = useState(false); // State for managing the alert
+  
 
   const handleLogin = () => {
     setShowAlert(false);
@@ -172,12 +188,17 @@ const Menu = ({ darkMode, setDarkMode }) => {
   return (
     <Container>
       <Wrapper>
+        <div style={{display:'flex', justifyContent:'space-around', margin:'0',padding:'0' }}>
+        <MenuButton>
+        <MenuIcon/>
+        </MenuButton>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Logo>
             <Img src={channel_logo} />
             WeTube
           </Logo>
         </Link>
+        </div>
 
         {isActive('/') ? (
           <ActiveIcon>

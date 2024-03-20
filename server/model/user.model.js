@@ -17,14 +17,14 @@ const userSchema = new mongoose.Schema({
     img: {
         type: String,
       },
-      subscribers: {
+    subscribers: {
         type: Number,
         default: 0,
       },
-      subscribedUsers: {
+    subscribedUsers: {
         type: [String],
       },
-      fromGoogle:{
+    fromGoogle:{
         type: Boolean,
         default: false,
       }

@@ -9,6 +9,7 @@ import Video from "./pages/Video.jsx";
 import Signin from "./pages/Signin.jsx";
 import Search from "./componets/Search.jsx";
 import Menu2 from "./componets/Menu2.jsx";
+import Profile from "./componets/Profile.jsx";
 
 const Container = styled.div`
   display : flex
@@ -19,7 +20,7 @@ const Main = styled.div`
   background-color: ${({theme})=>theme.bg};
 `
 const Wrapper = styled.div`
-  padding: 22px 40px;
+  padding: 30px 70px;
 `
 
 const App = ()=>{
@@ -45,8 +46,14 @@ const App = ()=>{
                   <Route path="search" element={<Search type= '/search' />} />
         
                   <Route path="signin" element={<Signin />} />
+
+                  
+
                   <Route path="video">
                     <Route path=":id" element={<Video />} />
+                  </Route>
+                  <Route path="profile"  >
+                    <Route path=":id" element={<Profile />} />
                   </Route>
                 </Route>
               </Routes>

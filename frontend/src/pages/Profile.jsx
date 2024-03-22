@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import Card from './card/Card';
+import Card from '../componets/card/Card';
 import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
@@ -74,7 +74,7 @@ display:flex;
 flex-direction:row;
 flex-wrap: wrap;
 gap:40px;
-padding: 18px 22px;
+padding: 18px 2px;
 `
 const Subscribe = styled.button`
   background-color: #cc1a00;

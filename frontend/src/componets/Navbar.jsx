@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 
 import PersonIcon from '@mui/icons-material/Person';
@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Alert from '@mui/material/Alert';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 
 
@@ -14,6 +15,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import Upload from './Upload';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../redux/userSlice';
+import MyProfile from './MyProfile';
 
 const Container = styled.div`
   position: sticky;
@@ -28,7 +30,6 @@ const Container = styled.div`
   align-items: center;
   height: 100%;
   padding: 0px 20px;
-  position: relative;
 `
 
 const Search = styled.div`
@@ -72,8 +73,7 @@ const Button = styled.button`
 const User = styled.div`
       display:flex;
       align-items:center;
-      gap:10px;
-      font-weight: 500;
+      gap:20px;
       color:  ${({theme})=>theme.text};
 `
 
@@ -132,12 +132,15 @@ const AlertButton = styled.button`
 const Navbar = () => {
 const {currentUser} = useSelector(state=>state.user)
 const [open, setOpen] = useState(false)
+const [openProfile, setOpenProfile] = useState(false)
 const [q, setQ] = useState("")
 const [showAlert, setShowAlert] = useState(false);
 
 
 const navigate = useNavigate()
 const dispatch = useDispatch()
+
+
 
 const handleLogout = ()=>{
   setShowAlert(true)
@@ -176,9 +179,8 @@ const handleContinue = () => {
         {currentUser  ?(
           <User>
             <VideoButton onClick={()=>setOpen(true)} />
-            <Avatar src={currentUser.img} style={{cursor:'pointer'}}/>
-            {currentUser.name}
-            <LogoutButton onClick={handleLogout} />
+            <NotificationsIcon/>
+            <Avatar src={currentUser.img} style={{cursor:'pointer'}} onClick={()=>setOpenProfile(true)}/>
           </User>
         ) : <a href='/signin' style={{textDecoration:"none"}}>
             <Button>
@@ -187,7 +189,10 @@ const handleContinue = () => {
         </a>}     
       </Wrapper>
     </Container>
+
+
     {open && <Upload setOpen={setOpen} />}
+
     {showAlert && (
         <StyledAlert severity="warning">
           You won't be able to use complete features of WeTube without logging in...Choose Login or Register to like,subscribe and more premium features
@@ -203,6 +208,8 @@ const handleContinue = () => {
           </AlertButton>
         </StyledAlert>
       )}
+
+      {openProfile && <MyProfile setOpenProfile={setOpenProfile} setShowAlert={setShowAlert}/>}
     </>
   )
 }

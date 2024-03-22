@@ -11,7 +11,7 @@ const Container = styled.div`
     border-radius:10px;
     display: ${(props)=>props.type === "sm" && "flex"};
     gap:10px;
-    
+    z-index:1;
 `
 
 const Image = styled.img`
@@ -21,6 +21,7 @@ const Image = styled.img`
     border-radius:10px;
     &:hover {
         transform: ${(props) => (props.type === "sm" ? "scale(1)" : "scale(1.07)")}
+        
       }
     
 `
@@ -79,14 +80,14 @@ const Card = ({type,video}) => {
     <Container type={type}>
         <Image type={type} src={video.imgUrl} />
         <Details type={type}> 
-            <Link to={`/profile/${video.userId}`} style={{textDecoration:"none"}}>
+            <Link to={`/prifile/${video.userId}`} style={{textDecoration:"none"}}>
                 <ChannelImage type={type} src={channel.img} />
             </Link>
             <Texts>
+                <Title>{video.title}</Title>
                 <Link to={`/profile/${video.userId}`} style={{textDecoration:"none"}}>
                     <ChannelName>{channel.name}</ChannelName>
                 </Link>
-                <Title>{video.title}</Title>
                 <Info>{video.views} views • {format(video.createdAt)}</Info>
             </Texts>
         </Details>

@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import Card from './card/Card'
 
 const Container = styled.div`
-  flex:2;
-`
+    flex:2;
+`;
 
 const Recommendation = ({tags}) => {
     const [videos, setVideos] = useState([])

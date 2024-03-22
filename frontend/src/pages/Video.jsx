@@ -11,7 +11,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import SaveIcon from '@mui/icons-material/Save';
 import Card from '../componets/card/Card.jsx'
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { dislike, fetchSuccess, like } from '../redux/videoSlice.js';
 import { format } from 'timeago.js';
@@ -93,6 +93,7 @@ const ChannelCounter = styled.span`
 `
 const Description = styled.p`
   font-size: 14px;
+  color: ${({ theme }) => theme.text};
 `
 const Subscribe = styled.button`
    background-color: #cc1a00;
@@ -185,12 +186,14 @@ const Video = () => {
 
         <Channel>
           <ChannelInfo>
+            <Link to={`/profile/${currentVideo.userId}`} style={{textDecoration:"none"}}>
             <Image src={channel.img}/>
             <ChannelDetail>
               <ChannelName>{channel.name}</ChannelName>
               <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
-              <Description>{currentVideo.desc}</Description>
             </ChannelDetail>
+            </Link>
+              <Description>{currentVideo.desc}</Description>
           </ChannelInfo>
           <Subscribe onClick={handleSub} style={{backgroundColor:currentUser?.subscribedUsers?.includes(channel._id)&&"grey"}}>
             {currentUser?.subscribedUsers?.includes(channel._id)

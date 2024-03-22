@@ -39,9 +39,25 @@ const Container = styled.div`
     background-color: ${({theme})=>theme.bgLighter};
     color:${({theme})=>theme.text};
     font-size:14px;
+    z-index: 900;
     position: sticky;
-    top:0; 
-    
+    top:0;
+    overflow-y: auto;
+    height:100vh;
+
+    &::-webkit-scrollbar {
+      width: 10px; /* Width of vertical scrollbar */
+  }
+  &::-webkit-scrollbar-track {
+      background: ${({ theme }) => theme.bgLighter}; /* Color of the track */
+  }
+  &::-webkit-scrollbar-thumb {
+      background: transparent; /* Color of the thumb */
+      border-radius: 5px; /* Rounded corners */
+  }
+  &::-webkit-scrollbar-thumb:hover {
+      background: ${({ theme }) => theme.soft}; /* Color of the thumb on hover */
+  }
 `;
 
 
@@ -343,7 +359,7 @@ const Menu = ({ darkMode, setDarkMode, setShowMenu, showMenu }) => {
         </Item>
         <Item onClick={() => setDarkMode(!darkMode)}>
           {darkMode ? <ModeNightIcon /> : <NightlightIcon />}
-          {darkMode ? 'Light' : 'Dark'} Mode
+          {darkMode ? 'Light' : 'Dark'}
         </Item>
       </Wrapper>
       {showAlert && (

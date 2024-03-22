@@ -17,13 +17,22 @@ import { Link , useLocation, useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Container = styled.div`
-    flex: 0.5;
+    flex: 0.535;
     background-color: ${({theme})=>theme.bgLighter};
     color:${({theme})=>theme.text};
-    position: sticky;
-    top:0; 
     font-size:11px;
-    
+    z-index: 900;
+`;
+
+const Wrapper = styled.div`
+    padding: 18px 22px;
+    display:flex;
+    flex-direction:column;
+    z-index: 900;
+    position: sticky;
+    top:0;
+    overflow-y: none;
+    height:100vh;
 `;
 
 const TopMenu = styled.div`
@@ -33,11 +42,6 @@ const TopMenu = styled.div`
 `
 
 
-const Wrapper = styled.div`
-    padding: 18px 22px;
-    display:flex;
-    flex-direction:column;
-`;
 
 const HamburgerButton = styled.button`
   height:25px;
@@ -113,7 +117,6 @@ const Menu2 = ({ setShowMenu, showMenu }) => {
   return (
     <Container>
       <Wrapper>
-
       <TopMenu>
       <HamburgerButton onClick={handleHamburger}>
           <MenuIcon/>

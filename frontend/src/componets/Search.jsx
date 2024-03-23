@@ -5,9 +5,10 @@ import Card from './card/Card'
 import { useLocation } from 'react-router-dom'
 
 const Container = styled.div`
-display: flex;
-justify-content: space-between;
-flex-wrap: wrap;
+    display: flex;
+    gap:40px;
+    flex-wrap: wrap;
+    
 `
 
 const Search = () => {

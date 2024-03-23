@@ -23,6 +23,9 @@ const Container = styled.div`
   background-color:${({theme})=>theme.bgLighter};
   height: 56px;
   z-index:999;
+  display:flex;
+  flex-direction: row-reverse;
+  gap:10px;
   `
   const Wrapper = styled.div`
   display: flex;
@@ -129,7 +132,7 @@ const AlertButton = styled.button`
 
 
 
-const Navbar = () => {
+const Navbar = ({darkMode, setDarkMode}) => {
 const {currentUser} = useSelector(state=>state.user)
 const [open, setOpen] = useState(false)
 const [openProfile, setOpenProfile] = useState(false)
@@ -178,13 +181,13 @@ const handleContinue = () => {
         </Search>
         {currentUser  ?(
           <User>
-            <VideoButton onClick={()=>setOpen(true)} />
-            <NotificationsIcon/>
-            <Avatar src={currentUser.img} style={{cursor:'pointer'}} onClick={()=>setOpenProfile(true)}/>
+            <VideoButton onClick={()=>setOpen(true)}  fontSize="large"/>
+            <NotificationsIcon fontSize="large"/>
+            <Avatar src={currentUser.img} style={{cursor:'pointer'} } onClick={()=>setOpenProfile(true)} />
           </User>
         ) : <a href='/signin' style={{textDecoration:"none"}}>
             <Button>
-                <PersonIcon/> Sign in
+                <PersonIcon fontSize="large"/> Sign in
             </Button>
         </a>}     
       </Wrapper>
@@ -209,7 +212,7 @@ const handleContinue = () => {
         </StyledAlert>
       )}
 
-      {openProfile && <MyProfile setOpenProfile={setOpenProfile} setShowAlert={setShowAlert}/>}
+      {openProfile && <MyProfile setOpenProfile={setOpenProfile} setShowAlert={setShowAlert} darkMode={darkMode} setDarkMode={setDarkMode} setOpen={setOpen}/>}
     </>
   )
 }

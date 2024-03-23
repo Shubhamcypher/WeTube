@@ -1,11 +1,23 @@
 import styled from "styled-components";
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import reverseGeocode from 'reverse-geocode'
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from '../redux/userSlice';
+import axios from 'axios'
 
 import GoogleIcon from '@mui/icons-material/Google';
 import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import LogoutIcon from '@mui/icons-material/Logout';
+import CameraIcon from '@mui/icons-material/Camera';
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import FolderCopyIcon from '@mui/icons-material/FolderCopy';
+import GTranslateIcon from '@mui/icons-material/GTranslate';
+import ModeNightIcon from '@mui/icons-material/ModeNight';
+import NightlightIcon from '@mui/icons-material/Nightlight';
+import LanguageIcon from '@mui/icons-material/Language';
+import SettingsIcon from '@mui/icons-material/Settings';
+import HelpIcon from '@mui/icons-material/Help';
+import FlagIcon from '@mui/icons-material/Flag';
 
 
 const LogoutButton = styled(LogoutIcon)`
@@ -18,6 +30,7 @@ const Container = styled.div`
   right:0;
   background-color: transparent;
   display: flex;
+  z-index:999;
 `;
 
 const Wrapper = styled.div`
@@ -33,7 +46,6 @@ const Wrapper = styled.div`
   position: relative;
   left:0;
   border-radius:4%;
-  z-index:900;
 `;
 
 const Item = styled.div`
@@ -80,9 +92,12 @@ const Avatar = styled.img`
 
 
 
-const MyProfile = ({setOpenProfile,setShowAlert}) => {
+const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen}) => {
     const containerRef = useRef(null);
     const {currentUser} = useSelector((state)=>state.user)
+
+    const [userLocation, setUserLocation] = useState(null);
+    const [userLocationName, setUserLocationName] = useState(null);
 
     const dispatch = useDispatch()
 
@@ -105,6 +120,56 @@ const MyProfile = ({setOpenProfile,setShowAlert}) => {
         };
       }, [setOpenProfile]);
 
+      useEffect(() => {
+        const fetchUserLocation = () => {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              setUserLocation({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              });
+            },
+            (error) => {
+              console.error('Error getting user location:', error.message);
+            }
+          );
+        };
+    
+        fetchUserLocation();
+      }, []);
+
+      useEffect(() => {
+        if (userLocation) {
+          const reverseGeocode = async () => {
+            const {latitude,longitude} = userLocation;
+            try {
+              const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+              // Extract location data from response
+              const { address } = response.data;
+              // Construct location name based on available address components
+              let locationName = '';
+              if (address) {
+                if (address.city) {
+                  locationName += address.city + ', ';
+                }
+                if (address.state) {
+                  locationName += address.state + ', ';
+                }
+                if (address.country) {
+                  locationName += address.country;
+                }
+                console.log(locationName);
+              }
+              setUserLocationName(locationName)
+            } catch (error) {
+              console.error('Error fetching location name:', error.message);
+              return null;
+            }
+          };
+      
+          reverseGeocode();
+        }
+      }, [userLocation]);
 
   return (
     <Container ref={containerRef}>
@@ -132,6 +197,44 @@ const MyProfile = ({setOpenProfile,setShowAlert}) => {
                 </LogoutContainer>
             </Item>
             <Hr/>
+            <Item onClick={()=>setOpen(true)}>
+              <CameraIcon/>
+              Youtube studio
+            </Item>
+            <Item>
+              <LocalAtmIcon/>
+              Purrchase and memberships
+            </Item>
+            <Hr/>
+            <Item>
+              <FolderCopyIcon/>
+              Your data in WeTube
+            </Item>
+            <Item>
+              <GTranslateIcon/>
+              Language
+            </Item>
+            <Item onClick={() => setDarkMode(!darkMode)}>
+              {darkMode ? <ModeNightIcon /> : <NightlightIcon />}
+              {darkMode ? 'Light' : 'Dark'} Mode
+          </Item>
+          <Item>
+              <LanguageIcon/>
+              Location <div style={{color:'green'}}>{userLocationName}</div>
+          </Item>
+          <Hr/>
+          <Item>
+              <SettingsIcon />
+              Settings
+          </Item>
+          <Item>
+              <HelpIcon />
+              Help
+        </Item>
+        <Item>
+              <FlagIcon />
+              Report
+        </Item>
         </Wrapper>
     </Container>
   )

@@ -108,7 +108,7 @@ const Item = styled.div`
   gap: 20px;
   cursor: pointer;
   padding: 7.5px 7px;
-  width: auto;
+  width: 100%;
   &:hover {
     background-color: ${({ theme }) => theme.soft};
     border-radius : 7.5px;

@@ -3,12 +3,11 @@ import styled from 'styled-components'
 
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
-import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
-import Comments from '../componets/Comments';
+import ShareIcon from '@mui/icons-material/Share';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-
 import SaveIcon from '@mui/icons-material/Save';
+
 import Card from '../componets/card/Card.jsx'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -17,12 +16,15 @@ import { dislike, fetchSuccess, like } from '../redux/videoSlice.js';
 import { format } from 'timeago.js';
 import { subscription } from '../redux/userSlice.js';
 import Recommendation from '../componets/Recommendation.jsx';
+import Comments from '../componets/Comments';
+import Share from '../componets/Share.jsx';
 
 
 
 const Container = styled.div`
   display: flex;
   gap: 24px;
+  z-index:999;
   
 `
 const Content = styled.div`
@@ -109,6 +111,8 @@ const VideoFrame = styled.video`
   max-height: 480px;
   width: 100%;
   object-fit: cover;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const Video = () => {
@@ -122,6 +126,7 @@ const Video = () => {
   
 
   const [channel,setChannel] = useState({})
+  const [openShare, setOpenShare] = useState(false)
 
 
   const handleLike = async()=>{
@@ -132,6 +137,32 @@ const Video = () => {
     await axios.put(`/api/user/dislike/${currentVideo._id}`)
     dispatch(dislike(currentUser._id))
   }
+
+  const handleShare = () => {
+    const currentURL = window.location.href;
+    navigator.clipboard.writeText(currentURL)
+      .then(() => {
+        console.log('URL copied to clipboard:', currentURL);
+        // Optionally, you can show a message to the user indicating successful copy
+        // alert('URL copied to clipboard');
+      })
+      .catch((error) => {
+        console.error('Failed to copy URL to clipboard:', error);
+      });
+  };
+
+  const handleSave = () => {
+    // Here you can implement the logic to download the video
+    const videoUrl = currentVideo.videoUrl;
+    const a = document.createElement('a');
+    a.href = videoUrl;
+    a.download = 'video.mp4';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+  
+
   const handleSub = async () => {
     currentUser.subscribedUsers.includes(channel._id)
       ? await axios.put(`/api/user/unsub/${channel._id}`)
@@ -174,11 +205,11 @@ const Video = () => {
               <Button onClick={handleDislike}>
               {currentVideo.dislikes?.includes(currentUser?._id)?<ThumbDownIcon/> :<ThumbDownOffAltOutlinedIcon />}Dislike
               </Button>
-              <Button>
-                <ReplyOutlinedIcon /> Share
+              <Button onClick={()=>setOpenShare(!openShare)}>
+                <ShareIcon /> Share
               </Button>
               <Button>
-                <SaveIcon /> Save
+                <SaveIcon  onClick={handleSave}/> Save
               </Button>
         </Buttons>
         </Details>
@@ -205,6 +236,8 @@ const Video = () => {
         <Comments videoId={currentVideo._id}/>
       </Content>
       <Recommendation tags={currentVideo.tags}/>
+
+      {openShare && <Share setOpenShare={setOpenShare}/>}
     </Container>
   )
 }

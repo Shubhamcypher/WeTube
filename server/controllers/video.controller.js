@@ -150,10 +150,15 @@ export const getByTag = async(req,res,next)=>{
 
 export const search = async(req,res,next)=>{
     const query = req.query.q
+
     try {
         const videos = await Video.find({
-            title:{$regex:query , $options:"i"}}).limit(40)
-
+            $or: [
+                    { title: { $regex: query, $options: "i" } },
+                    { tags: { $regex: query, $options: "i" } }
+                 ]
+        }).limit(40)
+            
             res
             .status(200)
             .json(videos)

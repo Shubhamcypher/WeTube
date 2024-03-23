@@ -36,7 +36,7 @@ const App = ()=>{
           ?(<Menu darkMode={darkMode} setDarkMode={setDarkMode} setShowMenu={setShowMenu} showMenu={showMenu} />)
           :(<Menu2 showMenu={showMenu} setShowMenu={setShowMenu}/>)}
           <Main>
-            <Navbar/>
+            <Navbar darkMode={darkMode} setDarkMode={setDarkMode}/>
             <Wrapper>
             <Routes>
                 <Route path="/">

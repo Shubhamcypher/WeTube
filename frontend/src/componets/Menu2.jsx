@@ -133,7 +133,7 @@ const Menu2 = ({ setShowMenu, showMenu }) => {
           <ActiveIcon>
             <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
               <Item>
-                <HomeIcon />
+                <HomeIcon fontSize="large" />
                 Home
               </Item>
             </Link>
@@ -142,7 +142,7 @@ const Menu2 = ({ setShowMenu, showMenu }) => {
           <InactiveIcon>
             <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
               <Item>
-                <HomeIcon />
+                <HomeIcon fontSize="large"/>
                 <div>Home</div>
               </Item>
             </Link>
@@ -156,7 +156,7 @@ const Menu2 = ({ setShowMenu, showMenu }) => {
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
               <Item>
-                <TravelExploreIcon />
+                <TravelExploreIcon fontSize="large"/>
                 <div>Explore</div>
               </Item>
             </Link>
@@ -168,7 +168,7 @@ const Menu2 = ({ setShowMenu, showMenu }) => {
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
               <Item>
-                <TravelExploreIcon />
+                <TravelExploreIcon fontSize="large" />
                 <div>Explore</div>
               </Item>
             </Link>
@@ -184,14 +184,14 @@ const Menu2 = ({ setShowMenu, showMenu }) => {
           {isActive('/subscriptions') ? (
             <ActiveIcon>
               <Item>
-                <SubscriptionsIcon />
+                <SubscriptionsIcon fontSize="large" />
                 <div>Subscribes</div>
               </Item>
             </ActiveIcon>
           ) : (
               <InactiveIcon>
               <Item>
-                <SubscriptionsIcon />
+                <SubscriptionsIcon fontSize="large" />
                 <div>Subscribes</div>
               </Item> 
             </InactiveIcon>
@@ -199,7 +199,7 @@ const Menu2 = ({ setShowMenu, showMenu }) => {
           )}
         </Link>
         <Item>
-          <SettingsIcon />
+          <SettingsIcon fontSize="large" />
           <div>Settings</div>
         </Item>
         </MenuItem>

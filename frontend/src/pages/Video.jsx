@@ -161,15 +161,6 @@ const Video = () => {
     a.click();
     document.body.removeChild(a);
   };
-  
-
-  const handleSub = async () => {
-    currentUser.subscribedUsers.includes(channel._id)
-      ? await axios.put(`/api/user/unsub/${channel._id}`)
-      : await axios.put(`/api/user/sub/${channel._id}`);
-    dispatch(subscription(channel._id));
-  };
-
 
   useEffect(()=>{
     const fetchData = async ()=>{
@@ -186,7 +177,16 @@ const Video = () => {
       }
     }
     fetchData();
-  },[path,dispatch])
+  },[path,dispatch,channel])
+  
+
+  const handleSub = async () => {
+    currentUser.subscribedUsers.includes(channel._id)
+      ? await axios.put(`/api/user/unsub/${channel._id}`)
+      : await axios.put(`/api/user/sub/${channel._id}`);
+      dispatch(subscription(channel._id));
+  };
+
 
   return (
     <Container>

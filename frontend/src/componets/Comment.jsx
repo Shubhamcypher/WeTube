@@ -164,12 +164,12 @@ const Comment = ({ comment, comments, setComments, currentUser }) => {
         </div>
 
         <ActionButtons>
-        {currentUser._id === comment.userId && isEditing ? (
+        {currentUser?._id === comment.userId && isEditing ? (
             <EditComment onClick={handleEditComment}>Save</EditComment>
-          ) : currentUser._id === comment.userId ? (
+          ) : currentUser?._id === comment.userId ? (
             <EditComment onClick={handleNonEditableComment}>Edit</EditComment>
           ) : null}
-          {currentUser._id === comment.userId && (
+          {currentUser?._id === comment.userId && (
             <DeleteComment onClick={handleDeleteComment}>Delete</DeleteComment>
           )}
         </ActionButtons>

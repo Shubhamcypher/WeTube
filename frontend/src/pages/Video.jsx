@@ -192,7 +192,7 @@ const Video = () => {
     <Container>
       <Content>
         <VideoWrapper>
-        <VideoFrame src={currentVideo.videoUrl} controls allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/>
+        <VideoFrame src={currentVideo.videoUrl} autoPlay muted controls allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/>
         </VideoWrapper>
         <Title>{currentVideo.title}</Title>
         <Details>

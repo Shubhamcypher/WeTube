@@ -74,11 +74,20 @@ const Card = ({type,video}) => {
       setChannel(res.data) ;//this data contains everything that api sends us
     };
     fetchChannel();
-  }, [video.userId])
+  }, [video.userId]);
+
+  const handleCard = async()=>{
+    try {
+        const res=await axios.put(`/api/video/views/${video._id}`)
+        console.log(res);
+    } catch (error) {
+        console.log(error);
+    }
+  }
     
   return (
     <Link to={`/video/${video._id}`} style={{textDecoration:"none"}}>
-    <Container type={type}>
+    <Container type={type} onClick={handleCard}>
         <Image type={type} src={video.imgUrl} />
         <Details type={type}> 
             <Link to={`/profile/${video.userId}`} style={{textDecoration:"none"}}>

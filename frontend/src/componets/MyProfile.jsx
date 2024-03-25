@@ -12,8 +12,7 @@ import CameraIcon from '@mui/icons-material/Camera';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import GTranslateIcon from '@mui/icons-material/GTranslate';
-import ModeNightIcon from '@mui/icons-material/ModeNight';
-import NightlightIcon from '@mui/icons-material/Nightlight';
+import LightModeIcon from '@mui/icons-material/LightMode';import NightlightIcon from '@mui/icons-material/Nightlight';
 import LanguageIcon from '@mui/icons-material/Language';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HelpIcon from '@mui/icons-material/Help';
@@ -74,7 +73,8 @@ const Title = styled.h1`
     color:${({theme})=>theme.text};
     display:flex;
     align-items:center;
-    justify-content:space-evenly;
+    justify-content:space-between;
+    padding: 0 20px;
 `;
 
 
@@ -215,7 +215,7 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen})
               Language
             </Item>
             <Item onClick={() => setDarkMode(!darkMode)}>
-              {darkMode ? <ModeNightIcon /> : <NightlightIcon />}
+              {darkMode ? <LightModeIcon /> : <NightlightIcon />}
               {darkMode ? 'Light' : 'Dark'} Mode
           </Item>
           <Item>

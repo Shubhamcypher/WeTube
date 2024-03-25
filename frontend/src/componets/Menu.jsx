@@ -22,7 +22,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import FlagIcon from '@mui/icons-material/Flag';
 import HelpIcon from '@mui/icons-material/Help';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
-import ModeNightIcon from '@mui/icons-material/ModeNight';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 import Alert from '@mui/material/Alert';
 
@@ -358,7 +358,7 @@ const Menu = ({ darkMode, setDarkMode, setShowMenu, showMenu }) => {
           Help
         </Item>
         <Item onClick={() => setDarkMode(!darkMode)}>
-          {darkMode ? <ModeNightIcon /> : <NightlightIcon />}
+          {darkMode ? <LightModeIcon /> : <NightlightIcon />}
           {darkMode ? 'Light' : 'Dark'}
         </Item>
       </Wrapper>

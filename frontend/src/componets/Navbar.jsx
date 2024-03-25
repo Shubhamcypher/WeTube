@@ -183,7 +183,7 @@ const handleContinue = () => {
           <User>
             <VideoButton onClick={()=>setOpen(true)}  fontSize="large"/>
             <NotificationsIcon fontSize="large"/>
-            <Avatar src={currentUser.img} style={{cursor:'pointer'} } onClick={()=>setOpenProfile(!openProfile)} setOpen={setOpen} />
+            <Avatar src={currentUser.img} style={{cursor:'pointer'} } onClick={()=>setOpenProfile(!openProfile)}/>
           </User>
         ) : <a href='/signin' style={{textDecoration:"none"}}>
             <Button>

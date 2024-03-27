@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components';
 
 import PersonIcon from '@mui/icons-material/Person';
@@ -13,7 +13,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 
 import {useDispatch, useSelector} from 'react-redux'
 import Upload from './Upload';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../redux/userSlice';
 import MyProfile from './MyProfile';
 
@@ -108,6 +108,10 @@ const StyledAlert = styled(Alert)`
   background-color: inherit;
   border-radius: 8px;
   padding: 16px;
+  position:fixed;
+  width:100%;
+  top:60px;
+  z-index:1000;
 `;
 
 const AlertButton = styled.button`
@@ -139,6 +143,8 @@ const [openProfile, setOpenProfile] = useState(false)
 const [q, setQ] = useState("")
 const [showAlert, setShowAlert] = useState(false);
 
+const alertlRef = useRef(null);
+
 
 const navigate = useNavigate()
 const dispatch = useDispatch()
@@ -147,29 +153,38 @@ const dispatch = useDispatch()
 
 const handleLogout = ()=>{
   setShowAlert(true)
-  dispatch(logout())
-  navigate('/')
 
 }
 
-const handleLogin = () => {
+useEffect(() => {
+  const handleClickOutside = (e) => {
+    if (alertlRef.current && !alertlRef.current.contains(e.target)) {
+      setShowAlert(false);
+    }
+  };
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, [setShowAlert]);
+
+const handleSwitch = () => {
+  dispatch(logout())
   setShowAlert(false);
   navigate('/signin');
 };
 
-const handleRegister = () => {
+const handleCancel = () => {
   setShowAlert(false);
-  navigate('/signin');
 };
 
-const handleContinue = () => {
+const handleLogoutAndContinue = () => {
+  dispatch(logout())
   setShowAlert(false);
+  navigate('/')
+
   
 };
-
-
-
-
 
   return (
     <>    
@@ -177,7 +192,7 @@ const handleContinue = () => {
       <Wrapper>
         <Search>
           <Input placeholder="Search" onChange={(e)=>setQ(e.target.value)}/>
-          <SearchIcon onClick={()=>navigate(`/search?q=${q}`)} style={{cursor:'pointer'}}/>
+          <SearchIcon onClick={()=>q&&navigate(`/search?q=${q}`)} style={{cursor:'pointer'}}/>
         </Search>
         {currentUser  ?(
           <User>
@@ -185,11 +200,11 @@ const handleContinue = () => {
             <NotificationsIcon fontSize="large"/>
             <Avatar src={currentUser.img} style={{cursor:'pointer'} } onClick={()=>setOpenProfile(!openProfile)}/>
           </User>
-        ) : <a href='/signin' style={{textDecoration:"none"}}>
+        ) : <Link to='/signin' style={{textDecoration:"none"}}>
             <Button>
-                <PersonIcon fontSize="large"/> Sign in
+                <PersonIcon fontSize="sm"/> Sign in
             </Button>
-        </a>}     
+        </Link>}     
       </Wrapper>
     </Container>
 
@@ -197,17 +212,17 @@ const handleContinue = () => {
     {open && <Upload setOpen={setOpen} />}
 
     {showAlert && (
-        <StyledAlert severity="warning">
+        <StyledAlert severity="warning" ref={alertlRef}>
           You won't be able to use complete features of WeTube without logging in...Choose Login or Register to like,subscribe and more premium features
           <br/>  
-          <AlertButton onClick={handleLogin} color="green">
-            Login
+          <AlertButton onClick={handleSwitch} color="blue">
+            Switch Account
           </AlertButton>
-          <AlertButton onClick={handleRegister} color="blue">
-            Register
+          <AlertButton onClick={handleCancel} color="green" >
+            Cancel
           </AlertButton>
-          <AlertButton onClick={handleContinue} color="red">
-            Continue without logging in
+          <AlertButton onClick={handleLogoutAndContinue} color="red">
+            Logout
           </AlertButton>
         </StyledAlert>
       )}

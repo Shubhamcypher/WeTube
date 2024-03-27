@@ -23,7 +23,7 @@ import FlagIcon from '@mui/icons-material/Flag';
 import HelpIcon from '@mui/icons-material/Help';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import NightlightIcon from '@mui/icons-material/Nightlight';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Alert from '@mui/material/Alert';
 
 import { Link , useLocation, useNavigate} from 'react-router-dom';
@@ -358,7 +358,7 @@ const Menu = ({ darkMode, setDarkMode, setShowMenu, showMenu }) => {
           Help
         </Item>
         <Item onClick={() => setDarkMode(!darkMode)}>
-          {darkMode ? <LightModeIcon /> : <NightlightIcon />}
+          {darkMode ? <LightModeIcon /> : <Brightness4Icon />}
           {darkMode ? 'Light' : 'Dark'}
         </Item>
       </Wrapper>

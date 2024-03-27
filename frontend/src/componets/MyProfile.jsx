@@ -4,6 +4,7 @@ import reverseGeocode from 'reverse-geocode'
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from '../redux/userSlice';
 import axios from 'axios'
+import { Link, useNavigate } from "react-router-dom";
 
 import GoogleIcon from '@mui/icons-material/Google';
 import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
@@ -12,11 +13,13 @@ import CameraIcon from '@mui/icons-material/Camera';
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import GTranslateIcon from '@mui/icons-material/GTranslate';
-import LightModeIcon from '@mui/icons-material/LightMode';import NightlightIcon from '@mui/icons-material/Nightlight';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
 import LanguageIcon from '@mui/icons-material/Language';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HelpIcon from '@mui/icons-material/Help';
 import FlagIcon from '@mui/icons-material/Flag';
+
 
 
 const LogoutButton = styled(LogoutIcon)`
@@ -96,6 +99,8 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen})
     const containerRef = useRef(null);
     const {currentUser} = useSelector((state)=>state.user)
 
+    const navigate = useNavigate()
+
     const [userLocation, setUserLocation] = useState(null);
     const [userLocationName, setUserLocationName] = useState(null);
 
@@ -103,9 +108,7 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen})
 
     const handleLogout = ()=>{
         setShowAlert(true)
-        setOpenProfile(false)
-        dispatch(logout())
-        navigate('/')  
+        setOpenProfile(false) 
     }
 
     useEffect(() => {
@@ -181,10 +184,12 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen})
             <Hr/>
             {currentUser.fromGoogle && 
             <>
+            <Link to="https://myaccount.google.com/" style={{textDecoration:"none"}}>
             <Item>
-                <GoogleIcon/>
+                <GoogleIcon />
                 Google Account 
             </Item>
+            </Link>
             <Item>
                 <SwitchAccountIcon/>
                 Switch Account
@@ -215,7 +220,7 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen})
               Language
             </Item>
             <Item onClick={() => setDarkMode(!darkMode)}>
-              {darkMode ? <LightModeIcon /> : <NightlightIcon />}
+              {darkMode ? <LightModeIcon /> : <Brightness4Icon />}
               {darkMode ? 'Light' : 'Dark'} Mode
           </Item>
           <Item>

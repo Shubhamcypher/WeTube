@@ -1,6 +1,7 @@
 import { createError } from '../error.js'
 import Video from '../model/video.model.js'
 import User from '../model/user.model.js'
+import View from '../model/view.model.js'
 
 export const createVideo = async(req,res,next)=>{
 
@@ -73,16 +74,29 @@ export const getVideo = async(req,res,next)=>{
 }
 
 export const addView = async(req,res,next)=>{
+    
     try {
-        await Video.findByIdAndUpdate(req.params.id,{
-            $inc: {views:1}
-        })
-        res
-        .status(200)
-        .json("The view has been increased")
-    } 
-    catch (error) {
-        next(error)
+        const videoId = req.params.id;
+        const userId  = req.user.id;
+        
+
+        // Check if the user has already viewed the video
+        const existingView = await View.findOne({ userId, videoId });
+
+        if (!existingView) {
+            // If the user hasn't viewed the video, increment the view count
+            await Video.findByIdAndUpdate(videoId, { $inc: { views: 1 } }, { new: true });
+
+            // Record that the user has viewed the video
+            await View.create({ userId, videoId });
+
+            return res.status(200).json("The view has been increased");
+        } else {
+            // If the user has already viewed the video, return a message indicating that the view count was not incremented
+            return res.status(200).json("The user has already viewed this video");
+        }
+    } catch (error) {
+        next(error);
     }
 }
 

@@ -30,7 +30,7 @@ router.delete("/:id",verifyToken,deleteVideo)
 router.get("/find/:id",getVideo)
 
 //get views of video
-router.put('/views/:id',addView)
+router.put('/views/:id',verifyToken,addView)
 
 //get trending video
 router.get('/trending',trending)

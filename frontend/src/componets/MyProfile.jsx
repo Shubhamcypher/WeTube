@@ -184,12 +184,13 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen})
             <Hr/>
             {currentUser.fromGoogle && 
             <>
-            <Link to="https://myaccount.google.com/" style={{textDecoration:"none"}}>
+            <Link to="https://myaccount.google.com/" style={{textDecoration:"none", color:'inherit'}}>
             <Item>
                 <GoogleIcon />
                 Google Account 
             </Item>
             </Link>
+
             <Item>
                 <SwitchAccountIcon/>
                 Switch Account

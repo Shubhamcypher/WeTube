@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import Card from '../componets/card/Card';
 import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { subscription } from '../redux/userSlice.js';
 
 const Container = styled.div`
   gap: 24px;
@@ -95,6 +97,10 @@ const Profile = () => {
     const[currentChannel,setCurrentChannel] = useState({})
     const[currentChannelVideos,setCurrentChannelVideos] = useState([])
 
+    const {currentUser} = useSelector((state)=>state.user)
+
+    const dispatch = useDispatch();
+
     const path = useLocation().pathname.split('/')[2]
 
     useEffect(()=>{
@@ -104,7 +110,7 @@ const Profile = () => {
             console.log(currentChannel);
         }
         fetchChannel()
-    },[path])
+    },[path,currentChannel])
 
     useEffect(()=>{
         const fetchVideo = async ()=>{
@@ -113,6 +119,13 @@ const Profile = () => {
         }
         fetchVideo()
     },[])
+
+    const handleSub = async () => {
+      currentUser.subscribedUsers.includes(currentChannel._id)
+        ? await axios.put(`/api/user/unsub/${currentChannel._id}`)
+        : await axios.put(`/api/user/sub/${currentChannel._id}`);
+        dispatch(subscription(currentChannel._id));
+    };
 
 
 
@@ -125,8 +138,10 @@ const Profile = () => {
                 <ChannelDetail>
                 <ChannelName>{currentChannel.name}</ChannelName>
                 <ChannelCounter>{currentChannel.subscribers} subscribers</ChannelCounter>
-                <Subscribe>
-                Subscriibe
+                <Subscribe onClick={handleSub} style={{backgroundColor:currentUser?.subscribedUsers?.includes(currentChannel._id)&&"grey"}}>
+                  {currentUser?.subscribedUsers?.includes(currentChannel._id)
+                    ? "SUBSCRIBED"
+                    : "SUBSCRIBE"}
                 </Subscribe>
                 <Description>This is the description of the channel</Description>
                 

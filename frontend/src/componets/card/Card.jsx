@@ -78,8 +78,8 @@ const Card = ({type,video}) => {
 
   const handleCard = async()=>{
     try {
-        const res=await axios.put(`/api/video/views/${video._id}`)
-        console.log(res);
+        await axios.put(`/api/video/views/${video._id}`)
+
     } catch (error) {
         console.log(error);
     }

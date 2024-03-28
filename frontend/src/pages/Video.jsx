@@ -123,6 +123,8 @@ const Video = () => {
   const dispatch = useDispatch()
 
   const path = useLocation().pathname.split('/')[2]
+
+  
   
 
   const [channel,setChannel] = useState({})
@@ -138,18 +140,7 @@ const Video = () => {
     dispatch(dislike(currentUser._id))
   }
 
-  const handleShare = () => {
-    const currentURL = window.location.href;
-    navigator.clipboard.writeText(currentURL)
-      .then(() => {
-        console.log('URL copied to clipboard:', currentURL);
-        // Optionally, you can show a message to the user indicating successful copy
-        // alert('URL copied to clipboard');
-      })
-      .catch((error) => {
-        console.error('Failed to copy URL to clipboard:', error);
-      });
-  };
+
 
   const handleSave = () => {
     // Here you can implement the logic to download the video

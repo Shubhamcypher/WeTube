@@ -48,7 +48,7 @@ const Button = styled.button`
     cursor:pointer;
     font-size:16px;
     text-align: center;
-    box-shadow: 1px 1px 1px 1px red;
+    box-shadow: 1px 1px 1px 1px crimson;
 `
 
 const Share = ({setOpenShare}) => {

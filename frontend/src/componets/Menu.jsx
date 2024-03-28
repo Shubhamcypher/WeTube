@@ -35,7 +35,6 @@ import { useSelector } from 'react-redux';
 
 
 const Container = styled.div`
-    flex: 1;
     background-color: ${({theme})=>theme.bgLighter};
     color:${({theme})=>theme.text};
     font-size:14px;
@@ -65,6 +64,7 @@ const Wrapper = styled.div`
     padding: 18px 26px;
     display:flex;
     flex-direction:column;
+    z-index:100000;
 `;
 
 const TopMenu = styled.div`

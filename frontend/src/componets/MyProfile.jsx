@@ -184,7 +184,7 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen})
             <Hr/>
             {currentUser.fromGoogle && 
             <>
-            <Link to="https://myaccount.google.com/" style={{textDecoration:"none", color:'inherit'}}>
+            <Link to="https://myaccount.google.com/" target="blank" rel="noopener noreferrer" style={{textDecoration:"none", color:'inherit'}}>
             <Item>
                 <GoogleIcon />
                 Google Account 

@@ -5,6 +5,22 @@ import Card from './card/Card'
 
 const Container = styled.div`
     flex:2;
+    overflow-y: auto;
+    max-height: 100vh;
+    
+    &::-webkit-scrollbar {
+        width: 1px; /* Width of vertical scrollbar */
+    }
+    &::-webkit-scrollbar-track {
+        background: ${({ theme }) => theme.bgLighter}; /* Color of the track */
+    }
+    &::-webkit-scrollbar-thumb {
+        background: transparent; /* Color of the thumb */
+        border-radius: 5px; /* Rounded corners */
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: ${({ theme }) => theme.soft}; /* Color of the thumb on hover */
+    }
 `;
 
 const Recommendation = ({tags}) => {

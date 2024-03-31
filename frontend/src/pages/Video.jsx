@@ -143,7 +143,6 @@ const Video = () => {
 
 
   const handleSave = () => {
-    // Here you can implement the logic to download the video
     const videoUrl = currentVideo.videoUrl;
     const a = document.createElement('a');
     a.href = videoUrl;

@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import React, { useEffect, useRef, useState } from 'react'
-import reverseGeocode from 'reverse-geocode'
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from '../redux/userSlice';
 import axios from 'axios'
 import { Link, useNavigate } from "react-router-dom";
 
@@ -161,7 +159,6 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen})
                 if (address.country) {
                   locationName += address.country;
                 }
-                console.log(locationName);
               }
               setUserLocationName(locationName)
             } catch (error) {

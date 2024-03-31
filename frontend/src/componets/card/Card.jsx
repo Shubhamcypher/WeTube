@@ -4,22 +4,25 @@ import { format } from 'timeago.js'
 import styled from 'styled-components'
 import axios from 'axios'
 
+import Option from '../Option'
+
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 const Container = styled.div`
     width: ${(props)=>props.type !== "sm" && "320px"};
     margin-bottom: ${(props) => (props.type === "sm" ? "15px" : "20px")};
-    cursor:pointer;
     border-radius:10px;
     display: ${(props)=>props.type === "sm" && "flex"};
-    gap:10px;
-    z-index:1;
-    
+    gap:10px;    
 `
 
 const Image = styled.img`
-    width: ${(props) => (props.type === "sm" ? "100%" : "100%")};
-    height: ${(props) => (props.type === "sm" ? "100px" : "180px")};
+    width: ${(props) => (props.type === "sm" ? "180px" : "100%")};
+    cursor:pointer;
+    height: ${(props) => (props.type === "sm" ? "120px" : "180px")};
     background-color: #999;
     border-radius:10px;
+    object-fit: cover;
     &:hover {
         transform: ${(props) => (props.type === "sm" ? "scale(1)" : "scale(1.07)")};
         box-shadow: 2px 2px 8px 1px #ff4f00;
@@ -27,11 +30,11 @@ const Image = styled.img`
     
 `
 
+
 const Details = styled.div`
     display:flex;
     margin-top: ${(props)=>props.type !== "sm" && "16px"};
-    gap:12px;
-    
+    gap:12px;    
 `
 
 const ChannelImage = styled.img`
@@ -43,6 +46,7 @@ const ChannelImage = styled.img`
 `
 
 const Texts = styled.div`
+  
     
 `
 const Title = styled.h1`
@@ -60,12 +64,31 @@ const ChannelName = styled.h2`
 const Info = styled.div`
     font-size: 16px;
     color:${({theme})=>theme.textSoft};
+    display: inline;
+`
+
+const OptionIcon = styled.div`
+      height:25px;
+      width:25px;
+      color:${({theme})=>theme.textSoft};
+      margin-left: 70px;
+      cursor: pointer;
+      padding:2.5px;
+      display: ${(props)=>props.type === "sm" && "none"};
+
+      &:hover {
+        background-color: ${({ theme }) => theme.soft};
+        border-radius : 50%;
+      }
+
 `
 
 const Card = ({type,video}) => {
 
       
   const [channel, setChannel] = useState({})
+
+  const [showOption, setShowOption] = useState(false);
 
   useEffect(() => {
     const fetchChannel = async()=>{
@@ -86,23 +109,29 @@ const Card = ({type,video}) => {
   }
     
   return (
-    <Link to={`/video/${video._id}`} style={{textDecoration:"none"}}>
-    <Container type={type} onClick={handleCard}>
+      <Container type={type} onClick={handleCard}>
+        <Link to={`/video/${video._id}`} style={{textDecoration:"none"}}>
         <Image type={type} src={video.imgUrl} />
+        </Link>
         <Details type={type}> 
             <Link to={`/profile/${video.userId}`} style={{textDecoration:"none"}}>
                 <ChannelImage type={type} src={channel.img} />
             </Link>
             <Texts>
+                <Link to={`/video/${video._id}`} style={{textDecoration:"none"}}>
                 <Title>{video.title}</Title>
+                </Link>
                 <Link to={`/profile/${video.userId}`} style={{textDecoration:"none"}}>
                     <ChannelName>{channel.name}</ChannelName>
                 </Link>
                 <Info>{video.views} views • {format(video.createdAt)}</Info>
             </Texts>
+            <OptionIcon type={type} onClick={()=>{setShowOption(!showOption)} }>
+                <MoreVertIcon />
+            </OptionIcon>
+            {showOption && <Option setShowOption={setShowOption}/>}
         </Details>
     </Container>
-    </Link>
   )
 }
 

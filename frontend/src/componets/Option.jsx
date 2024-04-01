@@ -1,15 +1,21 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { Link } from 'react-router-dom';
+
+import {  useSelector } from 'react-redux';
 
 const Container = styled.div`
     position: absolute;
 `
 const Wrapper = styled.div`
     position:relative;
-    width:100px;
+    width:160px;
     top:30px;
     left:220px;
     color: ${({ theme }) => theme.text};
@@ -18,6 +24,7 @@ const Wrapper = styled.div`
     // background-color: transparent;
     background-color: ${({ theme }) => theme.soft};
     padding: 5px;
+    z-index:1;
     
 
 `
@@ -27,9 +34,11 @@ const Item = styled.div`
     align-items:center;
     border-radius:5px;
     cursor: pointer;
+    gap:8px;
+    color:inherit;
     &:hover {
         background-color: ${({ theme }) => theme.bgLighter};
-        color: ${(props)=>props.special?"red":"#336BFF"};
+        color: ${(props)=>(props.special ? "red": "#336BFF")};
       }
 `
 
@@ -38,8 +47,12 @@ const Hr = styled.hr`
   margin: 2px;
 `;
 
-const Option = ({setShowOption}) => {
+const Option = ({setShowOption, video}) => {
     const containerRef = useRef(null);
+
+    const [channel, setChannel] = useState({})
+
+    const {currentUser} = useSelector((state)=>state.user)
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -57,15 +70,31 @@ const Option = ({setShowOption}) => {
   return (
     <Container ref={containerRef}>
         <Wrapper>
+            {(currentUser._id===video.userId) && <Link to={`/edit/${video._id}`} style={{textDecoration:"none", color:"inherit"}}  >
+              <Item >
+                  <EditIcon/>
+                  Edit
+              </Item>
+            </Link>}
+
             <Item >
-                <EditIcon/>
-                Edit
+                <SendIcon/>
+                Share
+            </Item>
+            <Item >
+                <PlaylistAddIcon/>
+                Add to Playlist
+            </Item>
+            <Item >
+                <ArrowDownwardIcon/>
+                Download
             </Item>
             <Hr/>
-            <Item special>
+
+            {(currentUser._id===video.userId)&&<Item special="true" >
                 <DeleteIcon/>
                 Delete
-            </Item>
+            </Item>}
         </Wrapper>
     </Container>
   )

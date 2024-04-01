@@ -8,7 +8,6 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import SaveIcon from '@mui/icons-material/Save';
 
-import Card from '../componets/card/Card.jsx'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';

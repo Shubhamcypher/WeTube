@@ -10,6 +10,7 @@ import Signin from "./pages/Signin.jsx";
 import Search from "./componets/Search.jsx";
 import Menu2 from "./componets/Menu2.jsx";
 import Profile from "./pages/Profile.jsx";
+import Edit from "./pages/Edit.jsx";
 
 const Container = styled.div`
   display : flex;  
@@ -50,9 +51,15 @@ const App = ()=>{
                   <Route path="video">
                     <Route path=":id" element={<Video />} />
                   </Route>
+
                   <Route path="profile"  >
                     <Route path=":id" element={<Profile />} />
                   </Route>
+
+                  <Route path="edit"  >
+                    <Route path=":id" element={<Edit />} />
+                  </Route>
+
                 </Route>
               </Routes>
             </Wrapper>

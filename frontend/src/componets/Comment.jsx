@@ -53,8 +53,7 @@ const InputField = styled.input`
   background-color: transparent;
   outline: none;
   padding: 5px;
-  min-width: 0;
-  flex-grow: 1; 
+  width:-webkit-fill-available;
 `;
 
 const ActionButtons = styled.div`
@@ -118,7 +117,7 @@ const Comment = ({ comment, comments, setComments, currentUser }) => {
 
   const handleEditComment = async () => {
     try {
-      const res = await axios.patch(`/api/comment/edit/${comment._id}`, {
+      await axios.patch(`/api/comment/edit/${comment._id}`, {
         desc: editedComment,
       });
       const updatedComments = comments.map((c) =>

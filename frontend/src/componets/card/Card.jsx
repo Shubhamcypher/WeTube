@@ -23,6 +23,7 @@ const Image = styled.img`
     background-color: #999;
     border-radius:10px;
     object-fit: cover;
+    z-index:0;
     &:hover {
         transform: ${(props) => (props.type === "sm" ? "scale(1)" : "scale(1.07)")};
         box-shadow: 2px 2px 8px 1px #ff4f00;
@@ -74,7 +75,7 @@ const OptionIcon = styled.div`
       margin-left: 70px;
       cursor: pointer;
       padding:2.5px;
-      display: ${(props)=>props.type === "sm" && "none"};
+      display: ${(props)=>props.type !== "sm" ? "block":"none"};
 
       &:hover {
         background-color: ${({ theme }) => theme.soft};
@@ -129,7 +130,7 @@ const Card = ({type,video}) => {
             <OptionIcon type={type} onClick={()=>{setShowOption(!showOption)} }>
                 <MoreVertIcon />
             </OptionIcon>
-            {showOption && <Option setShowOption={setShowOption}/>}
+            {showOption && <Option setShowOption={setShowOption} video={video}/>}
         </Details>
     </Container>
   )

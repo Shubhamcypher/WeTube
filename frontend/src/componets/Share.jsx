@@ -19,6 +19,7 @@ const Wrapper = styled.div`
     color: ${({ theme }) => theme.text};
     padding: 20px;
     border-radius: 20px;
+    z-index:2;
 `
 const Copy = styled.div`
     display: flex;
@@ -51,7 +52,7 @@ const Button = styled.button`
     box-shadow: 1px 1px 1px 1px crimson;
 `
 
-const Share = ({setOpenShare}) => {
+const Share = ({setOpenShare, video}) => {
     const inputRef = useRef(null);
     const containerRef = useRef(null)
     const [copied, setCopied] = useState(false);
@@ -69,7 +70,7 @@ const Share = ({setOpenShare}) => {
       }, []);
 
     const handleCopy = () => {
-        const currentURL = window.location.href;
+        const currentURL = video?`http://localhost:5173/video/${video._id}`:window.location.href;
         if (inputRef.current) {
             inputRef.current.select();
             navigator.clipboard.writeText(currentURL);
@@ -81,7 +82,7 @@ const Share = ({setOpenShare}) => {
     <Container ref={containerRef}>
         <Wrapper>
             <Copy>
-                <Input value={window.location.href} writable='false' ref={inputRef}/>
+                <Input value={video?`http://localhost:5173/video/${video._id}`:window.location.href} writable='false' ref={inputRef}/>
                 <Button onClick={handleCopy} copied={copied}>{copied ? 'Copied!' : 'Copy'}</Button>
             </Copy>
         </Wrapper>

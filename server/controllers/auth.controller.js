@@ -12,7 +12,6 @@ const options = {
 }
 
 export const signup = async (req, res, next)=>{
-
     const salt =  bcrypt.genSaltSync(10);
     const hash =  bcrypt.hashSync(req.body.password, salt);
 
@@ -25,7 +24,7 @@ export const signup = async (req, res, next)=>{
         .json("User added successfully!!!!")
     } 
     catch (error) {
-        next(err)
+        next(error)
     }
 }
 

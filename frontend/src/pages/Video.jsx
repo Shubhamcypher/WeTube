@@ -128,6 +128,7 @@ const Video = () => {
 
   const [channel,setChannel] = useState({})
   const [openShare, setOpenShare] = useState(false)
+  const [loginNavigator, setLoginNavigator] = useState(false)
 
 
   const handleLike = async()=>{
@@ -170,10 +171,16 @@ const Video = () => {
   
 
   const handleSub = async () => {
-    currentUser.subscribedUsers.includes(channel._id)
+    if (currentUser) {
+      currentUser.subscribedUsers.includes(channel._id)
       ? await axios.put(`/api/user/unsub/${channel._id}`)
       : await axios.put(`/api/user/sub/${channel._id}`);
       dispatch(subscription(channel._id));
+    }
+    else{
+      alert("Please Login to use this feature")
+      setLoginNavigator(true)
+    }
   };
 
 
@@ -207,22 +214,23 @@ const Video = () => {
         <Channel>
           <ChannelInfo>
             <Link to={`/profile/${currentVideo.userId}`} style={{textDecoration:"none"}}>
-            <Image src={channel.img}/>
+            {channel?<Image src={channel?.img}/>:<Image src="https://yt3.ggpht.com/a/AATXAJyoQKeFnPY6bJ-BPDeFFQ7C8EXN7xuyOSJoDw=s900-c-k-c0xffffffff-no-rj-mo"/>}
             <ChannelDetail>
-              <ChannelName>{channel.name}</ChannelName>
-              <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
+              {channel?<ChannelName>{channel?.name}</ChannelName>:<ChannelName>Deleted User</ChannelName>}
+              <ChannelCounter>{channel?.subscribers} subscribers</ChannelCounter>
             </ChannelDetail>
             </Link>
               <Description>{currentVideo.desc}</Description>
           </ChannelInfo>
-          <Subscribe onClick={handleSub} style={{backgroundColor:currentUser?.subscribedUsers?.includes(channel._id)&&"grey"}}>
-            {currentUser?.subscribedUsers?.includes(channel._id)
-              ? "SUBSCRIBED"
-              : "SUBSCRIBE"}
-          </Subscribe>
+          {channel && 
+          (<Subscribe onClick={handleSub} style={{backgroundColor:currentUser?.subscribedUsers?.includes(channel?._id)&&"grey"}}>
+          {currentUser?.subscribedUsers?.includes(channel?._id)
+            ? "SUBSCRIBED"
+            : "SUBSCRIBE"}
+        </Subscribe>)}
         </Channel>
         <Hr/>
-        <Comments videoId={currentVideo._id}/>
+        {channel && <Comments videoId={currentVideo._id} setLoginNavigator={setLoginNavigator} loginNavigator={loginNavigator}/>}
       </Content>
       <Recommendation tags={currentVideo.tags}/>
 

@@ -109,8 +109,9 @@ const StyledAlert = styled(Alert)`
   border-radius: 8px;
   padding: 16px;
   position:fixed;
-  width:100%;
-  top:60px;
+  width:720px;
+  top:0;
+  left:380px;
   z-index:1000;
 `;
 
@@ -127,6 +128,15 @@ const AlertButton = styled.button`
   &:hover {
     opacity: 0.8;
   }
+`;
+
+const ButtonWrapper = styled.div`
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 10px;
 `;
 
 
@@ -214,8 +224,8 @@ const handleLogoutAndContinue = () => {
 
     {showAlert && (
         <StyledAlert severity="warning" ref={alertlRef}>
-          You won't be able to use complete features of WeTube without logging in...Choose Login or Register to like,subscribe and more premium features
-          <br/>  
+          You won't be able to use complete features of WeTube without logging in...  
+          <ButtonWrapper>
           <AlertButton onClick={handleSwitch} color="blue">
             Switch Account
           </AlertButton>
@@ -225,6 +235,7 @@ const handleLogoutAndContinue = () => {
           <AlertButton onClick={handleLogoutAndContinue} color="red">
             Logout
           </AlertButton>
+          </ButtonWrapper>
         </StyledAlert>
       )}
 

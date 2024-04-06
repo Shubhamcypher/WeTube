@@ -82,6 +82,12 @@ const SignIn = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const [signupName, setSignupName] = useState('')
+  const [signupEmail, setSignupEmail] = useState('')
+  const [signupPassword, setSignupPassword] = useState('')
+
+
   const dispatch = useDispatch()
 
   const navigate = useNavigate()
@@ -96,6 +102,29 @@ const SignIn = () => {
     } 
     catch (error) {
       dispatch(loginFailure())
+      
+    }
+  }
+
+  const handleSignup = async (e)=>{
+    e.preventDefault();
+    try {
+
+       await axios.post("api/auth/signup",{
+        name:signupName,
+        password:signupPassword,
+        email:signupEmail
+      })
+      alert(`signin successful, logging in with ${signupName}  account`)
+      const res = await axios.post("api/auth/signin",{
+        name:signupName,
+        password:signupPassword
+      });
+      dispatch(loginSuccess(res.data))
+      navigate('/');
+    } 
+    catch (error) {
+      console.log(error);
       
     }
   }
@@ -135,10 +164,10 @@ const SignIn = () => {
         </GoogleContainer>
         <Title>or</Title>
         <Title>Sign up</Title>
-        <Input placeholder="username" />
-        <Input placeholder="email" />
-        <Input type="password" placeholder="password" />
-        <Button>Sign up</Button>
+        <Input placeholder="username" onChange={e=>setSignupName(e.target.value)}/>
+        <Input placeholder="email" onChange={e=>setSignupEmail(e.target.value)} />
+        <Input type="password" placeholder="password" onChange={e=>setSignupPassword(e.target.value)} />
+        <Button onClick={handleSignup}>Sign up</Button>
       </Wrapper>
       <More>
         English(USA)

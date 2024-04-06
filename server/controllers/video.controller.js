@@ -46,7 +46,7 @@ export const deleteVideo = async(req,res,next)=>{
     try {
         const video = await Video.findById(req.params.id)
         if(!video) return next(createError(404,"Video not found"))
-        if (req.params.id === req.user.id) {
+        if (req.user.id) {
             const updatedVideo = await Video.findByIdAndDelete(req.params.id)
 
         res

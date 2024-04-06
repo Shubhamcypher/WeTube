@@ -18,6 +18,12 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
+const Heading = styled.h1`
+  font-size:30px;
+  color: ${({ theme }) => theme.text};
+  margin-bottom: 25px;
+`
+
 const ImageWrapper = styled.div`
   display: flex;
   gap: 20px;
@@ -255,6 +261,7 @@ const handleSubmit = async()=>{
   return (
     <Container>
       <Content>
+        <Heading>Edit</Heading>
         <ImageWrapper>
           <ImageFrame src={editedThumbnail} />
           <UpdateButton onClick={handleEditThumbnail}>Edit Thumbnail</UpdateButton>

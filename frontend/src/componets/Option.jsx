@@ -9,6 +9,8 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { Link } from 'react-router-dom';
 
 import {  useSelector } from 'react-redux';
+import Delete from './Delete.jsx';
+import Share from './Share.jsx';
 
 const Container = styled.div`
     position: absolute;
@@ -16,17 +18,12 @@ const Container = styled.div`
 const Wrapper = styled.div`
     position:relative;
     width:160px;
-    top:30px;
     left:220px;
     color: ${({ theme }) => theme.text};
     border-radius:10px;
-    // background-color: #FF9933;
-    // background-color: transparent;
     background-color: ${({ theme }) => theme.soft};
     padding: 5px;
     z-index:1;
-    
-
 `
 const Item = styled.div`
     display:flex;
@@ -50,7 +47,8 @@ const Hr = styled.hr`
 const Option = ({setShowOption, video}) => {
     const containerRef = useRef(null);
 
-    const [channel, setChannel] = useState({})
+    const [deleteMenu, setDeleteMenu] = useState(false)
+    const [share, setShare] = useState(false)
 
     const {currentUser} = useSelector((state)=>state.user)
 
@@ -61,41 +59,68 @@ const Option = ({setShowOption, video}) => {
           }
         };
         document.addEventListener('mousedown', handleClickOutside);
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'auto';
         return () => {
           document.removeEventListener('mousedown', handleClickOutside);
           document.body.style.overflow = 'auto';
         };
       }, []);
+
+      const handleDeleteOption = ()=>{
+        setDeleteMenu(!deleteMenu);
+        // setShowOption(false);
+      }
+
+      const handleDownload = () => {
+        const videoUrl = video.videoUrl;
+        const a = document.createElement('a');
+        a.href = videoUrl;
+        a.download = 'video.mp4';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      };
+
+      const handleShare = ()=> {
+        setShare(!share)
+      }
+
   return (
     <Container ref={containerRef}>
         <Wrapper>
-            {(currentUser._id===video.userId) && <Link to={`/edit/${video._id}`} style={{textDecoration:"none", color:"inherit"}}  >
+            {(currentUser && (currentUser._id===video.userId)) && <Link to={`/edit/${video._id}`} style={{textDecoration:"none", color:"inherit"}}  >
               <Item >
                   <EditIcon/>
                   Edit
               </Item>
             </Link>}
 
-            <Item >
+            <Item onClick={handleShare} >
                 <SendIcon/>
                 Share
             </Item>
-            <Item >
-                <PlaylistAddIcon/>
-                Add to Playlist
+            {currentUser &&
+              <Item >
+              <PlaylistAddIcon/>
+              Add to Playlist
             </Item>
-            <Item >
-                <ArrowDownwardIcon/>
-                Download
-            </Item>
+            }
+
+            {currentUser &&
+            <Item onClick={handleDownload}>
+            <ArrowDownwardIcon/>
+            Download
+            </Item>}
             <Hr/>
 
-            {(currentUser._id===video.userId)&&<Item special="true" >
+            {currentUser&&(currentUser._id===video.userId)&&
+            (<Item special="true" onClick={handleDeleteOption}>
                 <DeleteIcon/>
                 Delete
-            </Item>}
+            </Item>)}
         </Wrapper>
+        {deleteMenu && <Delete setShowOption={setShowOption} setDeleteMenu={setDeleteMenu} video={video}/>}
+        {share && <Share video={video}/>}
     </Container>
   )
 }

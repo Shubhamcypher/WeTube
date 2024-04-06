@@ -116,14 +116,14 @@ const Card = ({type,video}) => {
         </Link>
         <Details type={type}> 
             <Link to={`/profile/${video.userId}`} style={{textDecoration:"none"}}>
-                <ChannelImage type={type} src={channel.img} />
+                {channel ? <ChannelImage type={type} src={channel?.img}/>:<ChannelImage type={type} src="https://yt3.ggpht.com/a/AATXAJyoQKeFnPY6bJ-BPDeFFQ7C8EXN7xuyOSJoDw=s900-c-k-c0xffffffff-no-rj-mo"/>}
             </Link>
             <Texts>
                 <Link to={`/video/${video._id}`} style={{textDecoration:"none"}}>
                 <Title>{video.title}</Title>
                 </Link>
                 <Link to={`/profile/${video.userId}`} style={{textDecoration:"none"}}>
-                    <ChannelName>{channel.name}</ChannelName>
+                    {channel ? <ChannelName>{channel?.name}</ChannelName>: <ChannelName>Deleted User</ChannelName>}
                 </Link>
                 <Info>{video.views} views • {format(video.createdAt)}</Info>
             </Texts>

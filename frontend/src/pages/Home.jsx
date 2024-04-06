@@ -22,10 +22,11 @@ const Home = ({type}) => {
       setVideos(res.data) ;//this data contains everything that api sends us
     };
     fetchVideos();
-  }, [type])
+  }, [type,])
   
   return (
     <Container>
+        
         {videos.map((video)=>(
           <Card key={video._id} video={video}/>
         ))}

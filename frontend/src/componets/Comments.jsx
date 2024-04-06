@@ -6,6 +6,7 @@ import Commment from './Comment.jsx'
 import Comment from './Comment.jsx'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
+import LoginNavigator from './LoginNavigator.jsx'
 
 const Container = styled.div`
 
@@ -63,21 +64,35 @@ transition: transform 0.3s ease;
 }
 `;
 
-const Comments = ({videoId}) => {
+const AlertContainer = styled.div`
+  position: fixed;
+  top: 0;
+  z-index: 999; /* Ensure it's on top of other content */
+`;
+
+const Comments = ({videoId, setLoginNavigator, loginNavigator}) => {
   const [comments, setComments] = useState([])
   const {currentUser} = useSelector((state)=>state.user)
   const [newComment, setNewComment] = useState('')
 
+
   
   const handlePostComment = async () => {
     try {
-      const res = await axios.post('/api/comment/', {
-        videoId: videoId,
-        desc: newComment,
-        userId: currentUser._id, // currentUser has _id field
-      });
-      setComments([...comments, res.data]); // Add the new comment to the existing comments array
-      setNewComment(''); // Clear the input field after posting the comment
+      if(currentUser){
+        const res = await axios.post('/api/comment/', {
+          videoId: videoId,
+          desc: newComment,
+          userId: currentUser._id, // currentUser has _id field
+        });
+        setComments([...comments, res.data]); // Add the new comment to the existing comments array
+        setNewComment('');// Clearing the input field after posting the comment
+      }
+      else{
+        alert("Log in to use this feature")
+        currentUser?setLoginNavigator(false): setLoginNavigator(true)
+      }
+       
     } catch (error) {
       console.log(error);
     }
@@ -98,8 +113,11 @@ const Comments = ({videoId}) => {
   },[videoId])
 
   return (
-    <Container>
-
+    <>
+      <Container>
+      <AlertContainer>
+        {loginNavigator && <LoginNavigator setLoginNavigator={setLoginNavigator} />}
+      </AlertContainer>
         <NewComment>
             <Avatar src={currentUser?.img}/>
             <Input placeholder='Add a comment...' onChange={(e)=>setNewComment(e.target.value)} value={newComment}/>
@@ -110,7 +128,9 @@ const Comments = ({videoId}) => {
         {comments.slice().reverse().map(comment=>(
           <Comment key={comment._id} comment={comment} comments={comments} setComments={setComments} currentUser={currentUser}/>
         ))} 
-    </Container>
+        </Container>
+        
+    </>
   )
 }
 

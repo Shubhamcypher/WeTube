@@ -2,6 +2,7 @@ import { createError } from '../error.js'
 import Video from '../model/video.model.js'
 import User from '../model/user.model.js'
 import View from '../model/view.model.js'
+import Comment from '../model/comment.model.js'
 
 export const createVideo = async(req,res,next)=>{
 
@@ -44,6 +45,9 @@ export const updateVideo = async(req,res,next)=>{
 }
 export const deleteVideo = async(req,res,next)=>{
     try {
+        await Comment.deleteMany({videoId:req.params.id})
+        await View.deleteMany({videoId:req.params.id})
+
         const video = await Video.findById(req.params.id)
         if(!video) return next(createError(404,"Video not found"))
         if (req.user.id) {

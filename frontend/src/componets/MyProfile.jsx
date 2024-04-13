@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Alert from '@mui/material/Alert';
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios'
@@ -17,6 +18,7 @@ import LanguageIcon from '@mui/icons-material/Language';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HelpIcon from '@mui/icons-material/Help';
 import FlagIcon from '@mui/icons-material/Flag';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
 
 
@@ -62,9 +64,15 @@ const Item = styled.div`
   }
 `;
 const LogoutContainer=styled.div`
-display:flex;
-gap: 10px;
-&:hover {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  height: 40px;
+  width: auto;
+  &:hover {
+    background-color: ${({ theme }) => theme.soft};
+    border-radius : 7.5px;
     color: red;
   }
 `
@@ -94,20 +102,25 @@ const Avatar = styled.img`
 
 
 
-const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen}) => {
+const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, setDeleteAccountMenu}) => {
     const containerRef = useRef(null);
     const {currentUser} = useSelector((state)=>state.user)
+    
 
     const navigate = useNavigate()
 
     const [userLocation, setUserLocation] = useState(null);
     const [userLocationName, setUserLocationName] = useState(null);
 
-    const dispatch = useDispatch()
 
     const handleLogout = ()=>{
         setShowAlert(true)
         setOpenProfile(false) 
+    }
+
+    const handleDeleteAccount = ()=>{
+        setDeleteAccountMenu(true)
+        setOpenProfile(false)
     }
 
     useEffect(() => {
@@ -194,12 +207,20 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen})
                 Switch Account
             </Item>
             </>}
-            <Item onClick={handleLogout} >
-                <LogoutContainer>
+            <LogoutContainer>
+              <Item onClick={handleLogout} >
                     <LogoutButton/>
                     Logout
-                </LogoutContainer>
-            </Item>
+              </Item>
+            </LogoutContainer>
+
+            <LogoutContainer>
+              <Item onClick={handleDeleteAccount}>
+                <PersonRemoveIcon/>
+                Delete Account
+              </Item>
+            </LogoutContainer>
+            
             <Hr/>
             <Item onClick={()=>setOpen(true)}>
               <CameraIcon/>

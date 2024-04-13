@@ -34,7 +34,7 @@ export const signin = async (req,res,next)=>{
         const user = await User.findOne({name:req.body.name})
         if(!user) return next(createError(404,"No user found"))
 
-        const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
+        const isPasswordCorrect =  bcrypt.compare(req.body.password, user.password);
         if(!isPasswordCorrect) return next(createError(400,"Invalid user credentials"));
 
 

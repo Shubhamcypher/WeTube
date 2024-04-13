@@ -145,10 +145,10 @@ const Comment = ({ comment, comments, setComments, currentUser }) => {
     <Container>
       <CommentWrapper>
         <div style={{ display: "flex", gap: "10px", alignItems: "center"}}>
-          <Avatar src={channel.img} />
+          <Avatar src={channel?.img} />
           <Details>
             <Name>
-              {channel.name} <Date>{format(comment.createdAt)}</Date>
+              {channel?.name} <Date>{format(comment.createdAt)}</Date>
             </Name>
             {isEditing ? (
               <InputField

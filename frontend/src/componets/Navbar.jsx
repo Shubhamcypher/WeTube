@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components';
+import axios from 'axios'
 
 import PersonIcon from '@mui/icons-material/Person';
 import SearchIcon from '@mui/icons-material/Search';
 import VideoCallIcon from '@mui/icons-material/VideoCall';
-import LogoutIcon from '@mui/icons-material/Logout';
 import Alert from '@mui/material/Alert';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
@@ -13,7 +13,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 
 import {useDispatch, useSelector} from 'react-redux'
 import Upload from './Upload';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../redux/userSlice';
 import MyProfile from './MyProfile';
 
@@ -87,13 +87,7 @@ const Avatar = styled.img`
       background-color: #999;
 `;
 
-const LogoutButton = styled(LogoutIcon)`
-  cursor: pointer;
 
-  &:hover {
-    color: red;
-  }
-`;
 const VideoButton = styled(VideoCallIcon)`
   cursor: pointer;
 
@@ -152,6 +146,7 @@ const [open, setOpen] = useState(false)
 const [openProfile, setOpenProfile] = useState(false)
 const [q, setQ] = useState("")
 const [showAlert, setShowAlert] = useState(false);
+const [deleteAccountMenu, setDeleteAccountMenu] = useState(false)
 
 const alertlRef = useRef(null);
 
@@ -161,11 +156,6 @@ const navigate = useNavigate()
 const dispatch = useDispatch()
 
 
-
-const handleLogout = ()=>{
-  setShowAlert(true)
-
-}
 
 useEffect(() => {
   const handleClickOutside = (e) => {
@@ -193,9 +183,18 @@ const handleLogoutAndContinue = () => {
   dispatch(logout())
   setShowAlert(false);
   navigate('/')
-
-  
 };
+
+const handleYesDeleteAccount = async()=>{
+  setDeleteAccountMenu(false)
+  await axios.delete(`/api/user/${currentUser._id}`)
+  dispatch(logout())
+  navigate('/signin')
+  
+}
+const handleNoDeleteAccount =()=>{
+  setDeleteAccountMenu(false)
+}
 
   return (
     <>    
@@ -224,7 +223,7 @@ const handleLogoutAndContinue = () => {
 
     {showAlert && (
         <StyledAlert severity="warning" ref={alertlRef}>
-          You won't be able to use complete features of WeTube without logging in...  
+          You won't be able to use complete features of WeTube  
           <ButtonWrapper>
           <AlertButton onClick={handleSwitch} color="blue">
             Switch Account
@@ -239,7 +238,21 @@ const handleLogoutAndContinue = () => {
         </StyledAlert>
       )}
 
-      {openProfile && <MyProfile setOpenProfile={setOpenProfile} setShowAlert={setShowAlert} darkMode={darkMode} setDarkMode={setDarkMode} setOpen={setOpen}/>}
+      {deleteAccountMenu && (
+        <StyledAlert severity="warning" >
+        Are you sure want to delete {currentUser.name}? 
+        <ButtonWrapper>
+        <AlertButton onClick={handleYesDeleteAccount} color="red">
+          Yes
+        </AlertButton>
+        <AlertButton onClick={handleNoDeleteAccount} color="green" >
+          No
+        </AlertButton>
+        </ButtonWrapper>
+      </StyledAlert>
+      )}
+
+      {openProfile && <MyProfile setOpenProfile={setOpenProfile} setShowAlert={setShowAlert} darkMode={darkMode} setDarkMode={setDarkMode} setOpen={setOpen} setDeleteAccountMenu={setDeleteAccountMenu}/>}
     </>
   )
 }

@@ -1,6 +1,8 @@
 import {createError} from '../error.js'
 import User from '../model/user.model.js'
 import Video from '../model/video.model.js'
+import View from '../model/view.model.js'
+import Comment from '../model/comment.model.js'
 
 export const updateUser = async(req,res,next)=>{
     if (req.params.id === req.user.id) {
@@ -24,26 +26,36 @@ export const updateUser = async(req,res,next)=>{
     }
 }
 
-export const deleteUser = async(req,res,next)=>{
-    if (req.params.id === req.user.id) {
-        
-        try {
-            await User.findByIdAndDelete(req.params.id)
+export const deleteUser = async (req, res, next) => {
+    const userId = req.user.id;
 
-            res
-            .status(200)
-            .json("User has been deleted")
-        } 
-        catch (error) {
-            next(error)
+    try {
+        // Check if the user is trying to delete their own account
+        if (userId !== req.user.id) {
+            return next(createError(400, "You can delete only your account"));
         }
 
-    } 
-    else {
-        next(createError(400,"You can delete only your account"))
-    }
+        // Fetch all videos associated with the user
+        const videos = await Video.find({ userId: userId });
 
-}
+        // Delete all comments and views associated with each video
+        (videos.map(async (video) => {
+            await Comment.deleteMany({ videoId: video._id });
+            await View.deleteMany({ videoId: video._id });
+        }));
+
+        // Delete all videos associated with the user
+        await Video.deleteMany({ userId: userId });
+
+        // Delete the user
+        await User.findByIdAndDelete(req.user.id);
+
+        res.status(200).json("User, associated videos, and comments have been deleted");
+    } catch (error) {
+        next(error);
+    }
+};
+
 
 export const getUser = async(req,res,next)=>{
     if (req.params.id ) {

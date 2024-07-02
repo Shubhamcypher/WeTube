@@ -35,6 +35,9 @@ export const deleteUser = async (req, res, next) => {
             return next(createError(400, "You can delete only your account"));
         }
 
+        //Deleting comment associated with user
+        Comment.deleteMany({userId})
+
         // Fetch all videos associated with the user
         const videos = await Video.find({ userId: userId });
 

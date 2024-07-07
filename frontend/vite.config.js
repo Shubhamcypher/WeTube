@@ -7,7 +7,8 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'https://we-tube-server-psi.vercel.app/'?'https://we-tube-server-psi.vercel.app/':'http://localhost:8000',
-        secure: true,
+        changeOrigin: true,
+        secure: false,
       },
     },
   },

@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://we-tube-a4dz.vercel.app/',
+        target: 'https://wetube-cmtu.onrender.com/',
         changeOrigin: true,
         secure: true,
       },

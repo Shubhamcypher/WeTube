@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://we-tube-server-psi.vercel.app/',
+        target: 'https://we-tube-a4dz.vercel.app/',
         changeOrigin: true,
         secure: false,
       },

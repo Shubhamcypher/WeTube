@@ -95,6 +95,7 @@ const UpdateButton = styled.button`
   font-size: 14px;
   transition: transform 0.3s ease;
 
+
   &:hover {
     transform: scale(1.1);
     background-color: #6495ed;
@@ -106,7 +107,7 @@ const SubmitContainer = styled.div`
   width: inherit;
   height: 30px;
   justify-content: center;
-  margin-top: 70px;
+  margin-top: 20px;
 `;
 
 const SubmitButton = styled.button`

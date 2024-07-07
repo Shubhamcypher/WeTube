@@ -27,6 +27,7 @@ const Image = styled.img`
     &:hover {
         transform: ${(props) => (props.type === "sm" ? "scale(1)" : "scale(1.07)")};
         box-shadow: 2px 2px 8px 1px #ff4f00;
+        transition: transform 0.5s ease, color 0.5s ease;
       }
     
 `

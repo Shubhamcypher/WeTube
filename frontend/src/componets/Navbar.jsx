@@ -90,11 +90,11 @@ const Avatar = styled.img`
 
 const VideoButton = styled(VideoCallIcon)`
   cursor: pointer;
-
-
+  
   &:hover {
     color: #00B5E2;
-    transform: scale(1.5)
+    transform: scale(1.3);
+     transition: transform 0.8s ease, color 0.8s ease;
   }
 `;
 

@@ -107,7 +107,6 @@ const Profile = () => {
         const fetchChannel = async ()=>{
             const channelRes = await axios.get(`/api/user/find/${path}`)
             setCurrentChannel(channelRes.data)
-            console.log(currentChannel);
         }
         fetchChannel()
     },[path,currentChannel])

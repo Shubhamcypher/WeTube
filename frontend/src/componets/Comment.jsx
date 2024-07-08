@@ -102,7 +102,7 @@ const Comment = ({ comment, comments, setComments, currentUser }) => {
 
   useEffect(() => {
     const fetchComment = async () => {
-      const res = await axios.get(`/api/user/find/${comment.userId}`);
+      const res = await axios.get(`/user/find/${comment.userId}`);
       setChannel(res.data)
     };
     fetchComment();
@@ -117,7 +117,7 @@ const Comment = ({ comment, comments, setComments, currentUser }) => {
 
   const handleEditComment = async () => {
     try {
-      await axios.patch(`/api/comment/edit/${comment._id}`, {
+      await axios.patch(`/comment/edit/${comment._id}`, {
         desc: editedComment,
       });
       const updatedComments = comments.map((c) =>
@@ -133,7 +133,7 @@ const Comment = ({ comment, comments, setComments, currentUser }) => {
 
   const handleDeleteComment = async () => {
     try {
-      await axios.delete(`/api/comment/${comment._id}`);
+      await axios.delete(`/comment/${comment._id}`);
       const nonDeletedComments = comments.filter((c) => c._id !== comment._id);
       setComments(nonDeletedComments);
     } catch (error) {

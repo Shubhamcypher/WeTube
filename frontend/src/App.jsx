@@ -12,6 +12,10 @@ import Menu2 from "./componets/Menu2.jsx";
 import Profile from "./pages/Profile.jsx";
 import Edit from "./pages/Edit.jsx";
 
+import axios from "axios";
+
+axios.defaults.baseURL = 'https://server-rwug.onrender.com'
+
 const Container = styled.div`
   display : flex;  
   

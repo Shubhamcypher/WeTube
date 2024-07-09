@@ -40,6 +40,7 @@ export const signin = async (req,res,next)=>{
 
         //injecting payload , which is here in this case is _id of user stored in MongoDB
         const token = jwt.sign({id:user._id},process.env.JWT_SECRET_KEY )
+        console.log(token);
         
 
         const {password, ...userDetails} = user._doc
@@ -64,6 +65,7 @@ export const googleAuth = async (req,res,next)=>{
         const user = await User.findOne({email: req.body.email})
         if (user) {
             const token = jwt.sign({id:user._id},process.env.JWT_SECRET_KEY )
+            console.log(token);
             res
             .cookie("access_token",token,options)
             .status(200)

@@ -7,6 +7,7 @@ import axios from 'axios'
 import Option from '../Option'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { useSelector } from 'react-redux'
 
 const Container = styled.div`
     width: ${(props)=>props.type !== "sm" && "320px"};
@@ -92,6 +93,8 @@ const Card = ({type,video}) => {
 
   const [showOption, setShowOption] = useState(false);
 
+  const {currentUser } = useSelector((state)=>state.user)
+
   useEffect(() => {
     const fetchChannel = async()=>{
       const res = await axios.get(`/user/find/${video.userId}`);
@@ -102,6 +105,7 @@ const Card = ({type,video}) => {
   }, [video.userId]);
 
   const handleCard = async()=>{
+    console.log(currentUser);
     try {
         await axios.put(`/video/views/${video._id}`)
 

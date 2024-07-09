@@ -98,8 +98,11 @@ const SignIn = () => {
     try {
       console.log("I am in frontend signninnn");
       const res = await axios.post("/auth/signin",{name,password});
+      console.log(res);
       dispatch(loginSuccess(res.data))
+
       navigate('/')
+      console.log("The cookie is : ",document.cookie);
     } 
     catch (error) {
       dispatch(loginFailure())

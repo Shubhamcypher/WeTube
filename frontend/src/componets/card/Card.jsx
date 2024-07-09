@@ -105,7 +105,6 @@ const Card = ({type,video}) => {
   }, [video.userId]);
 
   const handleCard = async()=>{
-    console.log(currentUser);
     try {
         await axios.put(`/video/views/${video._id}`)
 

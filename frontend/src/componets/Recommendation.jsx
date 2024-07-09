@@ -29,7 +29,7 @@ const Recommendation = ({tags}) => {
     useEffect(()=>{
         try {
             const fetchVideos = async ()=>{
-                const res = await axios.get(`/api/video/tags?tags=${tags}`)
+                const res = await axios.get(`/video/tags?tags=${tags}`)
                 setVideos(res.data)
             }
             fetchVideos()

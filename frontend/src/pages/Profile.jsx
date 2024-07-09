@@ -105,7 +105,7 @@ const Profile = () => {
 
     useEffect(()=>{
         const fetchChannel = async ()=>{
-            const channelRes = await axios.get(`/api/user/find/${path}`)
+            const channelRes = await axios.get(`/user/find/${path}`)
             setCurrentChannel(channelRes.data)
         }
         fetchChannel()
@@ -113,7 +113,7 @@ const Profile = () => {
 
     useEffect(()=>{
         const fetchVideo = async ()=>{
-            const channelRes = await axios.get(`/api/video/trending`)
+            const channelRes = await axios.get(`/video/trending`)
             setCurrentChannelVideos(channelRes.data)
         }
         fetchVideo()
@@ -121,8 +121,8 @@ const Profile = () => {
 
     const handleSub = async () => {
       currentUser.subscribedUsers.includes(currentChannel._id)
-        ? await axios.put(`/api/user/unsub/${currentChannel._id}`)
-        : await axios.put(`/api/user/sub/${currentChannel._id}`);
+        ? await axios.put(`/user/unsub/${currentChannel._id}`)
+        : await axios.put(`/user/sub/${currentChannel._id}`);
         dispatch(subscription(currentChannel._id));
     };
 

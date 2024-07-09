@@ -85,7 +85,7 @@ const Delete = ({setShowOption,setDeleteMenu,video}) => {
 
       const handleYes = async()=>{
         try {
-           const res = await axios.delete(`/api/video/${video._id}`) 
+           const res = await axios.delete(`/video/${video._id}`) 
             if(res.status===200)
             setShowOption(false);
             window.location.reload();

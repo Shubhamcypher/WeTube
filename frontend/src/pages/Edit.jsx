@@ -159,7 +159,7 @@ const Edit = () => {
 
   useEffect(() => {
     const fetchVideo = async () => {
-      const res = await axios.get(`/api/video/find/${path}`);
+      const res = await axios.get(`/video/find/${path}`);
       setVideo(res.data);
       setEditedTitle(res.data.title);
       setEditedDescription(res.data.desc);
@@ -245,7 +245,7 @@ useEffect(()=>{
 
 const handleSubmit = async()=>{
     try {
-        const res = await axios.patch(`/api/video/update/${video._id}`,{
+        const res = await axios.patch(`/video/update/${video._id}`,{
             title: editedTitle,
             imgUrl: editedThumbnail,
             desc: editedDescription,

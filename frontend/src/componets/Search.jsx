@@ -17,7 +17,7 @@ const Search = () => {
 
     useEffect(()=>{
         const fetchVideos = async()=>{
-            const res = await axios.get(`/api/video/search${query}`)
+            const res = await axios.get(`/video/search${query}`)
             setVideos(res.data)
         }
         fetchVideos()

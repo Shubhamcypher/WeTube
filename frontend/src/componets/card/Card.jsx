@@ -94,7 +94,7 @@ const Card = ({type,video}) => {
 
   useEffect(() => {
     const fetchChannel = async()=>{
-      const res = await axios.get(`/api/user/find/${video.userId}`);
+      const res = await axios.get(`/user/find/${video.userId}`);
       
       setChannel(res.data) ;//this data contains everything that api sends us
     };
@@ -103,7 +103,7 @@ const Card = ({type,video}) => {
 
   const handleCard = async()=>{
     try {
-        await axios.put(`/api/video/views/${video._id}`)
+        await axios.put(`/video/views/${video._id}`)
 
     } catch (error) {
         console.log(error);

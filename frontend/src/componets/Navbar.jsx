@@ -187,7 +187,7 @@ const handleLogoutAndContinue = () => {
 
 const handleYesDeleteAccount = async()=>{
   setDeleteAccountMenu(false)
-  await axios.delete(`/api/user/${currentUser._id}`)
+  await axios.delete(`/user/${currentUser._id}`)
   dispatch(logout())
   navigate('/signin')
   

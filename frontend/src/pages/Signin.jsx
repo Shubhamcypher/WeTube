@@ -116,7 +116,7 @@ const SignIn = () => {
         email:signupEmail
       })
       alert(`signin successful, logging in with ${signupName}  account`)
-      const res = await axios.post("api/auth/signin",{
+      const res = await axios.post("/auth/signin",{
         name:signupName,
         password:signupPassword
       });
@@ -133,7 +133,7 @@ const SignIn = () => {
     dispatch(loginStart())
     signInWithPopup(auth,provider)
     .then((result)=>{
-      axios.post("api/auth/googleAuth",{
+      axios.post("/auth/googleAuth",{
         name: result.user.displayName,
         email: result.user.email,
         img: result.user.photoURL

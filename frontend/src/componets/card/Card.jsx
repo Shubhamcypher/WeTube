@@ -7,7 +7,6 @@ import axios from 'axios'
 import Option from '../Option'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useSelector } from 'react-redux'
 
 const Container = styled.div`
     width: ${(props)=>props.type !== "sm" && "320px"};
@@ -102,24 +101,14 @@ const Card = ({type,video}) => {
     fetchChannel();
   }, [video.userId]);
 
-  const handleCard = async (videoId) => {
-    console.log("Card clicked");
-    
-
+  const handleCard = async()=>{
     try {
-        const token = currentUser.token; // Ensure token is correctly fetched
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
+        await axios.put(`/video/views/${video._id}`)
 
-        await axios.put(`/video/views/${videoId}`, {}, config);
-        console.log("Video view updated successfully");
     } catch (error) {
-        console.log("Error updating video view:", error);
+        console.log(error);
     }
-}
+  }
     
   return (
       <Container type={type} onClick={handleCard}>

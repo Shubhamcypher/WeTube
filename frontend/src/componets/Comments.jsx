@@ -100,10 +100,7 @@ const Comments = ({videoId, setLoginNavigator, loginNavigator}) => {
   useEffect(()=>{
     const fetchComments = async()=>{
       try {
-        console.log("fetching comments");
         const res = await axios.get(`/comment/${videoId}`)
-        console.log(res);
-        console.log("why not getting comments");
         setComments(res.data)
       } 
       catch (error) {

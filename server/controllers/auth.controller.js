@@ -58,6 +58,7 @@ export const signin = async (req,res,next)=>{
 
     } 
     catch (error) {
+        console.log("What is error");
         next(error)
     }
 }

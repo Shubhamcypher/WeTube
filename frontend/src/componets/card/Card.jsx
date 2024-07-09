@@ -105,6 +105,7 @@ const Card = ({type,video}) => {
   const handleCard = async (videoId) => {
     console.log("Card clicked");
     const { currentUser } = useSelector((state) => state.user);
+    console.log(currentUser);
     if (!currentUser) {
         console.log("User not authenticated");
         return;

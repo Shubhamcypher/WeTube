@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post('/',verifyToken,addComment)
 router.delete('/:id',verifyToken,deleteComment)
-router.get('/:videoId',verifyToken,getComments)
+router.get('/:videoId',getComments)
 router.patch('/edit/:id',verifyToken,editComment)
 
 

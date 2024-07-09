@@ -40,14 +40,6 @@ app.use('/api/video',videoRoutes)
 app.use('/api/comment',commentRoutes)
 
 
-// Serve static files from the Vite build output
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, 'dist')));
-
-// The "catchall" handler: for any request that doesn't match one above, send back index.html.
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
 
 //error handler
 app.use((err, req, res, next) => {

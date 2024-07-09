@@ -39,6 +39,7 @@ export const signin = async (req,res,next)=>{
 
 
         //injecting payload , which is here in this case is _id of user stored in MongoDB
+        console.log("checking for token");
         const token = jwt.sign({id:user._id},process.env.JWT_SECRET_KEY )
         console.log(token);
         

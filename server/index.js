@@ -34,10 +34,10 @@ app.use(cors({
 
 
 //appending routes
-app.use('/api/auth',authRoutes)
-app.use('/api/user',userRoutes)
-app.use('/api/video',videoRoutes)
-app.use('/api/comment',commentRoutes)
+app.use('/auth',authRoutes)
+app.use('/user',userRoutes)
+app.use('/video',videoRoutes)
+app.use('/comment',commentRoutes)
 
 //error handler
 app.use((err, req, res, next) => {

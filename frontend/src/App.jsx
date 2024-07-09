@@ -15,7 +15,7 @@ import Edit from "./pages/Edit.jsx";
 import axios from "axios";
 
 let baseURL ='https://server-rwug.onrender.com'
-axios.defaults.baseURL = 'https://server-rwug.onrender.com/'
+axios.defaults.baseURL = 'https://server-rwug.onrender.com/api'
 
 const Container = styled.div`
   display : flex;  

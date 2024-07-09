@@ -102,6 +102,7 @@ const Comments = ({videoId, setLoginNavigator, loginNavigator}) => {
       try {
         console.log("fetching comments");
         const res = await axios.get(`/comment/${videoId}`)
+        console.log(res);
         console.log("why not getting comments");
         setComments(res.data)
       } 

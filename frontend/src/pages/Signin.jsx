@@ -101,6 +101,7 @@ const SignIn = () => {
       console.log(res);
       dispatch(loginSuccess(res.data))
       navigate('/')
+      console.log(document.cookie);
     } 
     catch (error) {
       dispatch(loginFailure())

@@ -7,7 +7,7 @@ export const verifyToken = (req,res,next)=>{
     console.log("I am in token\n");
     const token = req.cookies.access_token;
     console.log(token);
-    if(!token) return next(createError(400,"You are not authenticated mannnnnnnnnnn!"))
+    if(!token) return next(createError(405,"You are not authenticated bro!"))
     
 
     //here we are checking if the token matches, if not matches it will have error and if condition follows if no erros req.user ko database wale user ka access mil jyga

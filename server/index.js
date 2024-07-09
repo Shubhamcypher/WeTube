@@ -28,7 +28,7 @@ app.use(cookieParser())
 
 
 app.use(cors({
-    origin: '*',
+    origin: ['https://we-tube-mu.vercel.app', 'https://server-rwug.onrender.com'],
     credentials: true, // This is needed if you're using cookies or authentication
 }));
 

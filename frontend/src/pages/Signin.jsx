@@ -98,7 +98,6 @@ const SignIn = () => {
     try {
       console.log("I am in frontend signninnn");
       const res = await axios.post("/auth/signin",{name,password});
-      console.log(res);
       dispatch(loginSuccess(res.data))
       navigate('/')
     } 

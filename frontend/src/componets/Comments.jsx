@@ -78,7 +78,7 @@ const Comments = ({videoId, setLoginNavigator, loginNavigator}) => {
   const handlePostComment = async () => {
     try {
       if(currentUser){
-        const res = await axios.post('comment/', {
+        const res = await axios.post('/comment/', {
           videoId: videoId,
           desc: newComment,
           userId: currentUser._id, // currentUser has _id field
@@ -100,7 +100,7 @@ const Comments = ({videoId, setLoginNavigator, loginNavigator}) => {
   useEffect(()=>{
     const fetchComments = async()=>{
       try {
-        const res = await axios.get(`comment/${videoId}`)
+        const res = await axios.get(`/comment/${videoId}`)
         setComments(res.data)
       } 
       catch (error) {

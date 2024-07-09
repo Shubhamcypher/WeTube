@@ -8,7 +8,6 @@ import jwt from 'jsonwebtoken'
 
 const options = {
     httpOnly: true,
-    secure: true
 }
 
 export const signup = async (req, res, next)=>{
@@ -31,7 +30,6 @@ export const signup = async (req, res, next)=>{
 export const signin = async (req,res,next)=>{
 
     try {
-        console.log("In signin");
         const user = await User.findOne({name:req.body.name})
         if(!user) return next(createError(404,"No user found"))
 
@@ -40,9 +38,7 @@ export const signin = async (req,res,next)=>{
 
 
         //injecting payload , which is here in this case is _id of user stored in MongoDB
-        console.log("checking for token");
         const token = jwt.sign({id:user._id},process.env.JWT_SECRET_KEY )
-        console.log(token);
         
 
         const {password, ...userDetails} = user._doc
@@ -52,13 +48,12 @@ export const signin = async (req,res,next)=>{
         res
         .cookie("access_token",token,options)
         .status(200)
-        .json(token)
+        .json(userDetails)
 
         
 
     } 
     catch (error) {
-        console.log("What is error");
         next(error)
     }
 }

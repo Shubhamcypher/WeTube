@@ -57,11 +57,12 @@ const Container = styled.div`
   &::-webkit-scrollbar-thumb:hover {
       background: ${({ theme }) => theme.soft}; /* Color of the thumb on hover */
   }
+
 `;
 
 
 const Wrapper = styled.div`
-    padding: 18px 26px;
+    padding: 18px 0px;
     display:flex;
     flex-direction:column;
     z-index:100000;

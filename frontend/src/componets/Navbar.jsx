@@ -36,7 +36,7 @@ const Container = styled.div`
 `
 
 const Search = styled.div`
-  position: absolute;
+  position: ;
   left: 0px;
   right: 0px;
   margin: auto;

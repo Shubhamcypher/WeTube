@@ -38,11 +38,14 @@ const Container = styled.div`
     background-color: ${({theme})=>theme.bgLighter};
     color:${({theme})=>theme.text};
     font-size:14px;
-    z-index: 900;
-    position: sticky;
+    z-index: 9999;
     top:0;
     overflow-y: auto;
-    height:100vh;
+    height:100%;
+
+    @media (max-width: 720px) { 
+    position:fixed;
+}
 
     &::-webkit-scrollbar {
       width: 10px; /* Width of vertical scrollbar */
@@ -62,9 +65,14 @@ const Container = styled.div`
 
 
 const Wrapper = styled.div`
-    padding: 18px 0px;
+    padding: 18px 20px;
     display:flex;
     flex-direction:column;
+
+    @media (max-width: 720px) { 
+    position:fixed;
+    padding:5px 2px;
+}
 
 `;
 
@@ -72,9 +80,11 @@ const TopMenu = styled.div`
     display: flex;
     justify-content: space-between;
     gap:5px;
-    position: static;
-     @media (max-width: 768px) {
-  }
+     @media (max-width: 720px) {
+      display:flex;
+      flex-direction:column-reverse;
+      gap:0px;
+}
 `
 
 const HamburgerButton = styled.button`
@@ -101,6 +111,15 @@ const Logo = styled.div`
     &:hover {
         transform: scale(1.2)
       }
+    @media (max-width: 720px) { 
+    margin-bottom:0px;
+}
+`;
+
+const LogoText = styled.span`
+  @media (max-width: 720px) {
+    display: none;
+  }
 `;
 const Img = styled.img`
     height:25px;
@@ -117,12 +136,18 @@ const Item = styled.div`
     background-color: ${({ theme }) => theme.soft};
     border-radius : 7.5px;
   }
+   @media (max-width: 720px) { 
+    display:none
+}
 `;
 
 
 const Hr = styled.hr`
     margin:15px 0px;
     border:0.5px solid ${({theme})=>theme.soft};;
+     @media (max-width: 720px) { 
+    display:none
+}
 `
 
 const Login = styled.div`
@@ -142,6 +167,9 @@ const Button = styled.button`
     align-items:center;
     justify-content:center;
     gap:3px;
+     @media (max-width: 720px) { 
+    display:none
+}
 
 `
 
@@ -150,6 +178,9 @@ const Title = styled.h2`
     font-weight:500;
     color:${({theme})=>theme.text};
     margin-bottom:20px;
+     @media (max-width: 720px) { 
+    display:none
+}
 `
 
 const ActiveIcon = styled.div`
@@ -203,7 +234,7 @@ const Menu = ({ darkMode, setDarkMode, setShowMenu, showMenu }) => {
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Logo>
             <Img src={channel_logo} />
-            WeTube
+            <LogoText>WeTube</LogoText>
           </Logo>
         </Link>
         </TopMenu>

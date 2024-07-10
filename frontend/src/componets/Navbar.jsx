@@ -49,7 +49,7 @@ const Search = styled.div`
   border-radius: 7px;
   color: ${({theme})=>theme.text};
 
-  @media (max-width: 768px) { 
+  @media (max-width: 720px) { 
     position:relative;
     width:50%
 }

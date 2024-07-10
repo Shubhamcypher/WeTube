@@ -26,7 +26,7 @@ const Container = styled.div`
   z-index:999;
   height:100%;
 
-  @media (max-width: 768px) { 
+  @media (max-width: 720px) { 
     flex-direction: column;
 }
 `

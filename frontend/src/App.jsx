@@ -14,14 +14,12 @@ import Edit from "./pages/Edit.jsx";
 
 import axios from "axios";
 
-let baseURL ='https://server-rwug.onrender.com'
 axios.defaults.baseURL = 'https://server-rwug.onrender.com/api'
 axios.defaults.withCredentials = true;
 
 
 const Container = styled.div`
   display : flex;  
-  
 `
 const Main = styled.div`
   flex:7;
@@ -29,8 +27,9 @@ const Main = styled.div`
 `
 const Wrapper = styled.div`
   padding: 20px 20px;
-  @media (max-width: 768px) { 
-    padding: 30px 30px;;
+
+  @media (max-width: 720px) { 
+    padding: 30px 40px;;
 }
   
 `

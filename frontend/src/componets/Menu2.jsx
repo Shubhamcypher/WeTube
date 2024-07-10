@@ -32,7 +32,7 @@ const Wrapper = styled.div`
     position: sticky;
     top:0;
     overflow-y: none;
-    height:100vh;
+    height:100%;
 `;
 
 const TopMenu = styled.div`

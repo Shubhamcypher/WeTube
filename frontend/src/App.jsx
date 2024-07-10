@@ -29,6 +29,10 @@ const Main = styled.div`
 `
 const Wrapper = styled.div`
   padding: 20px 20px;
+  @media (max-width: 768px) { 
+    padding: 30px 30px;;
+}
+  
 `
 
 const App = ()=>{

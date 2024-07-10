@@ -122,6 +122,9 @@ const VideoFrame = styled.video`
   object-fit: cover;
   border-radius: 10px;
   overflow: hidden;
+  @media (max-width: 720px) { 
+    max-height: 360px;
+}
 `;
 
 const Video = () => {

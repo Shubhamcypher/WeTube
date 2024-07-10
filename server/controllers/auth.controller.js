@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken'
 
 const options = {
     httpOnly: true,
-    secure: true, // Set to true if your frontend is served over HTTPS
+    secure: process.env.NODE_ENV === 'production', // Set to true if your frontend is served over HTTPS
     sameSite: 'None',
 }
 

@@ -13,8 +13,8 @@ const options = {
 }
 
 export const signup = async (req, res, next)=>{
-    const salt =  bcrypt.genSaltSync(10);
-    const hash =  bcrypt.hashSync(req.body.password, salt);
+    const salt =  await bcrypt.genSaltSync(10);
+    const hash =  await bcrypt.hashSync(req.body.password, salt);
 
     try {
         const newUser =  new User({...req.body,password:hash})
@@ -36,12 +36,12 @@ export const signin = async (req,res,next)=>{
         const user = await User.findOne({name:req.body.name})
         if(!user) return next(createError(404,"No user found"))
 
-        const isPasswordCorrect =  bcrypt.compare(req.body.password, user.password);
+        const isPasswordCorrect =  await bcrypt.compare(req.body.password, user.password);
         if(!isPasswordCorrect) return next(createError(400,"Invalid user credentials"));
 
 
         //injecting payload , which is here in this case is _id of user stored in MongoDB
-        const token = jwt.sign({id:user._id},process.env.JWT_SECRET_KEY {
+        const token = await jwt.sign({id:user._id},process.env.JWT_SECRET_KEY {
             expiresIn:'1h'
         })
         

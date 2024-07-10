@@ -12,7 +12,10 @@ const Container = styled.div`
 const NewComment = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
 `
 const Avatar = styled.img`
   width: 50px;
@@ -119,8 +122,10 @@ const Comments = ({videoId, setLoginNavigator, loginNavigator}) => {
         <NewComment>
             <Avatar src={currentUser?.img}/>
             <Input placeholder='Add a comment...' onChange={(e)=>setNewComment(e.target.value)} value={newComment}/>
+            <div style={{display:"flex", gap:"10px"}}>
             <PostButton onClick={handlePostComment}>Comment</PostButton>
             <ClearPostButton onClick={()=>setNewComment("")}>Clear</ClearPostButton>
+            </div>
         </NewComment>
 
         {comments.slice().reverse().map(comment=>(

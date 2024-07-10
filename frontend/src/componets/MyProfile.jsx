@@ -43,11 +43,11 @@ const Wrapper = styled.div`
   height: 600px;
   background-color: ${({ theme }) => theme.bgLighter};
   color: ${({ theme }) => theme.text};
-  padding: 10px 4px;
-  margin: 2px;
+  padding: 20px 4px;
+  margin: 20px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 10px;
   position: relative;
   left:0;
   border-radius:4%;
@@ -58,7 +58,7 @@ const Item = styled.div`
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  height: 35px;
+  height: 40px;
   padding: 0px 12px;
   width: auto;
   &:hover {

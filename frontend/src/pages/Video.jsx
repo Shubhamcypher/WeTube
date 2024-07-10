@@ -46,6 +46,12 @@ const Details = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 720px) { 
+    flex-direction: column;
+    align-items: flex-start;
+    gap:35px;
+}
 `
 const Hr = styled.hr`
   margin: 15px 0px;

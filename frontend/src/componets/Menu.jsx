@@ -42,6 +42,8 @@ const Container = styled.div`
     top:0;
     overflow-y: auto;
     height:100%;
+    position:sticky;
+    height:100vh;
 
     @media (max-width: 720px) { 
     position:fixed;

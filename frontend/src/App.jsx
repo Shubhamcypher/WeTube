@@ -20,6 +20,7 @@ axios.defaults.withCredentials = true;
 
 const Container = styled.div`
   display : flex;  
+  height: inherit;
 `
 const Main = styled.div`
   flex:7;

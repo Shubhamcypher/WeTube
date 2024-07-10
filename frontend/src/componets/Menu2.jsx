@@ -30,9 +30,12 @@ const Wrapper = styled.div`
     flex-direction:column;
     z-index: 900;
     position: sticky;
+    height:100vh;
     top:0;
     overflow-y: none;
-    height:100%;
+     @media (max-width: 720px) { 
+    padding: 8px 0;
+}
 `;
 
 const TopMenu = styled.div`

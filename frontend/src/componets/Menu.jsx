@@ -65,13 +65,16 @@ const Wrapper = styled.div`
     padding: 18px 0px;
     display:flex;
     flex-direction:column;
-    z-index:100000;
+
 `;
 
 const TopMenu = styled.div`
     display: flex;
     justify-content: space-between;
     gap:5px;
+    position: static;
+     @media (max-width: 768px) {
+  }
 `
 
 const HamburgerButton = styled.button`
@@ -156,27 +159,6 @@ const ActiveIcon = styled.div`
 const InactiveIcon = styled.div`
  color: inherit; 
  `;
-
- const StyledAlert = styled(Alert)`
-  background-color: inherit;
-  border-radius: 8px;
-  padding: 16px;
-`;
-
-const AlertButton = styled.button`
-  padding: 8px 16px;
-  background-color: ${({ color }) => color};
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-right: 8px;
-
-  &:hover {
-    opacity: 0.8;
-  }
-`;
 
 
 
@@ -363,23 +345,6 @@ const Menu = ({ darkMode, setDarkMode, setShowMenu, showMenu }) => {
           {darkMode ? 'Light' : 'Dark'}
         </Item>
       </Wrapper>
-      {showAlert && (
-        <StyledAlert severity="warning">
-          You won't be able to use complete features of WeTube without logging
-          in...Choose Login or Register to like, subscribe and more premium
-          features
-          <br />
-          <AlertButton onClick={handleLogin} color="green">
-            Login
-          </AlertButton>
-          <AlertButton onClick={handleRegister} color="blue">
-            Register
-          </AlertButton>
-          <AlertButton onClick={handleContinue} color="red">
-            Continue without logging in
-          </AlertButton>
-        </StyledAlert>
-      )}
     </Container>
   );
 };

@@ -38,9 +38,9 @@ const Container = styled.div`
 const Search = styled.div`
   position: fixed;
   left: 0px;
-  right: 40px;
+  right: 0px;
   margin: auto;
-  width:30%;
+  width:40%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,12 +48,17 @@ const Search = styled.div`
   border: 1px solid #ccc;
   border-radius: 7px;
   color: ${({theme})=>theme.text};
+
+  @media (max-width: 768px) { 
+    position:relative;
+    width:50%
+}
 `
 
 const Input = styled.input`
   border:none;
   background-color: transparent;
-  width:100%;
+  width:90%;
   outline:none;
   color: ${({theme})=>theme.text};
 `
@@ -66,11 +71,6 @@ const Button = styled.button`
     border-radius:3px;
     font-weight: 500;
     cursor: pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:3px;
-
 `;
 
 const User = styled.div`
@@ -103,9 +103,9 @@ const StyledAlert = styled(Alert)`
   border-radius: 8px;
   padding: 1px;
   position:relative;
-  width:80vw;
   top:0;
-  z-index:1000;
+  display:flex;
+  
 `;
 
 const AlertButton = styled.button`
@@ -129,7 +129,7 @@ const ButtonWrapper = styled.div`
     right: 10px;
     transform: translateY(-50%);
     display: flex;
-    gap: 10px;
+    gap: 0px;
 `;
 
 
@@ -222,7 +222,11 @@ const handleNoDeleteAccount =()=>{
 
     {showAlert && (
         <StyledAlert severity="warning" ref={alertlRef}>
-          You won't be able to use complete features of WeTube  
+          <div>
+          <div >
+          You won't be able to use complete features of WeTube
+          </div>
+          <div>
           <ButtonWrapper>
           <AlertButton onClick={handleSwitch} color="blue">
             Switch Account
@@ -234,6 +238,8 @@ const handleNoDeleteAccount =()=>{
             Logout
           </AlertButton>
           </ButtonWrapper>
+          </div>
+          </div>
         </StyledAlert>
       )}
 

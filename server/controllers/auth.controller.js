@@ -8,6 +8,8 @@ import jwt from 'jsonwebtoken'
 
 const options = {
     httpOnly: true,
+    secure: true, // Set to true if your frontend is served over HTTPS
+    sameSite: 'None',
 }
 
 export const signup = async (req, res, next)=>{
@@ -39,7 +41,9 @@ export const signin = async (req,res,next)=>{
 
 
         //injecting payload , which is here in this case is _id of user stored in MongoDB
-        const token = jwt.sign({id:user._id},process.env.JWT_SECRET_KEY )
+        const token = jwt.sign({id:user._id},process.env.JWT_SECRET_KEY {
+            expiresIn:'1h'
+        })
         
 
         const {password, ...userDetails} = user._doc

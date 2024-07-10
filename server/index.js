@@ -33,6 +33,8 @@ app.use(cors({
 }));
 
 
+
+
 //appending routes
 app.use('/api/auth',authRoutes)
 app.use('/api/user',userRoutes)

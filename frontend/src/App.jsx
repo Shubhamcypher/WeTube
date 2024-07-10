@@ -16,6 +16,7 @@ import axios from "axios";
 
 let baseURL ='https://server-rwug.onrender.com'
 axios.defaults.baseURL = 'https://server-rwug.onrender.com/api'
+axios.defaults.withCredentials = true;
 
 const Container = styled.div`
   display : flex;  

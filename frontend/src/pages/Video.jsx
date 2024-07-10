@@ -24,10 +24,14 @@ const Container = styled.div`
   display: flex;
   gap: 24px;
   z-index:999;
-  
+  height:100%;
+
+  @media (max-width: 768px) { 
+    flex-direction: column;
+}
 `
 const Content = styled.div`
-  flex: 5;
+  flex: 4;
 `
 const VideoWrapper = styled.div`
 `

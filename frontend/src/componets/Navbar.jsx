@@ -36,11 +36,11 @@ const Container = styled.div`
 `
 
 const Search = styled.div`
-  position: ;
+  position: fixed;
   left: 0px;
-  right: 0px;
+  right: 40px;
   margin: auto;
-  width:40%;
+  width:30%;
   display: flex;
   align-items: center;
   justify-content: space-between;

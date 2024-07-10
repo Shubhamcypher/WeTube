@@ -1,4 +1,4 @@
-{
+{{
   "version": 2,
   "builds": [
     {
@@ -10,7 +10,7 @@
     }
   ],
   "routes": [
-    { "handle": "filesystem" },
+    { "src": "/api/(.*)", "dest": "https://server-rwug.onrender.com/api/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

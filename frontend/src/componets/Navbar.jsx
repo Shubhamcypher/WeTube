@@ -101,11 +101,10 @@ const VideoButton = styled(VideoCallIcon)`
 const StyledAlert = styled(Alert)`
   background-color: inherit;
   border-radius: 8px;
-  padding: 16px;
-  position:fixed;
-  width:720px;
+  padding: 1px;
+  position:relative;
+  width:80vw;
   top:0;
-  left:380px;
   z-index:1000;
 `;
 

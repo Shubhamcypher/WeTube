@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
+const path = require('path ');
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -26,12 +27,18 @@ const connect = async ()=>{
 app.use(express.json())
 app.use(cookieParser())
 
+app.use(express.static(path.join(__dirname, 'build')));
+
 
 app.use(cors({
     origin: ['https://we-tube-mu.vercel.app', 'https://server-rwug.onrender.com', 'http://localhost:5173','http://localhost:8000/','https://nominatim.openstreetmap.org'],
     credentials: true, // This is needed if you're using cookies or authentication
 }));
 
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
 
 
 

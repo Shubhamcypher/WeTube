@@ -28,11 +28,14 @@ const LogoutButton = styled(LogoutIcon)`
 
 const Container = styled.div`
   position: fixed;
-  top: 10;
-  right:0;
+  top: 5px; /* Correcting the 'top' value to have a unit */
+  right: 0;
   background-color: transparent;
   display: flex;
-  z-index:999;
+  flex-direction: column; /* Ensuring the items stack vertically */
+  z-index: 999;
+  max-height: 100vh; /* Limit the height to the viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
 `;
 
 const Wrapper = styled.div`
@@ -40,11 +43,11 @@ const Wrapper = styled.div`
   height: 600px;
   background-color: ${({ theme }) => theme.bgLighter};
   color: ${({ theme }) => theme.text};
-  padding: 20px 4px;
-  margin: 20px;
+  padding: 10px 4px;
+  margin: 2px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
   position: relative;
   left:0;
   border-radius:4%;
@@ -55,7 +58,7 @@ const Item = styled.div`
   align-items: center;
   gap: 10px;
   cursor: pointer;
-  height: 40px;
+  height: 35px;
   padding: 0px 12px;
   width: auto;
   &:hover {

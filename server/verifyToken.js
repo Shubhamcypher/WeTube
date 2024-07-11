@@ -15,7 +15,7 @@ export const verifyToken = async (req, res, next) => {
         if (err) {
             if (err.name === 'TokenExpiredError') {
                 // Access token expired, check refresh token
-                const refreshToken = req.body.refreshToken; // Get refresh token from the request body
+                const refreshToken = req.cookies.refresh_token; // Get refresh token from the request body
                 if (!refreshToken) return next(createError(401, "No refresh token provided"));
 
                 try {
@@ -29,7 +29,7 @@ export const verifyToken = async (req, res, next) => {
                         return next(createError(401, "Invalid or expired refresh token"));
                     }
 
-                    const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '2m' });
+                    const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
 
                     res
                         .cookie("access_token", newAccessToken, {

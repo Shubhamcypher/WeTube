@@ -38,16 +38,16 @@ export const signin = async (req, res, next) => {
         const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
         if (!isPasswordCorrect) return next(createError(400, "Invalid user credentials"));
 
-        const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1m' });
+        const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '2h' });
 
         // Generate refresh token
-        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '5m' });
+        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '1d' });
 
         // Store refresh token in database
         const newRefreshToken =  new refreshTokenModel({
             userId: user._id,
             token: refreshToken,
-            expiresAt: new Date(Date.now() + 5 * 60 * 1000) // 2 minutes from now
+            expiresAt: new Date(Date.now() + 5 * 60 * 1000) // 5 minutes from now
         });
         await newRefreshToken.save();
 

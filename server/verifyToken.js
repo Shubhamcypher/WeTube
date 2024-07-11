@@ -27,8 +27,8 @@ export const verifyToken = async (req, res, next) => {
                     console.log("trying for decoded token");
 
                     const decoded =  jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY, async(err, user)=>{
-                        if(err)
-                        console.log(err);
+                        if(err.name === 'TokenExpiredError')
+                        await refreshTokenModel.findOneAndDelete({ token: refreshToken });
                         else{
                             console.log(" got decoded token ");
                             const storedToken = await refreshTokenModel.findOne({ userId: decoded.id, token: refreshToken });

@@ -20,13 +20,16 @@ export const verifyToken = async (req, res, next) => {
 
                 try {
                     const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY);
+                    console.log("decoded token = ",decoded);
                     const storedToken = await refreshTokenModel.findOne({ userId: decoded.id, token: refreshToken });
+                    console.log("stored token = ",storedToken);
 
                     if (!storedToken || new Date() > storedToken.expiresAt) {
                         if (storedToken) {
                             await refreshTokenModel.findOneAndDelete({ _id: storedToken._id }); // Delete the expired refresh token
                             console.log("Removed the refresh token");
                         }
+                        console.log("The error of the verifyToken block is ",err);
                         return next(createError(401, "Invalid or expired refresh token"));
                     }
 

@@ -2,24 +2,22 @@ import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
-    width: 52vw;
-    height: 0;
+    width: 100vw ;
     position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content:center;
 `
 const Wrapper = styled.div`
-    width: 600px;
-    height: 150px;
+    width: 50%;
     position: fixed;
-    bottom: 200px;
-    right: 290px;
+    bottom:400px;
     background-color: ${({ theme }) => theme.bgLighter};
     color: ${({ theme }) => theme.text};
     padding: 20px;
     border-radius: 20px;
     z-index:2;
+     @media (max-width: 720px) { 
+    width: 80%;
+    right:30px;
+}
 `
 const Copy = styled.div`
     display: flex;

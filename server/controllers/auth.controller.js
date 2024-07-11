@@ -83,7 +83,8 @@ export const googleAuth = async (req,res,next)=>{
             await newRefreshToken.save();
 
             res
-            .cookie("access_token",token,options)
+            .cookie("access_token",accessToken,options)
+            .cookie("refresh_token", refreshToken, options)
             .status(200)
             .json(user._doc)
         }
@@ -109,7 +110,8 @@ export const googleAuth = async (req,res,next)=>{
 
             
             res
-            .cookie("access_token",token,options)
+            .cookie("access_token",accessToken,options)
+            .cookie("refresh_token", refreshToken, options)
             .status(200)
             .json(savedUser._doc)
         }

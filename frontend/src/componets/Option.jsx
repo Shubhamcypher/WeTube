@@ -16,9 +16,9 @@ const Container = styled.div`
     position: absolute;
 `
 const Wrapper = styled.div`
-    position:relative;
+    position:fixed;
     width:160px;
-    left:220px;
+    bottom: 250px;
     color: ${({ theme }) => theme.text};
     border-radius:10px;
     background-color: ${({ theme }) => theme.soft};

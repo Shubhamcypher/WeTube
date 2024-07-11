@@ -99,13 +99,32 @@ const VideoButton = styled(VideoCallIcon)`
 `;
 
 const StyledAlert = styled(Alert)`
-  background-color: inherit;
+  background-color: ${({theme})=>theme.bgLighter} !important;
+  color: ${({theme})=>theme.text} !important;
   border-radius: 8px;
-  padding: 1px;
-  position:relative;
-  top:0;
+  margin: 10px;
+  position:fixed;
+  z-index:999;
+  top:10;
   display:flex;
-  
+  width:50vw;
+
+   @media (max-width: 720px) { 
+    width:80vw;
+    margin:2px 25px;
+}
+`;
+
+const LogoutText = styled.div`
+    @media (max-width: 720px) { 
+    display:none;
+}
+`;
+
+const DeleteAccountText = styled.div`
+    @media (max-width: 720px) { 
+    display:none;
+}
 `;
 
 const AlertButton = styled.button`
@@ -117,6 +136,7 @@ const AlertButton = styled.button`
   cursor: pointer;
   font-weight: bold;
   margin-right: 8px;
+  position:relative;
 
   &:hover {
     opacity: 0.8;
@@ -223,9 +243,9 @@ const handleNoDeleteAccount =()=>{
     {showAlert && (
         <StyledAlert severity="warning" ref={alertlRef}>
           <div>
-          <div >
-          You won't be able to use complete features of WeTube
-          </div>
+          <LogoutText >
+          You won't be able to use complete features.
+          </LogoutText>
           <div>
           <ButtonWrapper>
           <AlertButton onClick={handleSwitch} color="blue">
@@ -245,7 +265,9 @@ const handleNoDeleteAccount =()=>{
 
       {deleteAccountMenu && (
         <StyledAlert severity="warning" >
+        <DeleteAccountText>
         Are you sure want to delete {currentUser.name}? 
+        </DeleteAccountText>
         <ButtonWrapper>
         <AlertButton onClick={handleYesDeleteAccount} color="red">
           Yes

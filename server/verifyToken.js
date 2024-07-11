@@ -24,8 +24,8 @@ export const verifyToken = async (req, res, next) => {
 
                     if (!storedToken || new Date() > storedToken.expiresAt) {
                         if (storedToken) {
-                            await refreshTokenModel.deleteOne({ _id: storedToken._id }); // Delete the expired refresh token
-                            res.json("Removed the refres token");
+                            await refreshTokenModel.findOneAndDelete({ _id: storedToken._id }); // Delete the expired refresh token
+                            console.log("Removed the refresh token");
                         }
                         return next(createError(401, "Invalid or expired refresh token"));
                     }

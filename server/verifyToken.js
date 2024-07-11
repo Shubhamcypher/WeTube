@@ -5,7 +5,7 @@ import { createError } from './error.js';
 
 export const verifyToken = async (req, res, next) => {
 
-    console.log("I am in token\n");
+    console.log("I am in token");
     const token = req.cookies.access_token;
     console.log(token);
 
@@ -24,24 +24,30 @@ export const verifyToken = async (req, res, next) => {
 
                 try {
                     console.log("The refresh token is : ",refreshToken);
-                    console.log("trying for stored token");
-                    const storedToken = await refreshTokenModel.findOne({ userId: decoded.id, token: refreshToken });
-                    console.log(" got stored token which is:");
-                    console.log(storedToken);
-
                     console.log("trying for decoded token");
-                    const decoded =  jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY);
-                    console.log(" got decoded token ");
 
-                    if (!storedToken || new Date() > storedToken.expiresAt) {
-                        if (storedToken) {
-                            console.log("found stored token but it is expired");
-                            await refreshTokenModel.findOneAndDelete({ _id: storedToken._id }); // Delete the expired refresh token
-                            console.log("Removed the refresh token");
+                    const decoded =  jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY, async(err, user)=>{
+                        if(err)
+                        console.log(err);
+                        else{
+                            console.log(" got decoded token ");
+                            const storedToken = await refreshTokenModel.findOne({ userId: decoded.id, token: refreshToken });
+                            console.log(" got stored token which is:");
+                            console.log(storedToken);
+
+                            if (!storedToken || new Date() > storedToken.expiresAt) {
+                                if (storedToken) {
+                                    console.log("found stored token but it is expired");
+                                    await refreshTokenModel.findOneAndDelete({ _id: storedToken._id }); // Delete the expired refresh token
+                                    console.log("Removed the refresh token");
+                                }
+                                console.log("I think we are not able to fetch stored token or if fetched it should have deleted");
+                                return next(createError(401, "Invalid or expired refresh token"));
+                            }
                         }
-                        console.log("I think we are not able to fetch stored token or if fetched it should have deleted");
-                        return next(createError(401, "Invalid or expired refresh token"));
-                    }
+                    });
+
+                    
 
                     const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1m' });
 

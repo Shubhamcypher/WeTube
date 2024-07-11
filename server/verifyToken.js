@@ -29,7 +29,7 @@ export const verifyToken = async (req, res, next) => {
                         return next(createError(401, "Invalid or expired refresh token"));
                     }
 
-                    const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+                    const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '2m' });
 
                     res
                         .cookie("access_token", newAccessToken, {

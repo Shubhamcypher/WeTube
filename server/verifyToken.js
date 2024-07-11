@@ -19,9 +19,11 @@ export const verifyToken = async (req, res, next) => {
 
                 // Access token expired, check refresh token
                 const refreshToken = req.cookies.refresh_token; // Get refresh token from the cookies
+                console.log("Refresh token is still in cookies");
                 if (!refreshToken) return next(createError(401, "No refresh token provided"));
 
                 try {
+                    console.log("trying for decoded token");
                     const decoded = await jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY);
                     console.log(" got decoded token ");
                     const storedToken = await refreshTokenModel.findOne({ userId: decoded.id, token: refreshToken });

@@ -9,6 +9,7 @@ const Wrapper = styled.div`
     width: 50%;
     position: fixed;
     bottom:400px;
+    left:200px;
     background-color: ${({ theme }) => theme.bgLighter};
     color: ${({ theme }) => theme.text};
     padding: 20px;
@@ -16,7 +17,7 @@ const Wrapper = styled.div`
     z-index:2;
      @media (max-width: 720px) { 
     width: 80%;
-    right:30px;
+    left:20px;
 }
 `
 const Copy = styled.div`

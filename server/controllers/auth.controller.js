@@ -3,6 +3,7 @@ import User from '../model/user.model.js'
 import bcrypt from 'bcryptjs'
 import { createError } from '../error.js';
 import jwt from 'jsonwebtoken'
+import refreshTokenModel from '../model/refreshToken.model.js';
 
 
 
@@ -29,39 +30,38 @@ export const signup = async (req, res, next)=>{
     }
 }
 
-export const signin = async (req,res,next)=>{
-
+export const signin = async (req, res, next) => {
     try {
-        console.log("In signin");
-        const user = await User.findOne({name:req.body.name})
-        if(!user) return next(createError(404,"No user found"))
+        const user = await User.findOne({ name: req.body.name });
+        if (!user) return next(createError(404, "No user found"));
 
-        const isPasswordCorrect =  await bcrypt.compare(req.body.password, user.password);
-        if(!isPasswordCorrect) return next(createError(400,"Invalid user credentials"));
+        const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
+        if (!isPasswordCorrect) return next(createError(400, "Invalid user credentials"));
 
+        const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1m' });
 
-        //injecting payload , which is here in this case is _id of user stored in MongoDB
-        const token =  jwt.sign({id:user._id},process.env.JWT_SECRET_KEY, {
-            expiresIn:'1h'
-        })
-        
+        // Generate refresh token
+        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '2m' });
 
-        const {password, ...userDetails} = user._doc
+        // Store refresh token in database
+        const newRefreshToken = new refreshTokenModel({
+            userId: user._id,
+            token: refreshToken,
+            expiresAt: new Date(Date.now() + 3 * 60 * 1000) // 3 minutes from now
+        });
+        await newRefreshToken.save();
 
+        const { password, ...userDetails } = user._doc;
 
-        //if you want to verify cookie in postman you can check there and also in browser developer tools
         res
-        .cookie("access_token",token,options)
-        .status(200)
-        .json(userDetails)
+            .cookie("access_token", accessToken, options)
+            .status(200)
+            .json({ ...userDetails, refreshToken });
 
-        
-
-    } 
-    catch (error) {
-        next(error)
+    } catch (error) {
+        next(error);
     }
-}
+};
 
 export const googleAuth = async (req,res,next)=>{
     try {
@@ -92,3 +92,28 @@ export const googleAuth = async (req,res,next)=>{
         next(error)
     }
 }
+
+export const refreshAccessToken = async (req, res, next) => {
+    const { refreshToken } = req.body;
+
+    if (!refreshToken) return next(createError(401, "No refresh token provided"));
+
+    try {
+        const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY);
+        const storedToken = await refreshToken.findOne({ userId: decoded.id, token: refreshToken });
+
+        if (!storedToken || new Date() > storedToken.expiresAt) {
+            return next(createError(401, "Invalid or expired refresh token"));
+        }
+
+        const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+
+        res
+            .cookie("access_token", newAccessToken, options)
+            .status(200)
+            .json({ accessToken: newAccessToken });
+
+    } catch (error) {
+        next(error);
+    }
+};

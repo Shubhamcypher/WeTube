@@ -16,5 +16,7 @@ router.post('/signin', signin)
 //Google auth
 router.post('/googleAuth',googleAuth)
 
+router.post('/refresh-token', refreshAccessToken);
+
 
 export default router;

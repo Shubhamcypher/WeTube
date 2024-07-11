@@ -27,8 +27,10 @@ export const verifyToken = async (req, res, next) => {
                     console.log("trying for decoded token");
 
                     const decoded =  jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY, async(err, user)=>{
-                        if(err.name === 'TokenExpiredError')
+                        if(err.name === 'TokenExpiredError'){
                         await refreshTokenModel.findOneAndDelete({ token: refreshToken });
+                        console.log("The expired refresh token from DB has been deleted");
+                        }
                         else{
                             console.log(" got decoded token ");
                             const storedToken = await refreshTokenModel.findOne({ userId: decoded.id, token: refreshToken });
@@ -49,7 +51,7 @@ export const verifyToken = async (req, res, next) => {
 
                     
 
-                    const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1m' });
+                    const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '8h' });
 
                     res
                         .cookie("access_token", newAccessToken, {

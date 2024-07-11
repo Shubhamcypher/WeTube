@@ -8,13 +8,14 @@ export const refreshAccessToken = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY);
-        const storedToken = await refreshToken.findOne({ userId: decoded.id, token: refreshToken });
+        const storedToken = await refreshToken.findOne({ userId: decoded.id, token: refreshToken });//this token is stored in database
 
         if (!storedToken || new Date() > storedToken.expiresAt) {
+            await refreshTokenModel.deleteOne({ _id: storedToken._id });
             return next(createError(401, "Invalid or expired refresh token"));
         }
 
-        const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+        const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1m' });
 
         res
             .cookie("access_token", newAccessToken, options)

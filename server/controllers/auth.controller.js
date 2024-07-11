@@ -44,7 +44,7 @@ export const signin = async (req, res, next) => {
         const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '2m' });
 
         // Store refresh token in database
-        const newRefreshToken = new refreshTokenModel({
+        const newRefreshToken =  new refreshTokenModel({
             userId: user._id,
             token: refreshToken,
             expiresAt: new Date(Date.now() + 3 * 60 * 1000) // 3 minutes from now

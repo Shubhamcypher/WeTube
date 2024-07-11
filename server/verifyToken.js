@@ -23,12 +23,15 @@ export const verifyToken = async (req, res, next) => {
                 if (!refreshToken) return next(createError(401, "No refresh token provided"));
 
                 try {
-                    console.log("trying for decoded token");
-                    const decoded =  jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY);
-                    console.log(" got decoded token ");
+                    console.log("The refresh token is : ",refreshToken);
+                    console.log("trying for stored token");
                     const storedToken = await refreshTokenModel.findOne({ userId: decoded.id, token: refreshToken });
                     console.log(" got stored token which is:");
                     console.log(storedToken);
+
+                    console.log("trying for decoded token");
+                    const decoded =  jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET_KEY);
+                    console.log(" got decoded token ");
 
                     if (!storedToken || new Date() > storedToken.expiresAt) {
                         if (storedToken) {

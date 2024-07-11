@@ -92,6 +92,7 @@ const TopMenu = styled.div`
 const HamburgerButton = styled.button`
   height:25px;
   background-color: transparent;
+  
   border: none;
   outline: none;
   color: ${({theme})=>theme.text};
@@ -100,6 +101,10 @@ const HamburgerButton = styled.button`
     background-color: ${({ theme }) => theme.soft};
     border-radius : 7.5px;
   }
+
+   @media (max-width: 720px) {
+      padding:0px;
+}
 `;
 
 
@@ -125,6 +130,9 @@ const LogoText = styled.span`
 `;
 const Img = styled.img`
     height:25px;
+    @media (max-width: 720px) { 
+    height:20px;
+} 
 `;
 
 const Item = styled.div`
@@ -153,7 +161,9 @@ const Hr = styled.hr`
 `
 
 const Login = styled.div`
-    
+  @media (max-width: 720px) { 
+    display:none
+}  
 `
 
 const Button = styled.button`

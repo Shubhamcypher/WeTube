@@ -190,7 +190,7 @@ useEffect(() => {
 
 const handleSwitch = () => {
   alert(`Logging out, ${currentUser.name}` )
-  axios.get(`/user/logout`);
+  axios.get(`/auth/logout`);
   dispatch(logout())
   setShowAlert(false);
   navigate('/signin');
@@ -202,7 +202,7 @@ const handleCancel = () => {
 
 const handleLogoutAndContinue = () => {
   alert(`Logging out, ${currentUser.name}` )
-  axios.get(`/user/logout`);
+  axios.get(`/auth/logout`);
   dispatch(logout())
   setShowAlert(false);
   navigate('/')

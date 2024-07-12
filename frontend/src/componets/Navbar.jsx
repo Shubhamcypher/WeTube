@@ -188,9 +188,9 @@ useEffect(() => {
   };
 }, [setShowAlert]);
 
-const handleSwitch = () => {
+const handleSwitch = async() => {
   alert(`Logging out, ${currentUser.name}` )
-  axios.get(`/auth/logout`);
+  await axios.get(`/auth/logout`);
   dispatch(logout())
   setShowAlert(false);
   navigate('/signin');
@@ -200,9 +200,9 @@ const handleCancel = () => {
   setShowAlert(false);
 };
 
-const handleLogoutAndContinue = () => {
+const handleLogoutAndContinue = async() => {
   alert(`Logging out, ${currentUser.name}` )
-  axios.get(`/auth/logout`);
+  await axios.get(`/auth/logout`);
   dispatch(logout())
   setShowAlert(false);
   navigate('/')

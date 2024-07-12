@@ -47,7 +47,7 @@ export const signin = async (req, res, next) => {
         const newRefreshToken =  new refreshTokenModel({
             userId: user._id,
             token: refreshToken,
-            expiresAt: new Date(Date.now() + 2 * 60* 60 * 1000) // 15 minutes from now
+            expiresAt: new Date(Date.now() + 2 * 60* 60 * 1000) // 2 hours from login
         });
         await newRefreshToken.save();
 
@@ -120,5 +120,34 @@ export const googleAuth = async (req,res,next)=>{
         next(error)
     }
 }
+
+
+export const logout = async (req, res, next) => {
+    try {
+        const refreshToken = req.cookies.refresh_token;
+        if (!refreshToken) return next(createError(400, "No refresh token found"));
+
+        // Delete the refresh token from the database
+        await refreshTokenModel.findOneAndDelete({ token: refreshToken });
+        console.log("Refresh token deleted from the database");
+
+        // Clear cookies
+        res.clearCookie("access_token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'None',
+        });
+        res.clearCookie("refresh_token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'None',
+        });
+
+        res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        next(error);
+    }
+};
+
 
 

@@ -1,4 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const navigate = useNavigate();
 
 const initialState  = {
     currentUser:null,
@@ -22,10 +26,13 @@ export const userSlice = createSlice({
         state.loading = false,
         state.error =  true
      },
-     logout: (state)=>{
+     logout: async(state)=>{
+       alert(`Logging out, ${state.currentUser}` )
         state.currentUser = null
         state.loading = false,
-        state.error =  false
+        state.error =  false,
+        axios.get(`/user/logout`);
+        navigate('/signin')
      },
      subscription: (state, action) => {
       if (state.currentUser.subscribedUsers.includes(action.payload)) {

@@ -1,9 +1,6 @@
-import jwt from 'jsonwebtoken';
-import { promisify } from 'util';
-import refreshTokenModel from './model/refreshToken.model.js';
-import { createError } from './error.js';
+ // Assuming logout.js contains the logout function
 
-const verifyJwt = promisify(jwt.verify);
+import { logout } from "./controllers/auth.controller.js";
 
 export const verifyToken = async (req, res, next) => {
     console.log("I am in verify token function");
@@ -53,8 +50,8 @@ export const verifyToken = async (req, res, next) => {
                 return next();
             } catch (refreshError) {
                 if (refreshError.name === 'TokenExpiredError') {
-                    await refreshTokenModel.findOneAndDelete({ token: refreshToken });
-                    console.log("The expired refresh token from DB has been deleted");
+                    // Logout the user
+                    return logout(req, res, next);
                 }
                 return next(createError(401, "Invalid or expired refresh token"));
             }

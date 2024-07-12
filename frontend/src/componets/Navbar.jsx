@@ -225,7 +225,7 @@ const handleNoDeleteAccount =()=>{
       <Wrapper>
         <Search>
           <Input placeholder="Search" onChange={(e)=>setQ(e.target.value)}/>
-          <SearchIcon onClick={()=>q&&navigate(`/search?q=${q}`)} style={{cursor:'pointer'}}/>
+          <SearchIcon onClick={ ()=> q && navigate(`/search?q=${q}`)}   style={{cursor:'pointer'}} />
         </Search>
         {currentUser  ?(
           <User>

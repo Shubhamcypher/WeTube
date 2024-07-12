@@ -2,6 +2,7 @@
 
 import { logout } from "./controllers/auth.controller.js";
 import { createError } from "./error.js";
+import refreshTokenModel from "./model/refreshToken.model.js";
 
 
 export const verifyToken = async (req, res, next) => {

@@ -169,6 +169,7 @@ export const getByTag = async(req,res,next)=>{
 }
 
 export const search = async (req, res, next) => {
+    
     const query = req.query.q;
 
     try {

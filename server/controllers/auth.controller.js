@@ -41,7 +41,7 @@ export const signin = async (req, res, next) => {
         const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '5m' });
 
         // Generate refresh token
-        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '10m' });
+        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '15m' });
 
         // Store refresh token in database
         const newRefreshToken =  new refreshTokenModel({

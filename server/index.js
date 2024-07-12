@@ -69,5 +69,6 @@ app.use((err, req, res, next) => {
 
 app.listen(process.env.PORT,()=>{
     connect();
-    console.log(`Server is running on port ${process.env.PORT} `);
+    console.log(`Server is running on port ${process.env.PORT}`);
+    console.log(`Time is ${new Date(Date.now() + (5 * 60 * 60 * 1000) + (30 * 60 * 1000)).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })} `);
 })

@@ -47,7 +47,7 @@ export const signin = async (req, res, next) => {
         const newRefreshToken =  new refreshTokenModel({
             userId: user._id,
             token: refreshToken,
-            expiresAt: new Date(Date.now() + 5 * 60 * 1000) // 5 minutes from now
+            expiresAt: new Date(Date.now() + 15 * 60 * 1000) // 5 minutes from now
         });
         await newRefreshToken.save();
 

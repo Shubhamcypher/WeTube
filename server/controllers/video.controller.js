@@ -172,6 +172,8 @@ export const search = async (req, res, next) => {
     const query = req.query.q;
 
     try {
+        console.log("Search query:", query);
+
         const videos = await Video.aggregate([
             {
                 $lookup: {
@@ -187,9 +189,9 @@ export const search = async (req, res, next) => {
             {
                 $match: {
                     $or: [
-                        { title: { $regex: query, $options: "i" } },
-                        { tags: { $regex: query, $options: "i" } },
-                        { 'user.name': { $regex: query, $options: "i" } } // Match against the user name
+                        { title: { $regex: new RegExp(query, 'i') } },
+                        { tags: { $regex: new RegExp(query, 'i') } },
+                        { 'user.name': { $regex: new RegExp(query, 'i') } } // Match against the user name
                     ]
                 }
             },
@@ -197,9 +199,12 @@ export const search = async (req, res, next) => {
                 $limit: 40
             }
         ]);
-            console.log("Checking with search");
+
+        console.log("Matching videos:", videos);
+
         res.status(200).json(videos);
     } catch (error) {
+        console.error("Error in search function:", error);
         next(error);
     }
 };

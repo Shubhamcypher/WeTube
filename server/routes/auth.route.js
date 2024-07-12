@@ -19,7 +19,7 @@ router.post('/signin', signin)
 router.post('/googleAuth',googleAuth)
 
 //logout
-router.get('/logout',verifyToken,logout)
+router.get('/logout',logout)
 
 router.post('/refresh-token', refreshAccessToken);
 

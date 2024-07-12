@@ -3,6 +3,7 @@
 import { logout } from "./controllers/auth.controller.js";
 import { createError } from "./error.js";
 
+
 export const verifyToken = async (req, res, next) => {
     console.log("I am in verify token function");
     const token = req.cookies.access_token;

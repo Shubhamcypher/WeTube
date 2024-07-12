@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-
 
 const initialState  = {
     currentUser:null,
@@ -24,7 +22,7 @@ export const userSlice = createSlice({
         state.loading = false,
         state.error =  true
      },
-     logout: async(state)=>{
+     logout: (state)=>{
         state.currentUser = null
         state.loading = false,
         state.error =  false

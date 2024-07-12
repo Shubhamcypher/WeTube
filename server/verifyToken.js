@@ -10,7 +10,7 @@ export const verifyToken = async (req, res, next) => {
     console.log(token);
 
     if (!token) // this is the case when no token is found in cookies, it's not verified whether it is expired or not
-        return next(createError(405, "No token found in cookies"));
+        return next(createError(401, "No token found in cookies"));
 
     try {
         const user = await verifyJwt(token, process.env.JWT_SECRET_KEY);

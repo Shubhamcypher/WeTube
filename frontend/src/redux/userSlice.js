@@ -27,12 +27,9 @@ export const userSlice = createSlice({
         state.error =  true
      },
      logout: async(state)=>{
-       alert(`Logging out, ${state.currentUser}` )
         state.currentUser = null
         state.loading = false,
-        state.error =  false,
-        axios.get(`/user/logout`);
-        navigate('/signin')
+        state.error =  false
      },
      subscription: (state, action) => {
       if (state.currentUser.subscribedUsers.includes(action.payload)) {

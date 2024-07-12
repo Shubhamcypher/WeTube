@@ -168,22 +168,38 @@ export const getByTag = async(req,res,next)=>{
     }
 }
 
-export const search = async(req,res,next)=>{
-    const query = req.query.q
+export const search = async (req, res, next) => {
+    const query = req.query.q;
 
     try {
-        const videos = await Video.find({
-            $or: [
-                    { title: { $regex: query, $options: "i" } },
-                    { tags: { $regex: query, $options: "i" } }
-                 ]
-        }).limit(40)
-            
-            res
-            .status(200)
-            .json(videos)
-    } 
-    catch (error) {
-        next(error) 
+        const videos = await Video.aggregate([
+            {
+                $lookup: {
+                    from: 'users', // Name of the user collection
+                    localField: 'userId', // Field from the video collection
+                    foreignField: '_id', // Field from the user collection
+                    as: 'user' // Alias for the joined user data
+                }
+            },
+            {
+                $unwind: '$user' // Deconstruct the user array
+            },
+            {
+                $match: {
+                    $or: [
+                        { title: { $regex: query, $options: "i" } },
+                        { tags: { $regex: query, $options: "i" } },
+                        { 'user.name': { $regex: query, $options: "i" } } // Match against the user name
+                    ]
+                }
+            },
+            {
+                $limit: 40
+            }
+        ]);
+
+        res.status(200).json(videos);
+    } catch (error) {
+        next(error);
     }
-}
+};

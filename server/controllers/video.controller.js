@@ -197,7 +197,7 @@ export const search = async (req, res, next) => {
                 $limit: 40
             }
         ]);
-
+            console.log("Checking with search");
         res.status(200).json(videos);
     } catch (error) {
         next(error);

@@ -169,17 +169,25 @@ export const getByTag = async(req,res,next)=>{
 }
 
 export const search = async (req, res, next) => {
-    
     const query = req.query.q;
+
+    if (!query) {
+        return res.status(400).json({ message: 'Query parameter is missing' });
+    }
 
     try {
         console.log("Search query:", query);
 
         const videos = await Video.aggregate([
             {
+                $addFields: {
+                    userIdObjectId: { $toObjectId: "$userId" }
+                }
+            },
+            {
                 $lookup: {
                     from: 'users', // Name of the user collection
-                    localField: 'userId', // Field from the video collection
+                    localField: 'userIdObjectId', // Converted ObjectId field
                     foreignField: '_id', // Field from the user collection
                     as: 'user' // Alias for the joined user data
                 }
@@ -201,6 +209,10 @@ export const search = async (req, res, next) => {
             }
         ]);
 
+        if (videos.length === 0) {
+            return res.status(404).json({ message: 'No matching videos found' });
+        }
+
         console.log("Matching videos:", videos);
 
         res.status(200).json(videos);
@@ -208,4 +220,4 @@ export const search = async (req, res, next) => {
         console.error("Error in search function:", error);
         next(error);
     }
-};
+}

@@ -221,12 +221,21 @@ const handleNoDeleteAccount =()=>{
   setDeleteAccountMenu(false)
 }
 
+const handleKeyPress = (event) => {
+  if (event.key === 'Enter') {
+    q && navigate(`/search?q=${q}`);
+  }
+};
+
   return (
     <>    
     <Container>
       <Wrapper>
         <Search>
-          <Input placeholder="Search" onChange={(e)=>setQ(e.target.value)}/>
+          <Input 
+            placeholder="Search" 
+            onChange={(e)=>setQ(e.target.value)}
+            onKeyDown={handleKeyPress}/>
           <SearchIcon onClick={ ()=> q && navigate(`/search?q=${q}`)}   style={{cursor:'pointer'}} />
         </Search>
         {currentUser  ?(

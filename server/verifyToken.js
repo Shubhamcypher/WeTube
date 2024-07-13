@@ -1,9 +1,21 @@
- // Assuming logout.js contains the logout function
+// Assuming logout.js contains the logout function
 
 import { logout } from "./controllers/auth.controller.js";
 import { createError } from "./error.js";
 import refreshTokenModel from "./model/refreshToken.model.js";
+import jwt from 'jsonwebtoken';
 
+// Define the verifyJwt function
+const verifyJwt = (token, secretKey) => {
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, secretKey, (err, decoded) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(decoded);
+        });
+    });
+};
 
 export const verifyToken = async (req, res, next) => {
     console.log("I am in verify token function");
@@ -41,7 +53,7 @@ export const verifyToken = async (req, res, next) => {
                     return next(createError(401, "Invalid or expired refresh token"));
                 }
 
-                const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+                const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '10m' });
 
                 res.cookie("access_token", newAccessToken, {
                     httpOnly: true,

@@ -3,9 +3,7 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import path from 'path';
-import url from 'url'
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -15,10 +13,6 @@ import videoRoutes from './routes/video.route.js'
 import commentRoutes from './routes/comment.route.js'
 import authRoutes from './routes/auth.route.js'
 
-
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const app = express()
 
@@ -34,12 +28,11 @@ const connect = async ()=>{
 app.use(express.json())
 app.use(cookieParser())
 
-app.use(express.static(path.join(__dirname, 'dist')));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Handle all other routes by serving index.html
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+app.use(express.static(path.join(__dirname, 'build')));
+
 
 app.use(cors({
     origin: ['https://we-tube-mu.vercel.app', 'https://server-rwug.onrender.com', 'http://localhost:5173','http://localhost:8000/','https://nominatim.openstreetmap.org'],

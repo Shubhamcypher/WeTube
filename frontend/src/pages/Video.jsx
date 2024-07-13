@@ -128,7 +128,7 @@ const VideoFrame = styled.video`
   border-radius: 10px;
   overflow: hidden;
   @media (max-width: 720px) { 
-    max-height: 280px;
+    max-height: 200px;
 }
 `;
 

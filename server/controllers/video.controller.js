@@ -172,7 +172,7 @@ export const search = async (req, res, next) => {
     const query = req.query.q;
 
     if (!query) {
-        return res.status(400).json({ message: 'Query parameter is missing' });
+        return res.status(400).json({ message: 'Query parameter is missing here' });
     }
 
     try {

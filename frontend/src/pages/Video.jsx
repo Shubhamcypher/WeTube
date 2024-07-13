@@ -117,8 +117,8 @@ const Subscribe = styled.button`
   cursor: pointer;
 `
 const VideoFrame = styled.video`
-  max-height: 480px;
-  width: 100%;
+  max-height: 280px;
+  width: 90%;
   object-fit: cover;
   border-radius: 10px;
   overflow: hidden;

@@ -203,6 +203,7 @@ const handleCancel = () => {
 const handleLogoutAndContinue = async() => {
   alert(`Logging out, ${currentUser.name}` )
   await axios.get(`/auth/logout`);
+  console.log("User logged out from database");
   dispatch(logout())
   setShowAlert(false);
   navigate('/')

@@ -22,7 +22,7 @@ import Share from '../componets/Share.jsx';
 
 const Container = styled.div`
   display: flex;
-  gap: 24px;
+  gap: 28px;
   z-index:999;
   height:100%;
 
@@ -32,6 +32,11 @@ const Container = styled.div`
 `
 const Content = styled.div`
   flex: 4;
+  margin:0 20px 0 10px ;
+  
+  @media (max-width: 720px) { 
+    padding:0px;
+}
 `
 const VideoWrapper = styled.div`
 `
@@ -117,13 +122,13 @@ const Subscribe = styled.button`
   cursor: pointer;
 `
 const VideoFrame = styled.video`
-  max-height: 280px;
-  width: 90%;
+  max-height: 320px;
+  width: 100%;
   object-fit: cover;
   border-radius: 10px;
   overflow: hidden;
   @media (max-width: 720px) { 
-    max-height: 360px;
+    max-height: 280px;
 }
 `;
 

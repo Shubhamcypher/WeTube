@@ -161,9 +161,19 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
           const reverseGeocode = async () => {
             const {latitude,longitude} = userLocation;
             try {
-              const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+              const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // You can optionally include other headers here
+                },
+                credentials: 'same-origin'  // Adjust credentials mode as per your needs
+            });
+            
+            const dataFromLocation = await response.json(); // Assuming the response is JSON
+            console.log(dataFromLocation);
               // Extract location data from response
-              const { address } = response.data;
+              const { address } = dataFromLocation;
               // Construct location name based on available address components
               let locationName = '';
               if (address) {

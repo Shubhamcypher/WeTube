@@ -190,10 +190,11 @@ useEffect(() => {
 
 const handleSwitch = async() => {
   alert(`Logging out, ${currentUser.name}` )
-  await axios.get(`/auth/logout`);
   dispatch(logout())
+  console.log("User logged out from database");
   setShowAlert(false);
   navigate('/signin');
+  await axios.get(`/auth/logout`);
 };
 
 const handleCancel = () => {
@@ -202,11 +203,11 @@ const handleCancel = () => {
 
 const handleLogoutAndContinue = async() => {
   alert(`Logging out, ${currentUser.name}` )
-  await axios.get(`/auth/logout`);
-  console.log("User logged out from database");
   dispatch(logout())
+  console.log("User logged out from database");
   setShowAlert(false);
   navigate('/')
+  await axios.get(`/auth/logout`);
 };
 
 const handleYesDeleteAccount = async()=>{

@@ -171,7 +171,6 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
             });
             
             const dataFromLocation = await response.json(); // Assuming the response is JSON
-            console.log(dataFromLocation);
               // Extract location data from response
               const { address } = dataFromLocation;
               // Construct location name based on available address components

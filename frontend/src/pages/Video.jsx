@@ -149,12 +149,17 @@ const Video = () => {
   const [loginNavigator, setLoginNavigator] = useState(false)
 
 
+
+//In future these all should be like, check for verify token and if access token is expired check for refresh token, and if that also expired logut from backend dispatch logout from frontend and also generate an alert and navigate to homepage  
   const handleLike = async()=>{
     await axios.put(`/user/like/${currentVideo._id}`)
+    
     dispatch(like(currentUser._id))
   }
   const handleDislike = async()=>{
+    
     await axios.put(`/user/dislike/${currentVideo._id}`)
+    
     dispatch(dislike(currentUser._id))
   }
 

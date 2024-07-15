@@ -165,8 +165,6 @@ export const avatarAdd = async (req, res) => {
             { img: imageFileUrl },
             { new: true } // This option returns the updated document
         );
-
-        await User.save();
         
         res.status(200).json(updatedUser);
     } catch (error) {
@@ -184,7 +182,6 @@ export const deleteAvatar = async (req, res) => {
             { new: true } // This option returns the updated document
         );
 
-        await User.save();
         
         res.status(200).json(updatedUser);
     } catch (error) {

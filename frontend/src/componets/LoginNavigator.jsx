@@ -4,11 +4,23 @@ import Alert from '@mui/material/Alert';
 import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
-    width: 720px;
+    width: 880px;
+       @media (max-width: 720px) { 
+    max-width:480px;
+}
+   
 `;
 
 const Wrapper = styled.div`
     position: relative;
+
+     @media (max-width: 450px) { 
+    max-width:360px;
+}
+ 
+@media (max-width: 1274px) { 
+    width:680px;
+}
 `;
 
 const ButtonWrapper = styled.div`

@@ -115,6 +115,7 @@ const AvatarInContainer = styled.img`
       height: 100%;
       border-radius: 2%;
       background-color: #999;
+      object-fit:cover;
 `;
 
 const AvatarContainer = styled.div`
@@ -127,6 +128,10 @@ const AvatarContainer = styled.div`
     z-index:999;
     color: ${({ theme }) => theme.text};
     padding:20px;
+
+    @media (max-width: 720px) { 
+      width:60vw;
+}
 `;
 const AvatarWrapper = styled.div`
     height:100%;
@@ -145,6 +150,12 @@ const ButtonContainer = styled.div`
     justify-content:space-between;
     width:100%;
     padding:20px;
+
+    @media (max-width: 720px) { 
+      flex-direction:column;
+      gap:20px;
+}
+    
 `;
 
 

@@ -176,7 +176,6 @@ export const avatarAdd = async (req, res) => {
 
 export const deleteAvatar = async (req, res) => {
     const userId = req.user.id;
-    const { imageFileUrl } = req.body;
     
     try {
         const updatedUser = await User.findByIdAndUpdate(

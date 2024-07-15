@@ -291,7 +291,7 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
   const handleAddAvatar = async (e) => {
     e.preventDefault();
     try {
-      console.log('trying in the corner');
+      console.log(input.imageFileUrl);
         const res = await axios.patch(`/user/avatar`, { imageFileUrl: input.imageFileUrl });
         console.log(res);
         setOpenProfile(false)

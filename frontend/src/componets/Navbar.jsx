@@ -167,6 +167,7 @@ const [openProfile, setOpenProfile] = useState(false)
 const [q, setQ] = useState("")
 const [showAlert, setShowAlert] = useState(false);
 const [deleteAccountMenu, setDeleteAccountMenu] = useState(false)
+const [avatarUrl, setAvatarUrl] = useState(currentUser?.img);
 
 const alertlRef = useRef(null);
 
@@ -228,6 +229,20 @@ const handleKeyPress = (event) => {
   }
 };
 
+useEffect(() => {
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get(`/user/${currentUser._id}`);
+      const userData = response.data;
+      setAvatarUrl(userData.img);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+
+  fetchUserData();
+}, [currentUser]);
+
   return (
     <>    
     <Container>
@@ -244,7 +259,8 @@ const handleKeyPress = (event) => {
             <VideoButton onClick={()=>setOpen(true)}  fontSize="large"/>
             <NotificationsIcon fontSize="large"/>
             <Avatar src={currentUser?.img} style={{cursor:'pointer'} } onClick={()=>{
-              setOpenProfile(!openProfile)}}/>
+              setOpenProfile(!openProfile)
+              }}/>
           </User>
         ) : <Link to='/signin' style={{textDecoration:"none"}}>
             <Button>

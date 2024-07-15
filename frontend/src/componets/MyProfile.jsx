@@ -293,7 +293,7 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
     e.preventDefault();
     try {
         const res = await axios.patch(`/user/avatar`, { imageFileUrl: input.imageFileUrl });
-        console.log(res);
+        console.log(res.data.img);
         setOpenProfile(false)
     } catch (error) {
         console.log(error);
@@ -304,7 +304,7 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
     try {
       
         const res = await axios.patch(`/user/avatar/delete`);
-        console.log(res);
+        console.log(res.data.img);
         setOpenProfile(false)
     } catch (error) {
         console.log(error);

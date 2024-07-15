@@ -22,12 +22,16 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import app from '../firebase.js'
+import { updateAvatar } from "../redux/userSlice.js";
+
 
 
 
 const LogoutButton = styled(LogoutIcon)`
   cursor: pointer;
 `;
+
+
 
 const Container = styled.div`
   position: fixed;
@@ -158,6 +162,8 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
     const [imageFile, setImageFile] = useState('')
     const [imagePercentage, setImagePercentage] = useState('')
     const [input, setInput] = useState('')
+
+    const dispatch = useDispatch()
     
 
 
@@ -242,74 +248,53 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
         }
       }, [userLocation]);
 
-      const handleAvatar = ()=>{
-          setAvatarContainer(true)
-      }
-
-
-      const uploadFile = async (file, urlType)=>{
+      const handleAvatarClick = () => {
+        setAvatarContainer(true);
+      };
+    
+      const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setImageFile(file);
+      };
+    
+      const handleAddAvatar = async () => {
+        if (!imageFile) return;
         const storage = getStorage(app);
-        const fileName = new Date().getTime()+file.name
-        const storageRef = ref(storage, fileName );
-
-        const uploadTask = uploadBytesResumable(storageRef, file);
-
-        // Listen for state changes, errors, and completion of the upload.
-        uploadTask.on('state_changed',
-        (snapshot) => {
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const fileName = new Date().getTime() + "-" + imageFile.name;
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, imageFile);
+    
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            setImagePercentage(Math.round(progress)) 
-            switch (snapshot.state) {
-            case 'paused':
-                console.log('Upload is paused');
-                break;
-            case 'running':
-                console.log('Upload is running');
-                break;
-            default:
-                break;
-            }
-        },
-        (error)=>{console.log(error);},
-        () => {
-            // Upload completed successfully, now we can get the download URL
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              setInput((prev) => {
-                    return { ...prev, [urlType]: downloadURL };
-                  });
+            setImagePercentage(Math.round(progress));
+          },
+          (error) => {
+            console.error("Error uploading avatar:", error.message);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
+              dispatch(updateAvatar(downloadURL));
+              const res = await axios.patch(`/user/avatar`, { imageFileUrl: downloadURL });
+              console.log(res);
+              setOpenProfile(false);
             });
           }
-        ); 
+        );
+        
+      };
+    
+      const handleDeleteAvatar = async () => {
+        try {
+          const res = await axios.patch("/user/avatar/delete");
+          dispatch(updateAvatar(null)); // Update avatar to null in Redux state
 
-    }
-
-    useEffect(()=>{
-      imageFile && uploadFile(imageFile,"imageFileUrl");
-      console.log();
-  },[imageFile])
-
-  const handleAddAvatar = async (e) => {
-    e.preventDefault();
-    try {
-        const res = await axios.patch(`/user/avatar`, { imageFileUrl: input.imageFileUrl });
-        console.log(res.data.img);
-        setOpenProfile(false)
-    } catch (error) {
-        console.log(error);
-    }
-};
-  const handleDeleteAvatar = async (e) => {
-    e.preventDefault();
-    try {
-      
-        const res = await axios.patch(`/user/avatar/delete`);
-        console.log(res.data.img);
-        setOpenProfile(false)
-    } catch (error) {
-        console.log(error);
-    }
-};
+          setOpenProfile(false);
+        } catch (error) {
+          console.error("Error deleting avatar:", error.message);
+        }
+      };
 
 
 
@@ -318,7 +303,7 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
     <Container>
         <Wrapper>
             <Title>
-                <button style={{backgroundColor:'transparent', border:'none'}} onClick={handleAvatar}>
+                <button style={{backgroundColor:'transparent', border:'none'}} onClick={handleAvatarClick}>
                 <Avatar src={currentUser.img} style={{cursor:'pointer'}} />
                 </button>
                 {currentUser.name}
@@ -400,7 +385,7 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
           <ButtonContainer >
           <div>{imagePercentage>0?("Uploading: "+ imagePercentage+ "%"):(<input type='file' accept='image/*' onChange={(e)=>setImageFile(e.target.files[0])}/>)}</div>
           {currentUser.img?(
-           <div style={{display:'flex',gap:'15px'}}>
+           <div style={{display:'flex',gap:'15px' }}>
              <button style={{padding:'5px', backgroundColor:'yellow',border:'none',width:'70px', borderRadius:'6%'}} onClick={handleAddAvatar}>Change</button>
              <button style={{padding:'5px', backgroundColor:'red' ,border:'none', width:'70px',borderRadius:'6%' }} onClick={handleDeleteAvatar}>Delete</button>
            </div>

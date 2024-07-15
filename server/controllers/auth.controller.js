@@ -69,24 +69,26 @@ export const googleAuth = async (req,res,next)=>{
         const user = await User.findOne({email: req.body.email})
         if (user) {
 
-            const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+            const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
 
-            // Generate refresh token
-            const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '2h' });
-    
-            // Store refresh token in database
-            const newRefreshToken =  new refreshTokenModel({
-                userId: user._id,
-                token: refreshToken,
-                expiresAt: new Date(Date.now() + 2 * 60 * 60 * 1000) // 2 hours from now
-            });
-            await newRefreshToken.save();
+        // Generate refresh token
+        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '7d' });
 
-            res
-            .cookie("access_token",accessToken,options)
+        // Store refresh token in database
+        const newRefreshToken =  new refreshTokenModel({
+            userId: user._id,
+            token: refreshToken,
+            expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days from login
+        });
+        await newRefreshToken.save();
+
+        const { password, ...userDetails } = user._doc;
+
+        res
+            .cookie("access_token", accessToken, options)
             .cookie("refresh_token", refreshToken, options)
             .status(200)
-            .json(user._doc)
+            .json({ ...userDetails,  });
         }
         else{
             const newUser = new User({
@@ -95,25 +97,26 @@ export const googleAuth = async (req,res,next)=>{
             })
             const savedUser = await newUser.save();
 
-            const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+            const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' });
 
-            // Generate refresh token
-            const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '2h' });
-    
-            // Store refresh token in database
-            const newRefreshToken =  new refreshTokenModel({
-                userId: user._id,
-                token: refreshToken,
-                expiresAt: new Date(Date.now() + 2 * 60 * 60 * 1000) // 2 hours from now
-            });
-            await newRefreshToken.save();
+        // Generate refresh token
+        const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_REFRESH_SECRET_KEY, { expiresIn: '7d' });
 
-            
-            res
-            .cookie("access_token",accessToken,options)
+        // Store refresh token in database
+        const newRefreshToken =  new refreshTokenModel({
+            userId: user._id,
+            token: refreshToken,
+            expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days from login
+        });
+        await newRefreshToken.save();
+
+        const { password, ...userDetails } = user._doc;
+
+        res
+            .cookie("access_token", accessToken, options)
             .cookie("refresh_token", refreshToken, options)
             .status(200)
-            .json(savedUser._doc)
+            .json({ ...userDetails,  });
         }
     } 
     catch (error) {

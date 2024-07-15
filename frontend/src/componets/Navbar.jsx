@@ -213,21 +213,6 @@ const Navbar = ({ darkMode, setDarkMode }) => {
     }
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`/user/${currentUser._id}`);
-        const userData = response.data;
-        if (userData.img !== currentUser.img) {
-          dispatch(updateUserData(userData));
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, [currentUser, dispatch]);
 
   return (
     <>    
@@ -246,6 +231,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
               <NotificationsIcon fontSize="large" />
               <Avatar src={currentUser?.img} style={{ cursor: 'pointer' }} onClick={() => {
                 setOpenProfile(!openProfile)
+                console.log(currentUser.name);
               }} />
             </User>
           ) : <Link to='/signin' style={{ textDecoration: "none" }}>

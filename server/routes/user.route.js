@@ -7,7 +7,8 @@ import
         subscribeUser, 
         unsubscribeUser,
         likeVideo,
-        dislikeVideo
+        dislikeVideo,
+        avatarAdd
     } 
     from '../controllers/user.controller.js';
 
@@ -39,6 +40,8 @@ router.put('/like/:videoId',verifyToken, likeVideo)
 
 //unlike a video
 router.put('/dislike/:videoId',verifyToken, dislikeVideo)
+
+router.patch('/avatar',verifyToken,avatarAdd)
 
 
 export default router;

@@ -153,3 +153,21 @@ export const dislikeVideo = async(req,res,next)=>{
         
     }
 }
+
+export const avatarAdd = async (req, res) => {
+    console.log("I am in addAvatar");
+    const userId = req.user.id;
+    const { imageFileUrl } = req.body;
+    
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { img: imageFileUrl },
+            { new: true } // This option returns the updated document
+        );
+        
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

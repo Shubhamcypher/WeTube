@@ -50,6 +50,7 @@ const Image = styled.img`
   background-color: #999;
   width: 150px;
   height: 150px;
+  object-fit:cover;
 `
 
 

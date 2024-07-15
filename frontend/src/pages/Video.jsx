@@ -90,6 +90,7 @@ const Image = styled.img`
   height: 50px;
   border-radius: 50%;
   background-color: #999;
+  object-fit:cover;
 `
 
 
@@ -237,7 +238,7 @@ const Video = () => {
         <Channel>
           <ChannelInfo>
             <Link to={`/profile/${currentVideo.userId}`} style={{textDecoration:"none"}}>
-            {channel?<Image src={channel?.img}/>:<Image src="https://yt3.ggpht.com/a/AATXAJyoQKeFnPY6bJ-BPDeFFQ7C8EXN7xuyOSJoDw=s900-c-k-c0xffffffff-no-rj-mo"/>}
+            {channel&&<Image src={channel?.img}/>}
             <ChannelDetail>
               {channel?<ChannelName>{channel?.name}</ChannelName>:<ChannelName>Deleted User</ChannelName>}
               <ChannelCounter>{channel?.subscribers} subscribers</ChannelCounter>

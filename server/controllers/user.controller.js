@@ -165,6 +165,27 @@ export const avatarAdd = async (req, res) => {
             { img: imageFileUrl },
             { new: true } // This option returns the updated document
         );
+
+        await User.save();
+        
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const deleteAvatar = async (req, res) => {
+    const userId = req.user.id;
+    const { imageFileUrl } = req.body;
+    
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { img: '' },
+            { new: true } // This option returns the updated document
+        );
+
+        await User.save();
         
         res.status(200).json(updatedUser);
     } catch (error) {

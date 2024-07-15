@@ -104,6 +104,7 @@ const Avatar = styled.img`
       height: 48px;
       border-radius: 50%;
       background-color: #999;
+      object-fit:cover;
 `;
 const AvatarInContainer = styled.img`
       width: 100%;
@@ -291,8 +292,18 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
   const handleAddAvatar = async (e) => {
     e.preventDefault();
     try {
-      console.log(input.imageFileUrl);
         const res = await axios.patch(`/user/avatar`, { imageFileUrl: input.imageFileUrl });
+        console.log(res);
+        setOpenProfile(false)
+    } catch (error) {
+        console.log(error);
+    }
+};
+  const handleDeleteAvatar = async (e) => {
+    e.preventDefault();
+    try {
+      
+        const res = await axios.delete(`/user/avatar/delete`);
         console.log(res);
         setOpenProfile(false)
     } catch (error) {
@@ -385,11 +396,20 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
     {avatarContainer&&(
       <AvatarContainer>
         <AvatarWrapper>
-          <AvatarInContainer src={currentUser.img} style={{cursor:'pointer'}} />
+          <AvatarInContainer src={currentUser.img} style={{cursor:'pointer', objectFit:'cover'}} />
           <ButtonContainer >
           <div>{imagePercentage>0?("Uploading: "+ imagePercentage+ "%"):(<input type='file' accept='image/*' onChange={(e)=>setImageFile(e.target.files[0])}/>)}</div>
-          <button style={{padding:'5px', backgroundColor:'green',border:'none',width:'70px', borderRadius:'6%'}} onClick={handleAddAvatar}>Add</button>
-          <button style={{padding:'5px', backgroundColor:'red' ,border:'none', width:'70px',borderRadius:'6%' }}>Delete</button>
+          {currentUser.img?(
+           <div style={{display:'flex',gap:'15px'}}>
+             <button style={{padding:'5px', backgroundColor:'yellow',border:'none',width:'70px', borderRadius:'6%'}} onClick={handleAddAvatar}>Change</button>
+             <button style={{padding:'5px', backgroundColor:'red' ,border:'none', width:'70px',borderRadius:'6%' }} onClick={handleDeleteAvatar}>Delete</button>
+           </div>
+          ):(
+            <div>
+              <button style={{padding:'5px', backgroundColor:'green',border:'none',width:'70px', borderRadius:'6%'}} onClick={handleAddAvatar}>Add</button>
+              
+            </div>
+          )}
           </ButtonContainer>
         </AvatarWrapper>
       </AvatarContainer>

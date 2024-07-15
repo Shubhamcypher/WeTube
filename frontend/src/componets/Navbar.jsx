@@ -85,6 +85,7 @@ const Avatar = styled.img`
       height: 32px;
       border-radius: 50%;
       background-color: #999;
+      object-fit:cover;
 `;
 
 
@@ -242,7 +243,8 @@ const handleKeyPress = (event) => {
           <User>
             <VideoButton onClick={()=>setOpen(true)}  fontSize="large"/>
             <NotificationsIcon fontSize="large"/>
-            <Avatar src={currentUser.img} style={{cursor:'pointer'} } onClick={()=>setOpenProfile(!openProfile)}/>
+            <Avatar src={currentUser?.img} style={{cursor:'pointer'} } onClick={()=>{
+              setOpenProfile(!openProfile)}}/>
           </User>
         ) : <Link to='/signin' style={{textDecoration:"none"}}>
             <Button>

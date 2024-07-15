@@ -303,7 +303,7 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
     e.preventDefault();
     try {
       
-        const res = await axios.delete(`/user/avatar/delete`);
+        const res = await axios.patch(`/user/avatar/delete`);
         console.log(res);
         setOpenProfile(false)
     } catch (error) {

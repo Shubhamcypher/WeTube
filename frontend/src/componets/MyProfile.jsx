@@ -94,7 +94,7 @@ const Title = styled.h1`
     align-items:center;
     justify-content:space-between;
     flex-wrap:wrap;
-    padding: 0 20px;
+    padding: 0 5px;
 `;
 
 
@@ -162,6 +162,7 @@ const ButtonContainer = styled.div`
 
 const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, setDeleteAccountMenu}) => {
     const containerRef = useRef(null);
+    const avatarContainerRef = useRef(null);
     const {currentUser} = useSelector((state)=>state.user)
     
 
@@ -172,7 +173,6 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
     const [avatarContainer, setAvatarContainer] = useState(false)
     const [imageFile, setImageFile] = useState('')
     const [imagePercentage, setImagePercentage] = useState('')
-    const [input, setInput] = useState('')
 
     const dispatch = useDispatch()
     
@@ -199,6 +199,18 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
           document.removeEventListener('mousedown', handleClickOutside);
         };
       }, [setOpenProfile]);
+
+    useEffect(() => {
+        const handleClickOutsideimageContainer = (e) => {
+          if (avatarContainerRef.current && !avatarContainerRef.current.contains(e.target)) {
+            setAvatarContainer(false);
+          }
+        };
+        document.addEventListener('mousedown', handleClickOutsideimageContainer);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutsideimageContainer);
+        };
+      }, [avatarContainer]);
 
       useEffect(() => {
         const fetchUserLocation = () => {
@@ -263,10 +275,7 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
         setAvatarContainer(true);
       };
     
-      const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setImageFile(file);
-      };
+      
     
       const handleAddAvatar = async () => {
         if (!imageFile) return;
@@ -390,14 +399,14 @@ const MyProfile = ({setOpenProfile,setShowAlert,darkMode, setDarkMode, setOpen, 
         </Wrapper>
     </Container>
     {avatarContainer&&(
-      <AvatarContainer>
+      <AvatarContainer ref={avatarContainerRef}>
         <AvatarWrapper>
           <AvatarInContainer src={currentUser.img} style={{cursor:'pointer', objectFit:'cover'}} />
           <ButtonContainer >
           <div>{imagePercentage>0?("Uploading: "+ imagePercentage+ "%"):(<input type='file' accept='image/*' onChange={(e)=>setImageFile(e.target.files[0])}/>)}</div>
           {currentUser.img?(
            <div style={{display:'flex',gap:'15px' }}>
-             <button style={{padding:'5px', backgroundColor:'yellow',border:'none',width:'70px', borderRadius:'6%'}} onClick={handleAddAvatar}>Change</button>
+             {imageFile&&<button style={{padding:'5px', backgroundColor:'yellow',border:'none',width:'70px', borderRadius:'6%'}} onClick={handleAddAvatar}>Change</button>}
              <button style={{padding:'5px', backgroundColor:'red' ,border:'none', width:'70px',borderRadius:'6%' }} onClick={handleDeleteAvatar}>Delete</button>
            </div>
           ):(

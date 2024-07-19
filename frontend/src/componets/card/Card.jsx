@@ -61,8 +61,8 @@ const ChannelImage = styled.img`
     display: ${(props) => props.type === "sm" && "none"};
 
     @media (max-width: 720px) {
-        width: 66px;
-        height: 66px;
+        width: 44px;
+        height: 44px;
     }
 `;
 

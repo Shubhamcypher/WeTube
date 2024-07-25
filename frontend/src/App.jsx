@@ -45,7 +45,7 @@ const App = ()=>{
     <ThemeProvider theme={darkMode?darkTheme:lightTheme}>
         <Container>
           <BrowserRouter>
-          <Analytics>
+          
           {showMenu
           ?(<Menu darkMode={darkMode} setDarkMode={setDarkMode} setShowMenu={setShowMenu} showMenu={showMenu} />)
           :(<Menu2 showMenu={showMenu} setShowMenu={setShowMenu}/>)}
@@ -77,7 +77,6 @@ const App = ()=>{
               </Routes>
             </Wrapper>
           </Main>
-          </Analytics>
           </BrowserRouter>
         </Container>
     </ThemeProvider>

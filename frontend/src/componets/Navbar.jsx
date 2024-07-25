@@ -56,6 +56,7 @@ const Search = styled.div`
   @media (max-width: 720px) { 
     position: relative;
     left:15px;
+    z-index:99999;
 }
 `
 

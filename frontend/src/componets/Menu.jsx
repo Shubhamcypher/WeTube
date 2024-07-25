@@ -115,8 +115,11 @@ const Logo = styled.div`
     margin-bottom:5px;
 
     &:hover {
-        transform: scale(1.2)
+        transform: scale(1.2);
       }
+    @media (max-width: 360px) { 
+    display:none;
+}
 
 `;
 

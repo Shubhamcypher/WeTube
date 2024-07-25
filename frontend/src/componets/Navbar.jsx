@@ -14,6 +14,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../redux/userSlice';
 import MyProfile from './MyProfile';
 
+import SuprSendInbox from '@suprsend/react-inbox'
+import 'react-toastify/dist/ReactToastify.css'
+
+
 const Container = styled.div`
   position: sticky;
   top: 0;
@@ -30,6 +34,9 @@ const Wrapper = styled.div`
   align-items: center;
   height: 100%;
   padding: 0px 20px;
+  @media (max-width: 720px) { 
+    padding: 0px
+}
 `
 
 const Search = styled.div`
@@ -48,7 +55,7 @@ const Search = styled.div`
 
   @media (max-width: 720px) { 
     position: relative;
-    width: 50%
+    left:15px;
 }
 `
 
@@ -58,6 +65,7 @@ const Input = styled.input`
   width: 90%;
   outline: none;
   color: ${({ theme }) => theme.text};
+  
 `
 
 const Button = styled.button`
@@ -75,11 +83,19 @@ const User = styled.div`
   align-items: center;
   gap: 20px;
   color:  ${({ theme }) => theme.text};
+  padding-bottom:12px;
+
+  @media (max-width: 720px) { 
+    gap: 5px;
+    padding:0px 5px;
+    padding-bottom:12px;
+}
+  
 `
 
 const Avatar = styled.img`
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background-color: #999;
   object-fit: cover;
@@ -90,7 +106,7 @@ const VideoButton = styled(VideoCallIcon)`
 
   &:hover {
     color: #00B5E2;
-    transform: scale(1.3);
+    transform: scale(1.2);
     transition: transform 0.8s ease, color 0.8s ease;
   }
 `;
@@ -227,9 +243,15 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           </Search>
           {currentUser ? (
             <User>
-              <VideoButton onClick={() => setOpen(true)} fontSize="large" />
-              <NotificationsIcon fontSize="large" />
-              <Avatar src={currentUser?.img} style={{ cursor: 'pointer' }} onClick={() => {
+              <VideoButton onClick={() => setOpen(true)} fontSize="large"  style={{marginTop:'12px'}}/>
+              <SuprSendInbox
+                workspaceKey= "mL2IGFxoSyOO8PjrMTJZ"
+                subscriberId= "<subscriber_id>"
+                distinctId= "SS.fOTvP9U_vFoiOoR8keq26VPMvMYrXrD9WRF0rcScQXk"
+                theme={{ bell: { color: `${({ theme }) => theme.text} !important;` } }}
+                themeType="dark"
+              />
+              <Avatar src={currentUser?.img} style={{ cursor: 'pointer', marginTop:'12px' }} onClick={() => {
                 setOpenProfile(!openProfile)
                 console.log(currentUser.name);
               }} />

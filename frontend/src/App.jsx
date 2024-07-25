@@ -11,9 +11,11 @@ import Search from "./componets/Search.jsx";
 import Menu2 from "./componets/Menu2.jsx";
 import Profile from "./pages/Profile.jsx";
 import Edit from "./pages/Edit.jsx";
-import { Analytics } from "@vercel/analytics/react"
+
 
 import axios from "axios";
+
+
 
 axios.defaults.baseURL = 'https://server-rwug.onrender.com/api'
 axios.defaults.withCredentials = true;

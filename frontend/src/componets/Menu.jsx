@@ -82,11 +82,13 @@ const TopMenu = styled.div`
     display: flex;
     justify-content: space-between;
     gap:5px;
-     @media (max-width: 720px) {
-      display:flex;
-      flex-direction:column-reverse;
-      gap:0px;
+    
+    @media (max-width: 720px) { 
+    padding-top:12px;
+    margin-right:10px;
 }
+    
+
 `
 
 const HamburgerButton = styled.button`
@@ -102,9 +104,6 @@ const HamburgerButton = styled.button`
     border-radius : 7.5px;
   }
 
-   @media (max-width: 720px) {
-      padding:0px;
-}
 `;
 
 
@@ -113,14 +112,12 @@ const Logo = styled.div`
     align-items:center;
     gap:5px;
     font-weight:bold;
-    margin-bottom:25px;
+    margin-bottom:5px;
 
     &:hover {
         transform: scale(1.2)
       }
-    @media (max-width: 720px) { 
-    margin-bottom:0px;
-}
+
 `;
 
 const LogoText = styled.span`
@@ -130,9 +127,6 @@ const LogoText = styled.span`
 `;
 const Img = styled.img`
     height:25px;
-    @media (max-width: 720px) { 
-    height:20px;
-} 
 `;
 
 const Item = styled.div`

@@ -42,6 +42,10 @@ const TopMenu = styled.div`
     display: flex;
     justify-content: space-between;
     gap:5px;
+
+     @media (max-width: 720px) { 
+    padding-top:8px;
+}
 `
 
 

@@ -11,6 +11,7 @@ import Search from "./componets/Search.jsx";
 import Menu2 from "./componets/Menu2.jsx";
 import Profile from "./pages/Profile.jsx";
 import Edit from "./pages/Edit.jsx";
+import { Analytics } from "@vercel/analytics/react"
 
 import axios from "axios";
 
@@ -44,6 +45,7 @@ const App = ()=>{
     <ThemeProvider theme={darkMode?darkTheme:lightTheme}>
         <Container>
           <BrowserRouter>
+          <Analytics>
           {showMenu
           ?(<Menu darkMode={darkMode} setDarkMode={setDarkMode} setShowMenu={setShowMenu} showMenu={showMenu} />)
           :(<Menu2 showMenu={showMenu} setShowMenu={setShowMenu}/>)}
@@ -75,6 +77,7 @@ const App = ()=>{
               </Routes>
             </Wrapper>
           </Main>
+          </Analytics>
           </BrowserRouter>
         </Container>
     </ThemeProvider>

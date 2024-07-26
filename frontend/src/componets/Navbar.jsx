@@ -247,7 +247,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
               <VideoButton onClick={() => setOpen(true)} fontSize="large"  style={{marginTop:'12px'}}/>
               <SuprSendInbox
                 workspaceKey= "mL2IGFxoSyOO8PjrMTJZ"
-                subscriberId= "<subscriber_id>"
+                subscriberId= "SS.ypnGK6MepBByDKh7eEAh56N9R5XJLJ3St5N3Riv3W5o"
                 distinctId= "SS.fOTvP9U_vFoiOoR8keq26VPMvMYrXrD9WRF0rcScQXk"
                 theme={{ bell: { color: `${({ theme }) => theme.text} !important;` } }}
                 themeType="dark"

@@ -243,7 +243,7 @@ const Menu = ({ darkMode, setDarkMode, setShowMenu, showMenu }) => {
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Logo>
             <Img src={channel_logo} />
-            <LogoText>WeTube</LogoText>
+            <LogoText>NavinTube</LogoText>
           </Logo>
         </Link>
         </TopMenu>

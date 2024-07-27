@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 
 import channel_logo from '../img/channel_logo.png'
+import jiju from '../../dist/assets/jiju.jpeg'
 
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
@@ -242,7 +243,7 @@ const Menu = ({ darkMode, setDarkMode, setShowMenu, showMenu }) => {
         </HamburgerButton>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Logo>
-            <Img src={'../../dist/assets/jiju.jpeg'} />
+            <Img src={jiju} />
             <LogoText>NavinTube</LogoText>
           </Logo>
         </Link>

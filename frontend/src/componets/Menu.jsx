@@ -242,7 +242,7 @@ const Menu = ({ darkMode, setDarkMode, setShowMenu, showMenu }) => {
         </HamburgerButton>
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Logo>
-            <Img src={channel_logo} />
+            <Img src={jiju} />
             <LogoText>NavinTube</LogoText>
           </Logo>
         </Link>

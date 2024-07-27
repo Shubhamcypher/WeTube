@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 
 import channel_logo from '../img/channel_logo.png'
-import jiju from '../../dist/assets/jiju.jpeg'
+import jiju from '../img/jiju.jpeg'
 
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';

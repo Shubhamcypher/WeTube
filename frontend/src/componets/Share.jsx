@@ -92,4 +92,4 @@ const Share = ({setOpenShare, video}) => {
   )
 }
 
-export default Share
+export default Share;

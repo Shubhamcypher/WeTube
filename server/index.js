@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 
 app.use(cors({
-    origin: ['https://we-tube-mu.vercel.app', 'https://server-rwug.onrender.com', 'http://localhost:5173','http://localhost:8000/','https://nominatim.openstreetmap.org'],
+    origin: ['https://we-tube-mu.vercel.app', 'https://server-rwug.onrender.com', 'http://localhost:5173','http://localhost:8000/','https://nominatim.openstreetmap.org','http://192.168.57.110:5173'],
     credentials: true, // This is needed if you're using cookies or authentication
 }));
 

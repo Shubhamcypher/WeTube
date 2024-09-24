@@ -84,7 +84,7 @@ const Share = ({setOpenShare, video}) => {
     <Container ref={containerRef}>
         <Wrapper>
             <Copy>
-                <Input value={video?`/video/${video._id}`:window.location.href} writable='false' ref={inputRef}/>
+                <Input value={window.location.href} writable='false' ref={inputRef}/>
                 <Button onClick={handleCopy} copied={copied}>{copied ? 'Copied!' : 'Copy'}</Button>
             </Copy>
         </Wrapper>

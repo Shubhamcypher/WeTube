@@ -69,7 +69,10 @@ const Share = ({setOpenShare, video}) => {
       }, []);
 
     const handleCopy = () => {
-      const currentURL = video?window.location.href:`http://localhost:5173/video/${video._id}`;
+      // const currentURL = video?window.location.href:`http://localhost:5173/video/${video._id}`;
+      const currentURL = window.location.href;
+      console.log(currentURL);
+      
         if (inputRef.current) {
             inputRef.current.select();
             navigator.clipboard.writeText(currentURL);

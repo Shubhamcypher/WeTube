@@ -123,13 +123,16 @@ const Subscribe = styled.button`
   cursor: pointer;
 `
 const VideoFrame = styled.video`
-  max-height: 320px;
+  max-height: 720px;
   width: 100%;
   object-fit: cover;
   border-radius: 10px;
   overflow: hidden;
   @media (max-width: 720px) { 
     max-height: 200px;
+}
+@media (min-width: 1400px) { 
+   width: 100%;
 }
 `;
 
@@ -212,7 +215,7 @@ const Video = () => {
     <Container>
       <Content>
         <VideoWrapper>
-        <VideoFrame src={currentVideo.videoUrl} autoPlay muted controls allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/>
+        <VideoFrame src={currentVideo.videoUrl} autoPlay controls allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/>
         </VideoWrapper>
         <Title>{currentVideo.title}</Title>
         <Details>

@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const Container = styled.div`
     display: flex;
-    gap:30px;
+    gap:40px;
     flex-wrap:wrap;
 
      @media (max-width: 720px) { 

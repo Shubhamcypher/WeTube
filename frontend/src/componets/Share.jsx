@@ -51,44 +51,46 @@ const Button = styled.button`
     box-shadow: 1px 1px 1px 1px crimson;
 `
 
-const Share = ({setOpenShare, video}) => {
-    const inputRef = useRef(null);
-    const containerRef = useRef(null)
-    const [copied, setCopied] = useState(false);
+const Share = ({ setOpenShare, video = {} }) => {
+  const inputRef = useRef(null);
+  const containerRef = useRef(null);
+  const [copied, setCopied] = useState(false);
 
-    useEffect(() => {
-        const handleClickOutside = (e) => {
+  useEffect(() => {
+      const handleClickOutside = (e) => {
           if (containerRef.current && !containerRef.current.contains(e.target)) {
-            setOpenShare(false);
+              setOpenShare(false);
           }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
+      };
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
           document.removeEventListener('mousedown', handleClickOutside);
-        };
-      }, []);
+      };
+  }, []);
 
-    const handleCopy = () => {
+  const handleCopy = () => {
       const currentURL = window.location.href;
       console.log(currentURL);
-      
-        if (inputRef.current) {
-            inputRef.current.select();
-            navigator.clipboard.writeText(currentURL);
-            setCopied(true);
-        }
 
-      };
+      if (inputRef.current) {
+          inputRef.current.select();
+          navigator.clipboard.writeText(currentURL);
+          setCopied(true);
+      }
+  };
+
   return (
-    <Container ref={containerRef}>
-        <Wrapper>
-            <Copy>
-                <Input value={window.location.href} writable='false' ref={inputRef}/>
-                <Button onClick={handleCopy} copied={copied}>{copied ? 'Copied!' : 'Copy'}</Button>
-            </Copy>
-        </Wrapper>
-    </Container>
-  )
-}
+      <Container ref={containerRef}>
+          <Wrapper>
+              <Copy>
+                  <Input value={window.location.href} writable="false" ref={inputRef} />
+                  <Button onClick={handleCopy} copied={copied}>
+                      {copied ? 'Copied!' : 'Copy'}
+                  </Button>
+              </Copy>
+          </Wrapper>
+      </Container>
+  );
+};
 
 export default Share;

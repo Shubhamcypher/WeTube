@@ -43,7 +43,7 @@ app.use(cors({
 
 
 app.options('*', cors({
-  origin: ['https://we-tube-mu.vercel.app', 'https://server-rwug.onrender.com'],
+  origin: ['https://we-tube-mu.vercel.app', 'https://server-rwug.onrender.com','http://localhost:5174','http://192.168.57.110:5174'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
 }));

@@ -15,7 +15,7 @@ export const refreshAccessToken = async (req, res, next) => {
             return next(createError(401, "Invalid or expired refresh token"));
         }
 
-        const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '1m' });
+        const newAccessToken = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_KEY, { expiresIn: '7d' });
 
         res
             .cookie("access_token", newAccessToken, options)

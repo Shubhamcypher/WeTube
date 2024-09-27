@@ -30,7 +30,7 @@ const Main = styled.div`
   background-color: ${({theme})=>theme.bg};
 `
 const Wrapper = styled.div`
-  padding: 25px 20px;
+  padding: 25px 0px 25px 30px;
 
   @media (max-width: 720px) { 
     padding: 30px 2px;

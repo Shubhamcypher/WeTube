@@ -6,7 +6,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: '',
+        target: 'https://server-rwug.onrender.com',
+        changeOrigin:true,
+        secure:true
       },
     },
   },

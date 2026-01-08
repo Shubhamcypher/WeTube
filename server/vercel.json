@@ -1,4 +1,4 @@
-{{
+{
   "version": 2,
   "builds": [
     {
@@ -9,8 +9,14 @@
       }
     }
   ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "https://server-rwug.onrender.com/api/$1" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://server-rwug.onrender.com/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }

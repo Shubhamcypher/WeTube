@@ -35,7 +35,7 @@ const Close = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color:white
+  background-color:white;
   width: 30px;
   height: 30px;
   display: flex;

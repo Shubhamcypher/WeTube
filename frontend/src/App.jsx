@@ -2,7 +2,7 @@ import styled, { ThemeProvider } from "styled-components";
 import Menu from "./componets/Menu.jsx";
 import Navbar from "./componets/Navbar.jsx";
 import { darkTheme, lightTheme } from "./utils/Theme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Video from "./pages/Video.jsx";
@@ -11,9 +11,11 @@ import Search from "./componets/Search.jsx";
 import Menu2 from "./componets/Menu2.jsx";
 import Profile from "./pages/Profile.jsx";
 import Edit from "./pages/Edit.jsx";
-
-
 import axios from "axios";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
+import app from "./firebase";
+
+
 
 
 
@@ -42,6 +44,24 @@ const App = ()=>{
 
   const [darkMode, setDarkMode] = useState(true)
   const [showMenu, setShowMenu] = useState(true)
+
+  useEffect(() => {
+    const auth = getAuth(app);
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        signInAnonymously(auth)
+          .then(() => {
+            console.log("Signed in anonymously");
+          })
+          .catch((error) => {
+            console.error("Anonymous auth error:", error);
+          });
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
   
   return (
     <ThemeProvider theme={darkMode?darkTheme:lightTheme}>

@@ -19,7 +19,7 @@ import app from "./firebase";
 
 
 
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = 'https://server-rwug.onrender.com/api'
 axios.defaults.withCredentials = true;
 
 

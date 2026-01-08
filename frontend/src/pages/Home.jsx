@@ -20,7 +20,11 @@ const Home = ({type}) => {
   useEffect(() => {
     
     const fetchVideos = async()=>{
+      console.log('in fetch videos');
+      
       const res = await axios.get(`/video/${type}`);
+      console.log(res);
+      
       
       setVideos(res.data) ;//this data contains everything that api sends us
     };
